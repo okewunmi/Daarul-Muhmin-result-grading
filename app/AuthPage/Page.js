@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { BookOpen } from 'lucide-react';
 import { AuthToggle } from '../../components/auth/AuthToggle';
 import { AuthForm } from '../../components/auth/AuthForm';
+import {adminUserManagement } from '../../lib/appwrite';
 
 const AuthPage = ({ onNavigate, onLogin }) => {
   const [isLogin, setIsLogin] = useState(true);
@@ -13,6 +14,7 @@ const AuthPage = ({ onNavigate, onLogin }) => {
     email: '',
     password: '',
     name: '',
+    arabicName: '',
     confirmPassword: ''
   });
 
@@ -28,7 +30,17 @@ const AuthPage = ({ onNavigate, onLogin }) => {
     setLoading(true);
     setMessage({ text: '', type: '' });
 
-    const result = await appwriteAuth.login(formData.email, formData.password);
+    // Validate inputs
+    if (!formData.email || !formData.password) {
+      setMessage({ text: 'Please fill in all fields', type: 'error' });
+      setLoading(false);
+      return;
+    }
+
+    const result = await adminUserManagement.login(
+      formData.email, 
+      formData.password
+    );
     
     setLoading(false);
     
@@ -46,16 +58,26 @@ const AuthPage = ({ onNavigate, onLogin }) => {
     setLoading(true);
     setMessage({ text: '', type: '' });
 
+    // Validate inputs
+    if (!formData.name || !formData.email || !formData.password || !formData.confirmPassword) {
+      setMessage({ text: 'Please fill in all required fields', type: 'error' });
+      setLoading(false);
+      return;
+    }
+
     if (formData.password !== formData.confirmPassword) {
       setMessage({ text: 'Passwords do not match', type: 'error' });
       setLoading(false);
       return;
     }
 
-    const result = await appwriteAuth.createAccount(
+    const result = await adminUserManagement.createUser(
+      formData.name,
+      formData.arabicName,
       formData.email,
       formData.password,
-      formData.name
+      formData.confirmPassword,
+      'self-registration' // You can change this to track who created the account
     );
     
     setLoading(false);
@@ -64,7 +86,14 @@ const AuthPage = ({ onNavigate, onLogin }) => {
       setMessage({ text: result.message, type: 'success' });
       setTimeout(() => {
         setIsLogin(true);
-        setFormData(prev => ({ ...prev, name: '', confirmPassword: '' }));
+        setFormData({
+          email: formData.email, // Keep email for easy login
+          password: '',
+          name: '',
+          arabicName: '',
+          confirmPassword: ''
+        });
+        setMessage({ text: 'Please login with your credentials', type: 'success' });
       }, 1500);
     } else {
       setMessage({ text: result.message, type: 'error' });
@@ -100,7 +129,7 @@ const AuthPage = ({ onNavigate, onLogin }) => {
               Daarul Muhmin Institute
             </h2>
             <p className="text-gray-300 text-sm">
-              معهد دار المؤمنين
+              معهد دار المؤمن
             </p>
           </div>
 
@@ -120,9 +149,9 @@ const AuthPage = ({ onNavigate, onLogin }) => {
           />
         </div>
 
-        <p className="text-center text-gray-400 mt-6 text-sm">
+        {/* <p className="text-center text-gray-400 mt-6 text-sm">
           For school administration access, please contact IT support
-        </p>
+        </p> */}
       </div>
     </div>
   );

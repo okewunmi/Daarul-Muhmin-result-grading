@@ -1,5 +1,6 @@
 "use client"
 import { MessageAlert } from '../common/MessageAlert';
+
 export const AuthForm = ({
   isLogin,
   formData,
@@ -46,6 +47,7 @@ const LoginForm = ({ data, loading, onChange, onSubmit, onKeyPress }) => (
         onKeyPress={(e) => onKeyPress(e, onSubmit)}
         className="w-full px-4 py-3 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
         placeholder="student@example.com"
+        disabled={loading}
       />
     </div>
 
@@ -59,6 +61,7 @@ const LoginForm = ({ data, loading, onChange, onSubmit, onKeyPress }) => (
         onKeyPress={(e) => onKeyPress(e, onSubmit)}
         className="w-full px-4 py-3 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
         placeholder="••••••••"
+        disabled={loading}
       />
     </div>
 
@@ -69,20 +72,39 @@ const LoginForm = ({ data, loading, onChange, onSubmit, onKeyPress }) => (
 const RegisterForm = ({ data, loading, onChange, onSubmit, onKeyPress }) => (
   <div>
     <div className="mb-4">
-      <label className="block text-gray-300 mb-2">Full Name (الاسم الكامل)</label>
+      <label className="block text-gray-300 mb-2">
+        Full Name <span className="text-red-400">*</span>
+      </label>
       <input
         type="text"
         required
         value={data.name}
         onChange={(e) => onChange('name', e.target.value)}
         className="w-full px-4 py-3 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
-        placeholder="Enter your name / أدخل اسمك"
-        dir="auto"
+        placeholder="Enter your name"
+        disabled={loading}
       />
     </div>
 
     <div className="mb-4">
-      <label className="block text-gray-300 mb-2">Email</label>
+      <label className="block text-gray-300 mb-2">
+        Arabic Name (الاسم بالعربية) <span className="text-gray-500 text-sm">(Optional)</span>
+      </label>
+      <input
+        type="text"
+        value={data.arabicName || ''}
+        onChange={(e) => onChange('arabicName', e.target.value)}
+        className="w-full px-4 py-3 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+        placeholder="أدخل اسمك بالعربية"
+        dir="rtl"
+        disabled={loading}
+      />
+    </div>
+
+    <div className="mb-4">
+      <label className="block text-gray-300 mb-2">
+        Email <span className="text-red-400">*</span>
+      </label>
       <input
         type="email"
         required
@@ -90,11 +112,14 @@ const RegisterForm = ({ data, loading, onChange, onSubmit, onKeyPress }) => (
         onChange={(e) => onChange('email', e.target.value)}
         className="w-full px-4 py-3 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
         placeholder="student@example.com"
+        disabled={loading}
       />
     </div>
 
     <div className="mb-4">
-      <label className="block text-gray-300 mb-2">Password</label>
+      <label className="block text-gray-300 mb-2">
+        Password <span className="text-red-400">*</span>
+      </label>
       <input
         type="password"
         required
@@ -102,11 +127,15 @@ const RegisterForm = ({ data, loading, onChange, onSubmit, onKeyPress }) => (
         onChange={(e) => onChange('password', e.target.value)}
         className="w-full px-4 py-3 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
         placeholder="••••••••"
+        disabled={loading}
       />
+      <p className="text-gray-400 text-xs mt-1">Minimum 8 characters</p>
     </div>
 
     <div className="mb-6">
-      <label className="block text-gray-300 mb-2">Confirm Password</label>
+      <label className="block text-gray-300 mb-2">
+        Confirm Password <span className="text-red-400">*</span>
+      </label>
       <input
         type="password"
         required
@@ -115,6 +144,7 @@ const RegisterForm = ({ data, loading, onChange, onSubmit, onKeyPress }) => (
         onKeyPress={(e) => onKeyPress(e, onSubmit)}
         className="w-full px-4 py-3 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
         placeholder="••••••••"
+        disabled={loading}
       />
     </div>
 

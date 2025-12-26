@@ -1,9 +1,9 @@
-"use client"
+'use client'
 import { useState, useEffect } from 'react';
 import HomePage from './HomePage/Page';
 import AuthPage from './AuthPage/Page';
 import DashboardPage from './Dashboard/Page';
-import { appwriteAuth } from '../lib/appwrite';
+import { adminUserManagement } from '../lib/appwrite';
 
 const App = () => {
   const [currentPage, setCurrentPage] = useState('home');
