@@ -101,3 +101,4 @@ const HomePage = ({ onNavigate }) => {
 };
 
 export default HomePage;
+

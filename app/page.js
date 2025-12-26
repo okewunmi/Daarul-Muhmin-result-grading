@@ -3,27 +3,31 @@ import { useState, useEffect } from 'react';
 import HomePage from './HomePage/Page';
 import AuthPage from './AuthPage/Page';
 import DashboardPage from './Dashboard/Page';
-import { adminUserManagement } from '../lib/appwrite';
+import { appwriteAuth  } from '../lib/appwrite';
 
-const App = () => {
-  const [currentPage, setCurrentPage] = useState('home');
+export default function App() {
+  const [currentPage, setCurrentPage] = useState('auth'); // 'auth', 'home', 'dashboard'
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Check if user is already logged in
+  // Check if user is already logged in (from localStorage)
   useEffect(() => {
     checkCurrentUser();
   }, []);
 
   const checkCurrentUser = async () => {
     try {
+      // Check localStorage for saved user session
       const currentUser = await appwriteAuth.getCurrentUser();
       if (currentUser) {
         setUser(currentUser);
         setCurrentPage('dashboard');
+      } else {
+        setCurrentPage('auth');
       }
     } catch (error) {
       console.error('Error checking current user:', error);
+      setCurrentPage('auth');
     } finally {
       setLoading(false);
     }
@@ -31,41 +35,57 @@ const App = () => {
 
   const handleLogin = (userData) => {
     setUser(userData);
+    // Save user to localStorage for persistence
+    localStorage.setItem('user', JSON.stringify(userData));
     setCurrentPage('dashboard');
   };
 
   const handleLogout = async () => {
-    const result = await appwriteAuth.logout();
-    if (result.success) {
-      setUser(null);
-      setCurrentPage('home');
-    }
+    await appwriteAuth.logout();
+    setUser(null);
+    setCurrentPage('auth');
   };
 
+  const handleNavigate = (page) => {
+    setCurrentPage(page);
+  };
+
+  // Show loading state
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900 flex items-center justify-center">
-        <div className="text-white text-xl">Loading...</div>
+        <div className="text-center">
+          <div className="w-16 h-16 border-4 border-green-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-white text-xl">Loading...</p>
+        </div>
       </div>
     );
   }
 
-  const renderPage = () => {
-    switch (currentPage) {
-      case 'dashboard':
-        return user ? (
-          <DashboardPage user={user} onLogout={handleLogout} />
-        ) : (
-          <HomePage onNavigate={setCurrentPage} />
-        );
-      case 'auth':
-        return <AuthPage onNavigate={setCurrentPage} onLogin={handleLogin} />;
-      default:
-        return <HomePage onNavigate={setCurrentPage} />;
-    }
-  };
+  // Render appropriate page based on currentPage state
+  return (
+    <>
+      {currentPage === 'auth' && (
+        <AuthPage 
+          onNavigate={handleNavigate}
+          onLogin={handleLogin}
+        />
+      )}
 
-  return renderPage();
-};
+      {currentPage === 'home' && (
+        <HomePage 
+          onNavigate={handleNavigate}
+          user={user}
+        />
+      )}
 
-export default App;
+      {currentPage === 'dashboard' && user && (
+        <DashboardPage 
+          user={user}
+          onLogout={handleLogout}
+          onNavigate={handleNavigate}
+        />
+      )}
+    </>
+  );
+}
