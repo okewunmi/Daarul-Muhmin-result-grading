@@ -1,16 +1,13 @@
-
-export const MessageAlert = ({ message, type }) => {
+const MessageAlert = ({ message, type }) => {
   if (!message) return null;
-
-  const styles = {
-    success: 'bg-green-500 bg-opacity-20 border-green-500 text-green-300',
-    error: 'bg-red-500 bg-opacity-20 border-red-500 text-red-300',
-    info: 'bg-blue-500 bg-opacity-20 border-blue-500 text-blue-300'
-  };
-
+  
   return (
-    <div className={`mb-4 p-3 rounded-lg border ${styles[type] || styles.info}`}>
-      <p className="text-sm">{message}</p>
+    <div className={`mb-4 p-3 rounded-lg text-sm sm:text-base ${
+      type === 'success'
+        ? 'bg-green-600 bg-opacity-20 text-green-300 border border-green-500'
+        : 'bg-red-600 bg-opacity-20 text-red-300 border border-red-500'
+    }`}>
+      {message}
     </div>
   );
 };

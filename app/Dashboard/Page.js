@@ -1,127 +1,176 @@
-const DashboardPage = ({ user, onLogout, onNavigate }) => {
+const DashboardPage = ({ user, onLogout, onNavigate, isDark, setIsDark }) => {
+  const [activeTab, setActiveTab] = useState('home');
+
+  const navItems = [
+    { id: 'home', label: 'Home', icon: Home },
+    { id: 'grades', label: 'Grades', icon: BarChart },
+    { id: 'profile', label: 'Profile', icon: User },
+    { id: 'settings', label: 'Settings', icon: Settings }
+  ];
+
   return (
-    <div className="min-h-screen bg-gray-900 text-white">
+    <div className={`min-h-screen ${isDark ? 'bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900' : 'bg-gradient-to-br from-blue-50 via-white to-green-50'}`}>
       {/* Header */}
-      <header className="bg-gray-800 border-b border-gray-700">
-        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <div className="flex items-center space-x-4">
-            <div className="w-10 h-10 bg-green-600 rounded-full flex items-center justify-center">
-              <span className="text-xl font-bold">
-                {user.fullName.charAt(0).toUpperCase()}
-              </span>
+      <header className="bg-gray-800 bg-opacity-50 backdrop-blur-lg border-b border-gray-700">
+        <div className="container mx-auto px-4 py-3 sm:py-4">
+          <div className="flex flex-col sm:flex-row justify-between items-center gap-3">
+            <div className="flex items-center space-x-3">
+              <div className="p-2 bg-green-600 rounded-lg">
+                <BookOpen className="text-white w-6 h-6" />
+              </div>
+              <div>
+                <h1 className="text-base sm:text-lg font-bold text-white">
+                  Daarul Muhmin Institute
+                </h1>
+                <p className="text-xs sm:text-sm text-gray-300">Student Portal</p>
+              </div>
             </div>
-            <div>
-              <h2 className="font-semibold">{user.fullName}</h2>
-              {user.arabicName && (
-                <p className="text-sm text-gray-400" dir="rtl">{user.arabicName}</p>
-              )}
+            
+            <div className="flex items-center gap-2 sm:gap-3">
+              <button
+                onClick={() => setIsDark(!isDark)}
+                className={`p-2 rounded-lg ${isDark ? 'bg-gray-700 text-yellow-400' : 'bg-white text-gray-700'} shadow-lg transition-all hover:scale-110`}
+              >
+                {isDark ? <Sun size={18} /> : <Moon size={18} />}
+              </button>
+              
+              <button
+                onClick={onLogout}
+                className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-red-600 hover:bg-red-700 rounded-lg transition-colors text-white text-sm"
+              >
+                <LogOut size={16} />
+                <span className="hidden sm:inline">Logout</span>
+              </button>
             </div>
-          </div>
-          
-          <div className="flex items-center space-x-4">
-            <button
-              onClick={() => onNavigate('home')}
-              className="px-4 py-2 text-gray-300 hover:text-white transition-colors"
-            >
-              Home
-            </button>
-            <button
-              onClick={onLogout}
-              className="px-4 py-2 bg-red-600 hover:bg-red-700 rounded-lg transition-colors"
-            >
-              Logout
-            </button>
           </div>
         </div>
       </header>
 
-      {/* Main Content */}
-      <main className="container mx-auto px-4 py-8">
-        <div className="mb-8">
-          <h1 className="text-4xl font-bold mb-2">Dashboard</h1>
-          <p className="text-gray-400">Welcome back, {user.fullName}</p>
-        </div>
-
-        {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <div className="bg-gray-800 rounded-xl p-6 border border-gray-700">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-semibold">My Courses</h3>
-              <span className="text-3xl">📚</span>
-            </div>
-            <p className="text-3xl font-bold text-green-500">0</p>
-            <p className="text-gray-400 text-sm mt-2">Enrolled courses</p>
-          </div>
-
-          <div className="bg-gray-800 rounded-xl p-6 border border-gray-700">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-semibold">Assignments</h3>
-              <span className="text-3xl">📝</span>
-            </div>
-            <p className="text-3xl font-bold text-yellow-500">0</p>
-            <p className="text-gray-400 text-sm mt-2">Pending submissions</p>
-          </div>
-
-          <div className="bg-gray-800 rounded-xl p-6 border border-gray-700">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-semibold">Progress</h3>
-              <span className="text-3xl">📊</span>
-            </div>
-            <p className="text-3xl font-bold text-blue-500">0%</p>
-            <p className="text-gray-400 text-sm mt-2">Overall completion</p>
-          </div>
-        </div>
-
-        {/* Profile Section */}
-        <div className="bg-gray-800 rounded-xl p-6 border border-gray-700">
-          <h2 className="text-2xl font-bold mb-6">Profile Information</h2>
-          
-          <div className="space-y-4">
-            <div>
-              <label className="text-gray-400 text-sm">Full Name</label>
-              <p className="text-lg">{user.fullName}</p>
-            </div>
-
-            {user.arabicName && (
-              <div>
-                <label className="text-gray-400 text-sm">Arabic Name</label>
-                <p className="text-lg" dir="rtl">{user.arabicName}</p>
-              </div>
-            )}
-
-            <div>
-              <label className="text-gray-400 text-sm">Email</label>
-              <p className="text-lg">{user.email}</p>
-            </div>
-
-            <div>
-              <label className="text-gray-400 text-sm">Student ID</label>
-              <p className="text-lg font-mono text-sm">{user.$id}</p>
-            </div>
-          </div>
-
-          <div className="mt-6 pt-6 border-t border-gray-700">
-            <button className="px-6 py-2 bg-green-600 hover:bg-green-700 rounded-lg transition-colors">
-              Edit Profile
+      {/* Mobile Navigation */}
+      <nav className="sm:hidden bg-gray-800 bg-opacity-50 border-b border-gray-700">
+        <div className="flex justify-around">
+          {navItems.map(item => (
+            <button
+              key={item.id}
+              onClick={() => setActiveTab(item.id)}
+              className={`flex-1 py-3 flex flex-col items-center gap-1 transition-colors ${
+                activeTab === item.id
+                  ? 'text-green-400 border-b-2 border-green-400'
+                  : 'text-gray-400 hover:text-white'
+              }`}
+            >
+              <item.icon size={20} />
+              <span className="text-xs">{item.label}</span>
             </button>
-          </div>
+          ))}
         </div>
+      </nav>
 
-        {/* Quick Actions */}
-        <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="bg-gray-800 rounded-xl p-6 border border-gray-700 hover:border-green-500 transition-colors cursor-pointer">
-            <h3 className="text-xl font-semibold mb-2">Browse Courses</h3>
-            <p className="text-gray-400">Explore available courses and enroll</p>
-          </div>
+      <div className="container mx-auto px-4 py-6 sm:py-8">
+        <div className="flex flex-col sm:flex-row gap-6">
+          {/* Desktop Sidebar */}
+          <aside className="hidden sm:block w-64 bg-gray-800 bg-opacity-50 backdrop-blur-lg rounded-xl p-4">
+            {navItems.map(item => (
+              <button
+                key={item.id}
+                onClick={() => setActiveTab(item.id)}
+                className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg mb-2 transition-all ${
+                  activeTab === item.id
+                    ? 'bg-green-600 text-white'
+                    : 'text-gray-300 hover:bg-gray-700'
+                }`}
+              >
+                <item.icon size={20} />
+                {item.label}
+              </button>
+            ))}
+          </aside>
 
-          <div className="bg-gray-800 rounded-xl p-6 border border-gray-700 hover:border-green-500 transition-colors cursor-pointer">
-            <h3 className="text-xl font-semibold mb-2">View Schedule</h3>
-            <p className="text-gray-400">Check your class timetable</p>
-          </div>
+          {/* Main Content */}
+          <main className="flex-1">
+            <div className={`${isDark ? 'bg-gray-800 bg-opacity-50' : 'bg-white'} backdrop-blur-lg rounded-xl shadow-2xl p-4 sm:p-8`}>
+              {activeTab === 'home' && (
+                <div>
+                  <h2 className={`text-2xl sm:text-3xl font-bold mb-4 ${isDark ? 'text-white' : 'text-gray-800'}`}>
+                    Welcome, {user.name}!
+                  </h2>
+                  <p className={`text-lg sm:text-xl mb-2 ${isDark ? 'text-green-400' : 'text-green-600'}`}>
+                    {user.arabicName}
+                  </p>
+                  
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
+                    <div className={`p-4 sm:p-6 rounded-lg ${isDark ? 'bg-blue-600 bg-opacity-20' : 'bg-blue-50'} border ${isDark ? 'border-blue-500' : 'border-blue-200'}`}>
+                      <h3 className={`text-base sm:text-lg font-bold mb-2 ${isDark ? 'text-white' : 'text-gray-800'}`}>Enrolled Courses</h3>
+                      <p className={`text-2xl sm:text-3xl font-bold ${isDark ? 'text-blue-400' : 'text-blue-600'}`}>6</p>
+                    </div>
+                    
+                    <div className={`p-4 sm:p-6 rounded-lg ${isDark ? 'bg-green-600 bg-opacity-20' : 'bg-green-50'} border ${isDark ? 'border-green-500' : 'border-green-200'}`}>
+                      <h3 className={`text-base sm:text-lg font-bold mb-2 ${isDark ? 'text-white' : 'text-gray-800'}`}>Average Grade</h3>
+                      <p className={`text-2xl sm:text-3xl font-bold ${isDark ? 'text-green-400' : 'text-green-600'}`}>85%</p>
+                    </div>
+                    
+                    <div className={`p-4 sm:p-6 rounded-lg ${isDark ? 'bg-purple-600 bg-opacity-20' : 'bg-purple-50'} border ${isDark ? 'border-purple-500' : 'border-purple-200'}`}>
+                      <h3 className={`text-base sm:text-lg font-bold mb-2 ${isDark ? 'text-white' : 'text-gray-800'}`}>Attendance</h3>
+                      <p className={`text-2xl sm:text-3xl font-bold ${isDark ? 'text-purple-400' : 'text-purple-600'}`}>92%</p>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {activeTab === 'grades' && (
+                <div>
+                  <h2 className={`text-xl sm:text-2xl font-bold mb-6 ${isDark ? 'text-white' : 'text-gray-800'}`}>
+                    My Grades
+                  </h2>
+                  <div className={`${isDark ? 'bg-yellow-600 bg-opacity-20' : 'bg-yellow-50'} border ${isDark ? 'border-yellow-500' : 'border-yellow-200'} rounded-lg p-4 text-center`}>
+                    <p className={`text-base sm:text-lg ${isDark ? 'text-yellow-300' : 'text-yellow-700'}`}>
+                      📊 Grade view coming soon...
+                    </p>
+                  </div>
+                </div>
+              )}
+
+              {activeTab === 'profile' && (
+                <div>
+                  <h2 className={`text-xl sm:text-2xl font-bold mb-6 ${isDark ? 'text-white' : 'text-gray-800'}`}>
+                    My Profile
+                  </h2>
+                  <div className="space-y-4">
+                    <div>
+                      <label className={`block text-sm font-medium mb-1 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>Name</label>
+                      <p className={`p-3 rounded-lg ${isDark ? 'bg-gray-700 text-white' : 'bg-gray-100 text-gray-800'}`}>{user.name}</p>
+                    </div>
+                    <div>
+                      <label className={`block text-sm font-medium mb-1 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>Arabic Name</label>
+                      <p className={`p-3 rounded-lg ${isDark ? 'bg-gray-700 text-white' : 'bg-gray-100 text-gray-800'}`} dir="rtl">{user.arabicName}</p>
+                    </div>
+                    <div>
+                      <label className={`block text-sm font-medium mb-1 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>Email</label>
+                      <p className={`p-3 rounded-lg ${isDark ? 'bg-gray-700 text-white' : 'bg-gray-100 text-gray-800'}`}>{user.email}</p>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {activeTab === 'settings' && (
+                <div>
+                  <h2 className={`text-xl sm:text-2xl font-bold mb-6 ${isDark ? 'text-white' : 'text-gray-800'}`}>
+                    Settings
+                  </h2>
+                  <div className={`${isDark ? 'bg-blue-600 bg-opacity-20' : 'bg-blue-50'} border ${isDark ? 'border-blue-500' : 'border-blue-200'} rounded-lg p-4 text-center`}>
+                    <p className={`text-base sm:text-lg ${isDark ? 'text-blue-300' : 'text-blue-700'}`}>
+                      ⚙️ Settings panel coming soon...
+                    </p>
+                  </div>
+                </div>
+              )}
+            </div>
+          </main>
         </div>
-      </main>
+      </div>
     </div>
   );
 };
+
 
 export default DashboardPage;
