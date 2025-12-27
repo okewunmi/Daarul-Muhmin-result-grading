@@ -36,7 +36,7 @@ export const AuthForm = ({
 };
 
 
-const LoginForm = ({ data, loading, onChange, onSubmit, onKeyPress }) => (
+export const LoginForm = ({ data, loading, onChange, onSubmit, onKeyPress }) => (
   <div>
     <div className="mb-4">
       <label className="block text-gray-300 mb-2 text-sm sm:text-base">Email</label>
@@ -76,7 +76,7 @@ const LoginForm = ({ data, loading, onChange, onSubmit, onKeyPress }) => (
   </div>
 );
 
-const RegisterForm = ({ data, loading, onChange, onSubmit, onKeyPress }) => (
+export const RegisterForm = ({ data, loading, onChange, onSubmit, onKeyPress }) => (
   <div>
     <div className="mb-4">
       <label className="block text-gray-300 mb-2 text-sm sm:text-base">
