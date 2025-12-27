@@ -1,4 +1,4 @@
-const MessageAlert = ({ message, type }) => {
+export const MessageAlert = ({ message, type }) => {
   if (!message) return null;
   
   return (
@@ -11,3 +11,4 @@ const MessageAlert = ({ message, type }) => {
     </div>
   );
 };
+

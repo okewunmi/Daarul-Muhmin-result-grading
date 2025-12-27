@@ -98,5 +98,6 @@ const HomePage = ({ onNavigate, isDark, setIsDark }) => {
   );
 };
 
+
 export default HomePage;
 

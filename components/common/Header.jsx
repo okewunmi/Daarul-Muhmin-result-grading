@@ -1,7 +1,7 @@
-import { BookOpen } from 'lucide-react';
+import { BookOpen , Sun, Moon} from 'lucide-react';
 import { ThemeToggle } from './ThemeToggle';
 
-const Header = ({ isDark, onThemeToggle, instituteName, arabicName }) => (
+export const Header = ({ isDark, onThemeToggle, instituteName, arabicName }) => (
   <header className="container mx-auto px-4 py-4 sm:py-6">
     <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
       <div className="flex items-center space-x-2 sm:space-x-3">

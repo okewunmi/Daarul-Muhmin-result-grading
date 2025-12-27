@@ -36,7 +36,7 @@ const AuthPage = ({ onNavigate, onLogin, isDark, setIsDark }) => {
       return;
     }
 
-    const result = await appwriteAuth.login(formData.email, formData.password);
+    const result = await adminUserManagement.login(formData.email, formData.password);
     
     setLoading(false);
     
@@ -60,7 +60,7 @@ const AuthPage = ({ onNavigate, onLogin, isDark, setIsDark }) => {
       return;
     }
 
-    const result = await appwriteAuth.createUser(
+    const result = await adminUserManagement.createUser(
       formData.name,
       formData.arabicName,
       formData.email,
@@ -157,6 +157,7 @@ const AuthPage = ({ onNavigate, onLogin, isDark, setIsDark }) => {
     </div>
   );
 };
+
 
 export default AuthPage;
 
