@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { BookOpen , Sun, Moon} from 'lucide-react';
 import { AuthToggle } from '../../components/auth/AuthToggle';
-import { AuthForm } from '../../components/auth/AuthForm';
+import { LoginForm, RegisterForm } from '../../components/auth/AuthForm';
 import { AuthForm } from '../../components/auth/AuthForm';
 import { MessageAlert } from '../../components/common/MessageAlert';
 import {adminUserManagement } from '../../lib/appwrite';
@@ -138,7 +138,7 @@ const AuthPage = ({ onNavigate, onLogin, isDark, setIsDark }) => {
           <MessageAlert message={message.text} type={message.type} />
 
           {isLogin ? (
-            <AuthForm 
+            <LoginForm 
               data={formData}
               loading={loading}
               onChange={handleChange}
@@ -146,7 +146,7 @@ const AuthPage = ({ onNavigate, onLogin, isDark, setIsDark }) => {
               onKeyPress={handleKeyPress}
             />
           ) : (
-            <AuthForm
+            <RegisterForm
               data={formData}
               loading={loading}
               onChange={handleChange}
