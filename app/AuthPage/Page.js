@@ -1,8 +1,9 @@
 'use client'
 import { useState } from 'react';
-import { BookOpen } from 'lucide-react';
+import { BookOpen , Sun, Moon} from 'lucide-react';
 import { AuthToggle } from '../../components/auth/AuthToggle';
 import { AuthForm } from '../../components/auth/AuthForm';
+import { MessageAlert } from '../../components/common/MessageAlert';
 import {adminUserManagement } from '../../lib/appwrite';
 
 const AuthPage = ({ onNavigate, onLogin, isDark, setIsDark }) => {
@@ -136,7 +137,7 @@ const AuthPage = ({ onNavigate, onLogin, isDark, setIsDark }) => {
           <MessageAlert message={message.text} type={message.type} />
 
           {isLogin ? (
-            <LoginForm
+            <AuthForm 
               data={formData}
               loading={loading}
               onChange={handleChange}
@@ -144,7 +145,7 @@ const AuthPage = ({ onNavigate, onLogin, isDark, setIsDark }) => {
               onKeyPress={handleKeyPress}
             />
           ) : (
-            <RegisterForm
+            <AuthForm
               data={formData}
               loading={loading}
               onChange={handleChange}
