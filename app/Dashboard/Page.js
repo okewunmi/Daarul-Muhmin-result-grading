@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import { 
   Sun, Moon, BookOpen, Calendar, GraduationCap, Users, Settings, 
-  Plus, LogOut, Edit2, Trash2, Eye, X, Check, BookA
+  Plus, LogOut, Edit2, Trash2, Eye, X, Check, BookA, FileText, Printer, Download
 } from 'lucide-react';
 import { 
   academicSessionsManager,
@@ -97,6 +97,365 @@ const EmptyState = ({ icon: Icon, title, description, action }) => (
     {action}
   </div>
 );
+
+const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subjects }) => {
+  const [reportData, setReportData] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (student && isOpen) {
+      loadReportCardData();
+    }
+  }, [student, isOpen]);
+
+  const loadReportCardData = async () => {
+    setLoading(true);
+    try {
+      // Get student's results
+      const resultsResponse = await resultsManager.getByStudent(student.$id);
+      
+      // Get all students in the same class to calculate position
+      const classStudentsResponse = await studentsManager.getByClass(student.classId);
+      
+      if (resultsResponse.success && classStudentsResponse.success) {
+        // Calculate student's total score and average
+        const results = resultsResponse.results;
+        const totalScore = results.reduce((sum, r) => sum + r.score, 0);
+        const average = results.length > 0 ? (totalScore / results.length).toFixed(2) : 0;
+        
+        // Calculate class position
+        const classPosition = await calculateClassPosition(
+          student.$id, 
+          classStudentsResponse.students
+        );
+        
+        setReportData({
+          results,
+          totalScore,
+          average,
+          classPosition,
+          totalStudents: classStudentsResponse.students.length
+        });
+      }
+    } catch (error) {
+      console.error('Error loading report card:', error);
+      alert('Failed to load report card data');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const calculateClassPosition = async (studentId, classStudents) => {
+    try {
+      // Get results for all students in the class
+      const studentsWithScores = await Promise.all(
+        classStudents.map(async (s) => {
+          const res = await resultsManager.getByStudent(s.$id);
+          const total = res.success 
+            ? res.results.reduce((sum, r) => sum + r.score, 0) 
+            : 0;
+          return { studentId: s.$id, totalScore: total };
+        })
+      );
+
+      // Sort by total score (highest first)
+      studentsWithScores.sort((a, b) => b.totalScore - a.totalScore);
+      
+      // Find position
+      const position = studentsWithScores.findIndex(s => s.studentId === studentId) + 1;
+      return position;
+    } catch (error) {
+      console.error('Error calculating position:', error);
+      return 0;
+    }
+  };
+
+  const handlePrint = () => {
+    window.print();
+  };
+
+  const getPositionSuffix = (position) => {
+    if (position === 1) return 'st';
+    if (position === 2) return 'nd';
+    if (position === 3) return 'rd';
+    return 'th';
+  };
+
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4">
+      <div className="bg-white rounded-xl shadow-2xl w-full max-w-4xl max-h-[95vh] overflow-y-auto">
+        {/* Print/Close Buttons - Hide on print */}
+        <div className="flex justify-end gap-2 p-4 print:hidden bg-gray-100">
+          <button
+            onClick={handlePrint}
+            className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+          >
+            <Printer size={18} />
+            Print Report Card
+          </button>
+          <button
+            onClick={onClose}
+            className="flex items-center gap-2 px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors"
+          >
+            <X size={18} />
+            Close
+          </button>
+        </div>
+
+        {loading && (
+          <div className="flex justify-center items-center py-12">
+            <div className="w-12 h-12 border-4 border-green-500 border-t-transparent rounded-full animate-spin"></div>
+          </div>
+        )}
+
+        {!loading && reportData && (
+          <div className="p-8 print:p-6">
+            {/* Report Card Content */}
+            <div className="border-4 border-green-600 rounded-lg p-6">
+              {/* Header */}
+              <div className="text-center mb-6 border-b-2 border-gray-300 pb-4">
+                <h1 className="text-3xl font-bold text-green-700 mb-2">
+                  Daarul Muhmin Institute
+                </h1>
+                <h2 className="text-2xl font-bold text-green-600 mb-3" dir="rtl">
+                  معهد دار المؤمن للدراسات العربية والإسلامية
+                </h2>
+                <p className="text-lg font-semibold text-gray-700">
+                  Academic Report Card - التقرير الأكاديمي
+                </p>
+              </div>
+
+              {/* Student Information */}
+              <div className="grid grid-cols-2 gap-4 mb-6 bg-gray-50 p-4 rounded-lg">
+                <div>
+                  <p className="text-sm text-gray-600 mb-1">Student Name:</p>
+                  <p className="font-bold text-lg">{student.fullName}</p>
+                </div>
+                <div dir="rtl">
+                  <p className="text-sm text-gray-600 mb-1">اسم الطالب:</p>
+                  <p className="font-bold text-lg">{student.arabicName || student.fullName}</p>
+                </div>
+                
+                <div>
+                  <p className="text-sm text-gray-600 mb-1">Academic Session:</p>
+                  <p className="font-bold">{session?.sessionName}</p>
+                </div>
+                <div dir="rtl">
+                  <p className="text-sm text-gray-600 mb-1">السنة الدراسية:</p>
+                  <p className="font-bold">{session?.sessionNameArabic || session?.sessionName}</p>
+                </div>
+
+                <div>
+                  <p className="text-sm text-gray-600 mb-1">Class:</p>
+                  <p className="font-bold">{classInfo?.className}</p>
+                </div>
+                <div dir="rtl">
+                  <p className="text-sm text-gray-600 mb-1">الصف:</p>
+                  <p className="font-bold">{classInfo?.classNameArabic || classInfo?.className}</p>
+                </div>
+
+                <div>
+                  <p className="text-sm text-gray-600 mb-1">Gender:</p>
+                  <p className="font-bold">{student.gender}</p>
+                </div>
+                <div dir="rtl">
+                  <p className="text-sm text-gray-600 mb-1">الجنس:</p>
+                  <p className="font-bold">{student.gender === 'Male' ? 'ذكر' : 'أنثى'}</p>
+                </div>
+
+                <div>
+                  <p className="text-sm text-gray-600 mb-1">Number of Students:</p>
+                  <p className="font-bold">{reportData.totalStudents}</p>
+                </div>
+                <div dir="rtl">
+                  <p className="text-sm text-gray-600 mb-1">عدد الطلاب:</p>
+                  <p className="font-bold">{reportData.totalStudents}</p>
+                </div>
+
+                <div>
+                  <p className="text-sm text-gray-600 mb-1">Position in Class:</p>
+                  <p className="font-bold text-green-600 text-xl">
+                    {reportData.classPosition}{getPositionSuffix(reportData.classPosition)}
+                  </p>
+                </div>
+                <div dir="rtl">
+                  <p className="text-sm text-gray-600 mb-1">الترتيب في الصف:</p>
+                  <p className="font-bold text-green-600 text-xl">
+                    {reportData.classPosition}
+                  </p>
+                </div>
+              </div>
+
+              {/* Grades Table */}
+              <div className="mb-6">
+                <h3 className="text-xl font-bold text-center mb-4 text-gray-800">
+                  Academic Performance - الأداء الأكاديمي
+                </h3>
+                
+                <table className="w-full border-collapse border-2 border-gray-300">
+                  <thead>
+                    <tr className="bg-green-600 text-white">
+                      <th className="border border-gray-300 p-2 text-left">Subject<br/>المادة</th>
+                      <th className="border border-gray-300 p-2">Max Score<br/>النهاية العظمى</th>
+                      <th className="border border-gray-300 p-2">Score<br/>الدرجة</th>
+                      <th className="border border-gray-300 p-2">Grade<br/>التقدير</th>
+                      <th className="border border-gray-300 p-2">Remark<br/>الملاحظة</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {subjects.map((subject) => {
+                      const result = reportData.results.find(r => r.subjectId === subject.$id);
+                      const gradeInfo = result ? gradingSystem.calculateGrade(result.score) : null;
+                      
+                      return (
+                        <tr key={subject.$id} className="hover:bg-gray-50">
+                          <td className="border border-gray-300 p-2">
+                            <div>{subject.englishName}</div>
+                            <div className="text-sm text-gray-600" dir="rtl">{subject.arabicName}</div>
+                          </td>
+                          <td className="border border-gray-300 p-2 text-center font-bold">
+                            100
+                          </td>
+                          <td className="border border-gray-300 p-2 text-center font-bold text-lg">
+                            {result ? result.score : '-'}
+                          </td>
+                          <td className="border border-gray-300 p-2 text-center" dir="rtl">
+                            <div className="font-bold text-green-700">{gradeInfo?.arabic || '-'}</div>
+                            <div className="text-sm text-gray-600">{gradeInfo?.english || '-'}</div>
+                          </td>
+                          <td className="border border-gray-300 p-2 text-center" dir="rtl">
+                            <span className={`font-bold ${
+                              gradeInfo?.remarkArabic === 'نجح' ? 'text-green-600' : 'text-red-600'
+                            }`}>
+                              {gradeInfo?.remarkArabic || '-'}
+                            </span>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                    
+                    {/* Total Row */}
+                    <tr className="bg-gray-100 font-bold">
+                      <td className="border border-gray-300 p-2">
+                        Total / المجموع
+                      </td>
+                      <td className="border border-gray-300 p-2 text-center">
+                        {subjects.length * 100}
+                      </td>
+                      <td className="border border-gray-300 p-2 text-center text-lg text-green-700">
+                        {reportData.totalScore}
+                      </td>
+                      <td className="border border-gray-300 p-2 text-center" colSpan="2">
+                        Average: {reportData.average}%
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              {/* Teacher's Comments */}
+              <div className="mb-6 p-4 bg-gray-50 rounded-lg">
+                <h4 className="font-bold mb-2">Class Teacher's Remarks - ملاحظات معلم الصف</h4>
+                <div className="min-h-[60px] border-b-2 border-gray-300 pb-2">
+                  {/* This can be filled from results if you add classTeacherRemark */}
+                  <p className="text-gray-600 italic">
+                    {reportData.results[0]?.classTeacherRemark || 'Keep up the good work!'}
+                  </p>
+                </div>
+              </div>
+
+              {/* Grading Scale */}
+              <div className="mb-6">
+                <h4 className="font-bold mb-3 text-center">Grading Scale - مقياس التقديرات</h4>
+                <div className="grid grid-cols-5 gap-2 text-sm">
+                  <div className="text-center p-2 bg-green-100 rounded">
+                    <div className="font-bold">90-100</div>
+                    <div>Excellent</div>
+                    <div dir="rtl">ممتاز</div>
+                  </div>
+                  <div className="text-center p-2 bg-blue-100 rounded">
+                    <div className="font-bold">80-89</div>
+                    <div>Very Good</div>
+                    <div dir="rtl">جيد جداً</div>
+                  </div>
+                  <div className="text-center p-2 bg-yellow-100 rounded">
+                    <div className="font-bold">60-79</div>
+                    <div>Good</div>
+                    <div dir="rtl">جيد</div>
+                  </div>
+                  <div className="text-center p-2 bg-orange-100 rounded">
+                    <div className="font-bold">50-59</div>
+                    <div>Pass</div>
+                    <div dir="rtl">مقبول</div>
+                  </div>
+                  <div className="text-center p-2 bg-red-100 rounded">
+                    <div className="font-bold">0-49</div>
+                    <div>Fail</div>
+                    <div dir="rtl">راسب</div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Signatures */}
+              <div className="grid grid-cols-3 gap-8 mt-8 pt-6 border-t-2 border-gray-300">
+                <div className="text-center">
+                  <div className="border-t-2 border-gray-400 pt-2 mt-12">
+                    <p className="font-semibold">Class Teacher</p>
+                    <p className="text-sm" dir="rtl">معلم الصف</p>
+                  </div>
+                </div>
+                <div className="text-center">
+                  <div className="border-t-2 border-gray-400 pt-2 mt-12">
+                    <p className="font-semibold">Principal</p>
+                    <p className="text-sm" dir="rtl">المدير</p>
+                  </div>
+                </div>
+                <div className="text-center">
+                  <div className="border-t-2 border-gray-400 pt-2 mt-12">
+                    <p className="font-semibold">Date</p>
+                    <p className="text-sm" dir="rtl">التاريخ</p>
+                    <p className="text-sm mt-1">{new Date().toLocaleDateString()}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Print Styles */}
+      <style jsx>{`
+        @media print {
+          body * {
+            visibility: hidden;
+          }
+          .fixed.inset-0 * {
+            visibility: visible;
+          }
+          .fixed.inset-0 {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: auto;
+            background: white;
+          }
+          .print\\:hidden {
+            display: none !important;
+          }
+          @page {
+            margin: 0.5cm;
+            size: A4;
+          }
+        }
+      `}</style>
+    </div>
+  );
+};
+
+
 // ============================================
 // MODAL COMPONENTS - SESSION & CLASS
 // ============================================
@@ -262,173 +621,7 @@ const ClassModal = ({ isOpen, onClose, onSave, sessionId, editingClass }) => {
 // MODAL COMPONENTS - STUDENT & SUBJECT
 // ============================================
 
-// // Student Modal (Create & Edit)
-// const StudentModal = ({ isOpen, onClose, onSave, classId, sessionId, editingStudent }) => {
-//   const [formData, setFormData] = useState({
-//     fullName: '',
-//     arabicName: '',
-//     // email: '',
-//     // registrationNumber: '',
-//     gender: 'Male',
-//     // dateOfBirth: '',
-//     // parentName: '',
-//     // parentNameArabic: '',
-//     // parentPhone: '',
-//     // parentEmail: '',
-//     // address: '',
-//     // addressArabic: ''
-//   });
-
-//   useEffect(() => {
-//     if (editingStudent) {
-//       setFormData({
-//         fullName: editingStudent.fullName || '',
-//         arabicName: editingStudent.arabicName || '',
-//         // email: editingStudent.email || '',
-//         // registrationNumber: editingStudent.registrationNumber || '',
-//         gender: editingStudent.gender || 'Male',
-//         // dateOfBirth: editingStudent.dateOfBirth || '',
-//         // parentName: editingStudent.parentName || '',
-//         // parentNameArabic: editingStudent.parentNameArabic || '',
-//         // parentPhone: editingStudent.parentPhone || '',
-//         // parentEmail: editingStudent.parentEmail || '',
-//         // address: editingStudent.address || '',
-//         // addressArabic: editingStudent.addressArabic || ''
-//       });
-//     } else {
-//       setFormData({
-//         fullName: '',
-//         arabicName: '',
-//         // email: '',
-//         // registrationNumber: '',
-//         gender: 'Male',
-//         // dateOfBirth: '',
-//         // parentName: '',
-//         // parentNameArabic: '',
-//         // parentPhone: '',
-//         // parentEmail: '',
-//         // address: '',
-//         // addressArabic: ''
-//       });
-//     }
-//   }, [editingStudent, isOpen]);
-
-//   const handleSubmit = () => {
-//     onSave({ 
-//       ...formData, 
-//       classId, 
-//       academicSessionId: sessionId,
-//       isActive: true 
-//     }, editingStudent?.$id);
-//     setFormData({
-//       fullName: '', arabicName: '', 
-//       gender: 'Male',
-//     });
-//     // setFormData({
-//     //   fullName: '', arabicName: '', email: '', registrationNumber: '', 
-//     //   gender: 'Male', dateOfBirth: '', parentName: '', parentNameArabic: '',
-//     //   parentPhone: '', parentEmail: '', address: '', addressArabic: ''
-//     // });
-//   };
-
-//   return (
-//     <Modal isOpen={isOpen} onClose={onClose} title={editingStudent ? "Edit Student - تعديل طالب" : "Add Student - إضافة طالب"} size="lg">
-//       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-//         <Input
-//           label="Full Name"
-//           value={formData.fullName}
-//           onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-//           placeholder="Enter full name"
-//           required
-//         />
-//         <Input
-//           label="Arabic Name - الاسم بالعربية"
-//           value={formData.arabicName}
-//           onChange={(e) => setFormData({ ...formData, arabicName: e.target.value })}
-//           placeholder="أدخل الاسم بالعربية"
-//           dir="rtl"
-//         />
-//         {/* <Input
-//           label="Registration Number"
-//           value={formData.registrationNumber}
-//           onChange={(e) => setFormData({ ...formData, registrationNumber: e.target.value })}
-//           placeholder="REG001"
-//           required
-//         /> */}
-//         {/* <Input
-//           label="Email"
-//           type="email"
-//           value={formData.email}
-//           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-//           placeholder="student@example.com"
-//         /> */}
-//         <div className="mb-4">
-//           <label className="block text-gray-300 mb-2 text-sm sm:text-base">Gender</label>
-//           <select
-//             value={formData.gender}
-//             onChange={(e) => setFormData({ ...formData, gender: e.target.value })}
-//             className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 text-sm sm:text-base"
-//           >
-//             <option value="Male">Male - ذكر</option>
-//             <option value="Female">Female - أنثى</option>
-//           </select>
-//         </div>
-//         {/* <Input
-//           label="Date of Birth"
-//           type="date"
-//           value={formData.dateOfBirth}
-//           onChange={(e) => setFormData({ ...formData, dateOfBirth: e.target.value })}
-//         /> */}
-//         {/* <Input
-//           label="Parent Name"
-//           value={formData.parentName}
-//           onChange={(e) => setFormData({ ...formData, parentName: e.target.value })}
-//           placeholder="Enter parent name"
-//         /> */}
-//         {/* <Input
-//           label="Parent Name (Arabic) - اسم ولي الأمر"
-//           value={formData.parentNameArabic}
-//           onChange={(e) => setFormData({ ...formData, parentNameArabic: e.target.value })}
-//           placeholder="اسم ولي الأمر"
-//           dir="rtl"
-//         /> */}
-//         {/* <Input
-//           label="Parent Phone"
-//           value={formData.parentPhone}
-//           onChange={(e) => setFormData({ ...formData, parentPhone: e.target.value })}
-//           placeholder="+234..."
-//         /> */}
-//         {/* <Input
-//           label="Parent Email"
-//           type="email"
-//           value={formData.parentEmail}
-//           onChange={(e) => setFormData({ ...formData, parentEmail: e.target.value })}
-//           placeholder="parent@example.com"
-//         /> */}
-//       </div>
-
-//       {/*<Input
-//         label="Address"
-//         value={formData.address}
-//         onChange={(e) => setFormData({ ...formData, address: e.target.value })}
-//         placeholder="Enter address"
-//       />
-//       <Input
-//         label="Address (Arabic) - العنوان"
-//         value={formData.addressArabic}
-//         onChange={(e) => setFormData({ ...formData, addressArabic: e.target.value })}
-//         placeholder="أدخل العنوان"
-//         dir="rtl"
-//       />*/}
-//       <div className="flex gap-3 mt-6">
-//         <Button onClick={handleSubmit} icon={Check}>
-//           {editingStudent ? 'Update Student' : 'Save Student'}
-//         </Button>
-//         <Button onClick={onClose} variant="secondary">Cancel</Button>
-//       </div>
-//     </Modal>
-//   );
-// };
+//  Student Modal (Create & Edit)
 // Student Modal (Create & Edit) - Simplified Version
 const StudentModal = ({ isOpen, onClose, onSave, classId, sessionId, editingStudent }) => {
   const [formData, setFormData] = useState({
@@ -630,6 +823,185 @@ const SubjectModal = ({ isOpen, onClose, onSave, editingSubject }) => {
 };
 
 // ============================================
+// STUDENT GRADES MANAGEMENT COMPONENT
+// ============================================
+
+const StudentGradesModal = ({ isOpen, onClose, student, subjects, onSave }) => {
+  const [scores, setScores] = useState({});
+  const [comments, setComments] = useState({});
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (student && isOpen) {
+      loadStudentScores();
+    }
+  }, [student, isOpen]);
+
+  const loadStudentScores = async () => {
+    setLoading(true);
+    try {
+      // Load existing scores for this student
+      const result = await resultsManager.getByStudent(student.$id);
+      
+      if (result.success) {
+        // Convert results array to object for easy access
+        const scoresObj = {};
+        const commentsObj = {};
+        
+        result.results.forEach(r => {
+          scoresObj[r.subjectId] = r.score;
+          commentsObj[r.subjectId] = r.teacherComment || '';
+        });
+        
+        setScores(scoresObj);
+        setComments(commentsObj);
+      }
+    } catch (error) {
+      console.error('Error loading scores:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleScoreChange = (subjectId, score) => {
+    const numScore = parseInt(score) || 0;
+    setScores({ ...scores, [subjectId]: numScore });
+  };
+
+  const handleCommentChange = (subjectId, comment) => {
+    setComments({ ...comments, [subjectId]: comment });
+  };
+
+  const calculateGradePreview = (score) => {
+    if (score >= 90) return { grade: 'Excellent', color: 'text-green-400' };
+    if (score >= 80) return { grade: 'Very Good', color: 'text-blue-400' };
+    if (score >= 60) return { grade: 'Good', color: 'text-yellow-400' };
+    if (score >= 50) return { grade: 'Pass', color: 'text-orange-400' };
+    return { grade: 'Fail', color: 'text-red-400' };
+  };
+
+  const handleSaveAll = async () => {
+    setLoading(true);
+    
+    try {
+      const promises = subjects.map(async (subject) => {
+        const score = scores[subject.$id];
+        
+        // Only save if score is entered
+        if (score !== undefined && score !== '') {
+          return await resultsManager.saveResult({
+            studentId: student.$id,
+            subjectId: subject.$id,
+            classId: student.classId,
+            academicSessionId: student.academicSessionId,
+            score: score,
+            teacherComment: comments[subject.$id] || ''
+            // Removed: term field - single term only
+          }, 'admin@school.com'); // Replace with actual admin email
+        }
+      });
+
+      await Promise.all(promises);
+      alert('Scores saved successfully!');
+      onSave();
+      onClose();
+    } catch (error) {
+      console.error('Error saving scores:', error);
+      alert('Failed to save scores');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <Modal isOpen={isOpen} onClose={onClose} title={`Grades - ${student?.fullName}`} size="xl">
+      {loading && (
+        <div className="flex justify-center py-8">
+          <div className="w-8 h-8 border-4 border-green-500 border-t-transparent rounded-full animate-spin"></div>
+        </div>
+      )}
+
+      {!loading && (
+        <>
+          <div className="mb-4 p-4 bg-gray-700 rounded-lg">
+            <div className="grid grid-cols-2 gap-4 text-sm">
+              <div>
+                <span className="text-gray-400">Student:</span>
+                <span className="text-white ml-2 font-bold">{student?.fullName}</span>
+              </div>
+              <div>
+                <span className="text-gray-400">Arabic Name:</span>
+                <span className="text-white ml-2" dir="rtl">{student?.arabicName}</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="space-y-4 max-h-96 overflow-y-auto">
+            {subjects.map((subject) => {
+              const score = scores[subject.$id] || '';
+              const preview = score ? calculateGradePreview(score) : null;
+
+              return (
+                <div key={subject.$id} className="p-4 bg-gray-700 rounded-lg">
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="flex-1">
+                      <h4 className="text-white font-bold">{subject.englishName}</h4>
+                      <p className="text-sm text-gray-400" dir="rtl">{subject.arabicName}</p>
+                    </div>
+                    {preview && (
+                      <span className={`text-sm font-bold ${preview.color}`}>
+                        {preview.grade}
+                      </span>
+                    )}
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                      <label className="block text-gray-300 text-sm mb-1">
+                        Score (Max: {subject.maxScore})
+                      </label>
+                      <input
+                        type="number"
+                        min="0"
+                        max={subject.maxScore}
+                        value={score}
+                        onChange={(e) => handleScoreChange(subject.$id, e.target.value)}
+                        className="w-full px-3 py-2 bg-gray-600 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                        placeholder="Enter score"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-gray-300 text-sm mb-1">
+                        Teacher Comment
+                      </label>
+                      <input
+                        type="text"
+                        value={comments[subject.$id] || ''}
+                        onChange={(e) => handleCommentChange(subject.$id, e.target.value)}
+                        className="w-full px-3 py-2 bg-gray-600 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                        placeholder="Optional comment"
+                      />
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          <div className="flex gap-3 mt-6">
+            <Button onClick={handleSaveAll} icon={Check} disabled={loading}>
+              {loading ? 'Saving...' : 'Save All Scores'}
+            </Button>
+            <Button onClick={onClose} variant="secondary">Cancel</Button>
+          </div>
+        </>
+      )}
+    </Modal>
+  );
+};
+
+// ============================================
 // DISPLAY CARD COMPONENTS
 // ============================================
 
@@ -666,39 +1038,7 @@ const AcademicSessionCard = ({ session, onView, onEdit, onDelete }) => (
   </Card>
 );
 
-// const ClassCard = ({ classItem, onView, onEdit, onDelete, studentCount }) => (
-//   <Card className="hover:shadow-2xl transition-shadow cursor-pointer">
-//     <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
-//       <div className="flex-1" onClick={onView}>
-//         <div className="flex items-center gap-2 mb-2">
-//           <GraduationCap className="text-blue-400" size={20} />
-//           <h3 className="text-lg sm:text-xl font-bold text-white">{classItem.className}</h3>
-//         </div>
-//         {classItem.classNameArabic && (
-//           <p className="text-sm text-gray-400 mb-1" dir="rtl">{classItem.classNameArabic}</p>
-//         )}
-//         <p className="text-sm text-gray-400">
-//           Teacher: {classItem.classTeacher || 'Not assigned'}
-//           {classItem.classTeacherArabic && <span dir="rtl"> ({classItem.classTeacherArabic})</span>}
-//         </p>
-//         <p className="text-sm text-gray-400">
-//           Students: {studentCount || classItem.currentEnrollment || 0}/{classItem.capacity}
-//         </p>
-//       </div>
-//       <div className="flex gap-2">
-//         <button onClick={onView} className="p-2 bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors">
-//           <Eye size={18} />
-//         </button>
-//         <button onClick={onEdit} className="p-2 bg-gray-700 hover:bg-gray-600 rounded-lg transition-colors">
-//           <Edit2 size={18} />
-//         </button>
-//         <button onClick={onDelete} className="p-2 bg-red-600 hover:bg-red-700 rounded-lg transition-colors">
-//           <Trash2 size={18} />
-//         </button>
-//       </div>
-//     </div>
-//   </Card>
-// );
+
 const ClassCard = ({ classItem, onView, onEdit, onDelete, studentCount }) => (
   <Card className="hover:shadow-2xl transition-shadow cursor-pointer">
     <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
@@ -734,7 +1074,8 @@ const ClassCard = ({ classItem, onView, onEdit, onDelete, studentCount }) => (
   </Card>
 );
 
-const StudentRow = ({ student, onEdit, onDelete }) => (
+
+const StudentRow = ({ student, onEdit, onDelete, onViewGrades, onViewReportCard }) => (
   <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 p-4 bg-gray-700 bg-opacity-50 rounded-lg hover:bg-opacity-70 transition-all">
     <div className="flex-1">
       <div className="flex items-center gap-2 mb-1">
@@ -745,9 +1086,22 @@ const StudentRow = ({ student, onEdit, onDelete }) => (
       {student.arabicName && (
         <p className="text-sm text-gray-400" dir="rtl">{student.arabicName}</p>
       )}
-      <p className="text-xs text-gray-500">Reg: {student.registrationNumber}</p>
     </div>
     <div className="flex gap-2">
+      <button 
+        onClick={onViewReportCard} 
+        className="p-2 bg-green-600 hover:bg-green-700 rounded-lg transition-colors"
+        title="View Report Card"
+      >
+        <FileText size={16} />
+      </button>
+      <button 
+        onClick={onViewGrades} 
+        className="p-2 bg-purple-600 hover:bg-purple-700 rounded-lg transition-colors"
+        title="Edit Grades"
+      >
+        <Edit2 size={16} />
+      </button>
       <button onClick={onEdit} className="p-2 bg-gray-600 hover:bg-gray-500 rounded-lg transition-colors">
         <Edit2 size={16} />
       </button>
@@ -757,6 +1111,7 @@ const StudentRow = ({ student, onEdit, onDelete }) => (
     </div>
   </div>
 );
+
 
 const SubjectCard = ({ subject, onEdit, onDelete }) => (
   <Card>
@@ -820,6 +1175,12 @@ const AdminDashboard = ({ user, onLogout, isDark, setIsDark }) => {
     { id: 'subjects', label: 'Subjects', icon: BookA },
     { id: 'settings', label: 'Settings', icon: Settings }
   ];
+
+    const [isGradesModalOpen, setIsGradesModalOpen] = useState(false);
+    const [selectedStudentForGrades, setSelectedStudentForGrades] = useState(null);
+    const [isReportCardOpen, setIsReportCardOpen] = useState(false);
+    const [selectedStudentForReport, setSelectedStudentForReport] = useState(null);
+
 
   // ============================================
   // LOAD DATA ON MOUNT
@@ -912,7 +1273,18 @@ const AdminDashboard = ({ user, onLogout, isDark, setIsDark }) => {
     
     setLoading(false);
   };
+  // Add this handler:
+const handleViewGrades = (student) => {
+  setSelectedStudentForGrades(student);
+  setIsGradesModalOpen(true);
+};
 
+const handleSaveGrades = () => {
+  // Refresh student list if needed
+  setIsGradesModalOpen(false);
+  setSelectedStudentForGrades(null);
+};
+  
   // ============================================
   // CLASS HANDLERS
   // ============================================
@@ -1105,6 +1477,10 @@ const AdminDashboard = ({ user, onLogout, isDark, setIsDark }) => {
     setCurrentView('students');
   };
 
+const handleViewReportCard = (student) => {
+  setSelectedStudentForReport(student);
+  setIsReportCardOpen(true);
+};
   // Filter Data
   const filteredClasses = selectedSession 
     ? classes.filter(c => c.academicSessionId === selectedSession.$id)
@@ -1337,6 +1713,8 @@ const AdminDashboard = ({ user, onLogout, isDark, setIsDark }) => {
                             student={student}
                             onEdit={() => handleEditStudent(student)}
                             onDelete={() => handleDeleteStudent(student.$id)}
+                            onViewGrades={() => handleViewGrades(student)}
+                            onViewReportCard={() => handleViewReportCard(student)}
                           />
                         ))
                       )}
@@ -1441,6 +1819,27 @@ const AdminDashboard = ({ user, onLogout, isDark, setIsDark }) => {
         }}
         onSave={handleSaveSubject}
         editingSubject={editingSubject}
+      />
+      <StudentGradesModal
+        isOpen={isGradesModalOpen}
+        onClose={() => {
+          setIsGradesModalOpen(false);
+          setSelectedStudentForGrades(null);
+        }}
+        student={selectedStudentForGrades}
+        subjects={subjects}
+        onSave={handleSaveGrades}
+      />
+      <ReportCardModal
+        isOpen={isReportCardOpen}
+        onClose={() => {
+          setIsReportCardOpen(false);
+          setSelectedStudentForReport(null);
+        }}
+        student={selectedStudentForReport}
+        session={selectedSession}
+        classInfo={selectedClass}
+        subjects={subjects}
       />
     </div>
   );
