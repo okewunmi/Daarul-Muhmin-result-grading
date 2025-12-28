@@ -513,11 +513,11 @@ const SubjectModal = ({ isOpen, onClose, onSave, editingSubject }) => {
   const [formData, setFormData] = useState({
     englishName: '',
     arabicName: '',
-    subjectCode: '',
-    description: '',
-    descriptionArabic: '',
+    // subjectCode: '',
+    // description: '',
+    // descriptionArabic: '',
     maxScore: 100,
-    passingScore: 50
+    // passingScore: 50
   });
 
   useEffect(() => {
@@ -525,21 +525,21 @@ const SubjectModal = ({ isOpen, onClose, onSave, editingSubject }) => {
       setFormData({
         englishName: editingSubject.englishName || '',
         arabicName: editingSubject.arabicName || '',
-        subjectCode: editingSubject.subjectCode || '',
-        description: editingSubject.description || '',
-        descriptionArabic: editingSubject.descriptionArabic || '',
+        // subjectCode: editingSubject.subjectCode || '',
+        // description: editingSubject.description || '',
+        // descriptionArabic: editingSubject.descriptionArabic || '',
         maxScore: editingSubject.maxScore || 100,
-        passingScore: editingSubject.passingScore || 50
+        // passingScore: editingSubject.passingScore || 50
       });
     } else {
       setFormData({
         englishName: '',
         arabicName: '',
-        subjectCode: '',
-        description: '',
-        descriptionArabic: '',
+        // subjectCode: '',
+        // description: '',
+        // descriptionArabic: '',
         maxScore: 100,
-        passingScore: 50
+        // passingScore: 50
       });
     }
   }, [editingSubject, isOpen]);
@@ -547,10 +547,14 @@ const SubjectModal = ({ isOpen, onClose, onSave, editingSubject }) => {
   const handleSubmit = () => {
     onSave({ ...formData, isActive: true }, editingSubject?.$id);
     setFormData({
-      englishName: '', arabicName: '', subjectCode: '', 
-      description: '', descriptionArabic: '', 
-      maxScore: 100, passingScore: 50
+      englishName: '', arabicName: '',
+      maxScore: 100
     });
+    // setFormData({
+    //   englishName: '', arabicName: '', subjectCode: '', 
+    //   description: '', descriptionArabic: '', 
+    //   maxScore: 100, passingScore: 50
+    // });
   };
 
   return (
@@ -571,12 +575,12 @@ const SubjectModal = ({ isOpen, onClose, onSave, editingSubject }) => {
           dir="rtl"
           required
         />
-        <Input
+        {/* <Input
           label="Subject Code (Optional)"
           value={formData.subjectCode}
           onChange={(e) => setFormData({ ...formData, subjectCode: e.target.value })}
           placeholder="IS101"
-        />
+        /> */}
         <Input
           label="Max Score"
           type="number"
@@ -584,15 +588,15 @@ const SubjectModal = ({ isOpen, onClose, onSave, editingSubject }) => {
           onChange={(e) => setFormData({ ...formData, maxScore: parseInt(e.target.value) })}
           required
         />
-        <Input
+        {/* <Input
           label="Passing Score"
           type="number"
           value={formData.passingScore}
           onChange={(e) => setFormData({ ...formData, passingScore: parseInt(e.target.value) })}
-        />
+        /> */}
       </div>
       
-      <div className="mb-4">
+      {/* <div className="mb-4">
         <label className="block text-gray-300 mb-2 text-sm sm:text-base">Description</label>
         <textarea
           value={formData.description}
@@ -601,9 +605,9 @@ const SubjectModal = ({ isOpen, onClose, onSave, editingSubject }) => {
           rows="3"
           placeholder="Subject description..."
         />
-      </div>
+      </div> */}
       
-      <div className="mb-4">
+      {/* <div className="mb-4">
         <label className="block text-gray-300 mb-2 text-sm sm:text-base">Description (Arabic) - الوصف</label>
         <textarea
           value={formData.descriptionArabic}
@@ -613,7 +617,7 @@ const SubjectModal = ({ isOpen, onClose, onSave, editingSubject }) => {
           placeholder="وصف المادة..."
           dir="rtl"
         />
-      </div>
+      </div> */}
       
       <div className="flex gap-3 mt-6">
         <Button onClick={handleSubmit} icon={Check}>
