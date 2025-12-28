@@ -181,9 +181,9 @@ const ClassModal = ({ isOpen, onClose, onSave, sessionId, editingClass }) => {
   const [formData, setFormData] = useState({
     className: '',
     classNameArabic: '',
-    classTeacher: '',
-    classTeacherArabic: '',
-    capacity: 30
+    // classTeacher: '',
+    // classTeacherArabic: '',
+    // capacity: 30
   });
 
   useEffect(() => {
@@ -191,24 +191,25 @@ const ClassModal = ({ isOpen, onClose, onSave, sessionId, editingClass }) => {
       setFormData({
         className: editingClass.className || '',
         classNameArabic: editingClass.classNameArabic || '',
-        classTeacher: editingClass.classTeacher || '',
-        classTeacherArabic: editingClass.classTeacherArabic || '',
-        capacity: editingClass.capacity || 30
+        // classTeacher: editingClass.classTeacher || '',
+        // classTeacherArabic: editingClass.classTeacherArabic || '',
+        // capacity: editingClass.capacity || 30
       });
     } else {
       setFormData({
         className: '',
         classNameArabic: '',
-        classTeacher: '',
-        classTeacherArabic: '',
-        capacity: 30
+        // classTeacher: '',
+        // classTeacherArabic: '',
+        // capacity: 30
       });
     }
   }, [editingClass, isOpen]);
 
   const handleSubmit = () => {
     onSave({ ...formData, academicSessionId: sessionId }, editingClass?.$id);
-    setFormData({ className: '', classNameArabic: '', classTeacher: '', classTeacherArabic: '', capacity: 30 });
+    setFormData({ className: '', classNameArabic: ''});
+    // setFormData({ className: '', classNameArabic: '', classTeacher: '', classTeacherArabic: '', capacity: 30 });
   };
 
   return (
@@ -227,26 +228,26 @@ const ClassModal = ({ isOpen, onClose, onSave, sessionId, editingClass }) => {
         placeholder="الصف الأول أ"
         dir="rtl"
       />
-      <Input
+      {/* <Input
         label="Class Teacher"
         value={formData.classTeacher}
         onChange={(e) => setFormData({ ...formData, classTeacher: e.target.value })}
         placeholder="e.g., Ustadh Ahmad"
-      />
-      <Input
+      /> */}
+      {/* <Input
         label="Teacher Name (Arabic) - اسم المعلم بالعربية"
         value={formData.classTeacherArabic}
         onChange={(e) => setFormData({ ...formData, classTeacherArabic: e.target.value })}
         placeholder="الأستاذ أحمد"
         dir="rtl"
-      />
-      <Input
+      /> */}
+      {/* <Input
         label="Capacity"
         type="number"
         value={formData.capacity}
         onChange={(e) => setFormData({ ...formData, capacity: parseInt(e.target.value) })}
         required
-      />
+      /> */}
       <div className="flex gap-3 mt-6">
         <Button onClick={handleSubmit} icon={Check}>
           {editingClass ? 'Update Class' : 'Save Class'}
@@ -261,21 +262,179 @@ const ClassModal = ({ isOpen, onClose, onSave, sessionId, editingClass }) => {
 // MODAL COMPONENTS - STUDENT & SUBJECT
 // ============================================
 
-// Student Modal (Create & Edit)
+// // Student Modal (Create & Edit)
+// const StudentModal = ({ isOpen, onClose, onSave, classId, sessionId, editingStudent }) => {
+//   const [formData, setFormData] = useState({
+//     fullName: '',
+//     arabicName: '',
+//     // email: '',
+//     // registrationNumber: '',
+//     gender: 'Male',
+//     // dateOfBirth: '',
+//     // parentName: '',
+//     // parentNameArabic: '',
+//     // parentPhone: '',
+//     // parentEmail: '',
+//     // address: '',
+//     // addressArabic: ''
+//   });
+
+//   useEffect(() => {
+//     if (editingStudent) {
+//       setFormData({
+//         fullName: editingStudent.fullName || '',
+//         arabicName: editingStudent.arabicName || '',
+//         // email: editingStudent.email || '',
+//         // registrationNumber: editingStudent.registrationNumber || '',
+//         gender: editingStudent.gender || 'Male',
+//         // dateOfBirth: editingStudent.dateOfBirth || '',
+//         // parentName: editingStudent.parentName || '',
+//         // parentNameArabic: editingStudent.parentNameArabic || '',
+//         // parentPhone: editingStudent.parentPhone || '',
+//         // parentEmail: editingStudent.parentEmail || '',
+//         // address: editingStudent.address || '',
+//         // addressArabic: editingStudent.addressArabic || ''
+//       });
+//     } else {
+//       setFormData({
+//         fullName: '',
+//         arabicName: '',
+//         // email: '',
+//         // registrationNumber: '',
+//         gender: 'Male',
+//         // dateOfBirth: '',
+//         // parentName: '',
+//         // parentNameArabic: '',
+//         // parentPhone: '',
+//         // parentEmail: '',
+//         // address: '',
+//         // addressArabic: ''
+//       });
+//     }
+//   }, [editingStudent, isOpen]);
+
+//   const handleSubmit = () => {
+//     onSave({ 
+//       ...formData, 
+//       classId, 
+//       academicSessionId: sessionId,
+//       isActive: true 
+//     }, editingStudent?.$id);
+//     setFormData({
+//       fullName: '', arabicName: '', 
+//       gender: 'Male',
+//     });
+//     // setFormData({
+//     //   fullName: '', arabicName: '', email: '', registrationNumber: '', 
+//     //   gender: 'Male', dateOfBirth: '', parentName: '', parentNameArabic: '',
+//     //   parentPhone: '', parentEmail: '', address: '', addressArabic: ''
+//     // });
+//   };
+
+//   return (
+//     <Modal isOpen={isOpen} onClose={onClose} title={editingStudent ? "Edit Student - تعديل طالب" : "Add Student - إضافة طالب"} size="lg">
+//       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+//         <Input
+//           label="Full Name"
+//           value={formData.fullName}
+//           onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
+//           placeholder="Enter full name"
+//           required
+//         />
+//         <Input
+//           label="Arabic Name - الاسم بالعربية"
+//           value={formData.arabicName}
+//           onChange={(e) => setFormData({ ...formData, arabicName: e.target.value })}
+//           placeholder="أدخل الاسم بالعربية"
+//           dir="rtl"
+//         />
+//         {/* <Input
+//           label="Registration Number"
+//           value={formData.registrationNumber}
+//           onChange={(e) => setFormData({ ...formData, registrationNumber: e.target.value })}
+//           placeholder="REG001"
+//           required
+//         /> */}
+//         {/* <Input
+//           label="Email"
+//           type="email"
+//           value={formData.email}
+//           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+//           placeholder="student@example.com"
+//         /> */}
+//         <div className="mb-4">
+//           <label className="block text-gray-300 mb-2 text-sm sm:text-base">Gender</label>
+//           <select
+//             value={formData.gender}
+//             onChange={(e) => setFormData({ ...formData, gender: e.target.value })}
+//             className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 text-sm sm:text-base"
+//           >
+//             <option value="Male">Male - ذكر</option>
+//             <option value="Female">Female - أنثى</option>
+//           </select>
+//         </div>
+//         {/* <Input
+//           label="Date of Birth"
+//           type="date"
+//           value={formData.dateOfBirth}
+//           onChange={(e) => setFormData({ ...formData, dateOfBirth: e.target.value })}
+//         /> */}
+//         {/* <Input
+//           label="Parent Name"
+//           value={formData.parentName}
+//           onChange={(e) => setFormData({ ...formData, parentName: e.target.value })}
+//           placeholder="Enter parent name"
+//         /> */}
+//         {/* <Input
+//           label="Parent Name (Arabic) - اسم ولي الأمر"
+//           value={formData.parentNameArabic}
+//           onChange={(e) => setFormData({ ...formData, parentNameArabic: e.target.value })}
+//           placeholder="اسم ولي الأمر"
+//           dir="rtl"
+//         /> */}
+//         {/* <Input
+//           label="Parent Phone"
+//           value={formData.parentPhone}
+//           onChange={(e) => setFormData({ ...formData, parentPhone: e.target.value })}
+//           placeholder="+234..."
+//         /> */}
+//         {/* <Input
+//           label="Parent Email"
+//           type="email"
+//           value={formData.parentEmail}
+//           onChange={(e) => setFormData({ ...formData, parentEmail: e.target.value })}
+//           placeholder="parent@example.com"
+//         /> */}
+//       </div>
+
+//       {/*<Input
+//         label="Address"
+//         value={formData.address}
+//         onChange={(e) => setFormData({ ...formData, address: e.target.value })}
+//         placeholder="Enter address"
+//       />
+//       <Input
+//         label="Address (Arabic) - العنوان"
+//         value={formData.addressArabic}
+//         onChange={(e) => setFormData({ ...formData, addressArabic: e.target.value })}
+//         placeholder="أدخل العنوان"
+//         dir="rtl"
+//       />*/}
+//       <div className="flex gap-3 mt-6">
+//         <Button onClick={handleSubmit} icon={Check}>
+//           {editingStudent ? 'Update Student' : 'Save Student'}
+//         </Button>
+//         <Button onClick={onClose} variant="secondary">Cancel</Button>
+//       </div>
+//     </Modal>
+//   );
+// };
+// Student Modal (Create & Edit) - Simplified Version
 const StudentModal = ({ isOpen, onClose, onSave, classId, sessionId, editingStudent }) => {
   const [formData, setFormData] = useState({
     fullName: '',
     arabicName: '',
-    email: '',
-    registrationNumber: '',
-    gender: 'Male',
-    dateOfBirth: '',
-    parentName: '',
-    parentNameArabic: '',
-    parentPhone: '',
-    parentEmail: '',
-    address: '',
-    addressArabic: ''
+    gender: 'Male'
   });
 
   useEffect(() => {
@@ -283,31 +442,13 @@ const StudentModal = ({ isOpen, onClose, onSave, classId, sessionId, editingStud
       setFormData({
         fullName: editingStudent.fullName || '',
         arabicName: editingStudent.arabicName || '',
-        email: editingStudent.email || '',
-        registrationNumber: editingStudent.registrationNumber || '',
-        gender: editingStudent.gender || 'Male',
-        dateOfBirth: editingStudent.dateOfBirth || '',
-        parentName: editingStudent.parentName || '',
-        parentNameArabic: editingStudent.parentNameArabic || '',
-        parentPhone: editingStudent.parentPhone || '',
-        parentEmail: editingStudent.parentEmail || '',
-        address: editingStudent.address || '',
-        addressArabic: editingStudent.addressArabic || ''
+        gender: editingStudent.gender || 'Male'
       });
     } else {
       setFormData({
         fullName: '',
         arabicName: '',
-        email: '',
-        registrationNumber: '',
-        gender: 'Male',
-        dateOfBirth: '',
-        parentName: '',
-        parentNameArabic: '',
-        parentPhone: '',
-        parentEmail: '',
-        address: '',
-        addressArabic: ''
+        gender: 'Male'
       });
     }
   }, [editingStudent, isOpen]);
@@ -319,101 +460,44 @@ const StudentModal = ({ isOpen, onClose, onSave, classId, sessionId, editingStud
       academicSessionId: sessionId,
       isActive: true 
     }, editingStudent?.$id);
+    
     setFormData({
-      fullName: '', arabicName: '', email: '', registrationNumber: '', 
-      gender: 'Male', dateOfBirth: '', parentName: '', parentNameArabic: '',
-      parentPhone: '', parentEmail: '', address: '', addressArabic: ''
+      fullName: '', 
+      arabicName: '', 
+      gender: 'Male'
     });
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title={editingStudent ? "Edit Student - تعديل طالب" : "Add Student - إضافة طالب"} size="lg">
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <Input
-          label="Full Name"
-          value={formData.fullName}
-          onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-          placeholder="Enter full name"
-          required
-        />
-        <Input
-          label="Arabic Name - الاسم بالعربية"
-          value={formData.arabicName}
-          onChange={(e) => setFormData({ ...formData, arabicName: e.target.value })}
-          placeholder="أدخل الاسم بالعربية"
-          dir="rtl"
-        />
-        <Input
-          label="Registration Number"
-          value={formData.registrationNumber}
-          onChange={(e) => setFormData({ ...formData, registrationNumber: e.target.value })}
-          placeholder="REG001"
-          required
-        />
-        <Input
-          label="Email"
-          type="email"
-          value={formData.email}
-          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-          placeholder="student@example.com"
-        />
-        <div className="mb-4">
-          <label className="block text-gray-300 mb-2 text-sm sm:text-base">Gender</label>
-          <select
-            value={formData.gender}
-            onChange={(e) => setFormData({ ...formData, gender: e.target.value })}
-            className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 text-sm sm:text-base"
-          >
-            <option value="Male">Male - ذكر</option>
-            <option value="Female">Female - أنثى</option>
-          </select>
-        </div>
-        <Input
-          label="Date of Birth"
-          type="date"
-          value={formData.dateOfBirth}
-          onChange={(e) => setFormData({ ...formData, dateOfBirth: e.target.value })}
-        />
-        <Input
-          label="Parent Name"
-          value={formData.parentName}
-          onChange={(e) => setFormData({ ...formData, parentName: e.target.value })}
-          placeholder="Enter parent name"
-        />
-        <Input
-          label="Parent Name (Arabic) - اسم ولي الأمر"
-          value={formData.parentNameArabic}
-          onChange={(e) => setFormData({ ...formData, parentNameArabic: e.target.value })}
-          placeholder="اسم ولي الأمر"
-          dir="rtl"
-        />
-        <Input
-          label="Parent Phone"
-          value={formData.parentPhone}
-          onChange={(e) => setFormData({ ...formData, parentPhone: e.target.value })}
-          placeholder="+234..."
-        />
-        <Input
-          label="Parent Email"
-          type="email"
-          value={formData.parentEmail}
-          onChange={(e) => setFormData({ ...formData, parentEmail: e.target.value })}
-          placeholder="parent@example.com"
-        />
-      </div>
+    <Modal isOpen={isOpen} onClose={onClose} title={editingStudent ? "Edit Student - تعديل طالب" : "Add Student - إضافة طالب"} size="md">
       <Input
-        label="Address"
-        value={formData.address}
-        onChange={(e) => setFormData({ ...formData, address: e.target.value })}
-        placeholder="Enter address"
+        label="Full Name"
+        value={formData.fullName}
+        onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
+        placeholder="Enter full name"
+        required
       />
+      
       <Input
-        label="Address (Arabic) - العنوان"
-        value={formData.addressArabic}
-        onChange={(e) => setFormData({ ...formData, addressArabic: e.target.value })}
-        placeholder="أدخل العنوان"
+        label="Arabic Name - الاسم بالعربية"
+        value={formData.arabicName}
+        onChange={(e) => setFormData({ ...formData, arabicName: e.target.value })}
+        placeholder="أدخل الاسم بالعربية"
         dir="rtl"
       />
+      
+      <div className="mb-4">
+        <label className="block text-gray-300 mb-2 text-sm sm:text-base">Gender</label>
+        <select
+          value={formData.gender}
+          onChange={(e) => setFormData({ ...formData, gender: e.target.value })}
+          className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 text-sm sm:text-base"
+        >
+          <option value="Male">Male - ذكر</option>
+          <option value="Female">Female - أنثى</option>
+        </select>
+      </div>
+
       <div className="flex gap-3 mt-6">
         <Button onClick={handleSubmit} icon={Check}>
           {editingStudent ? 'Update Student' : 'Save Student'}
@@ -578,6 +662,39 @@ const AcademicSessionCard = ({ session, onView, onEdit, onDelete }) => (
   </Card>
 );
 
+// const ClassCard = ({ classItem, onView, onEdit, onDelete, studentCount }) => (
+//   <Card className="hover:shadow-2xl transition-shadow cursor-pointer">
+//     <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+//       <div className="flex-1" onClick={onView}>
+//         <div className="flex items-center gap-2 mb-2">
+//           <GraduationCap className="text-blue-400" size={20} />
+//           <h3 className="text-lg sm:text-xl font-bold text-white">{classItem.className}</h3>
+//         </div>
+//         {classItem.classNameArabic && (
+//           <p className="text-sm text-gray-400 mb-1" dir="rtl">{classItem.classNameArabic}</p>
+//         )}
+//         <p className="text-sm text-gray-400">
+//           Teacher: {classItem.classTeacher || 'Not assigned'}
+//           {classItem.classTeacherArabic && <span dir="rtl"> ({classItem.classTeacherArabic})</span>}
+//         </p>
+//         <p className="text-sm text-gray-400">
+//           Students: {studentCount || classItem.currentEnrollment || 0}/{classItem.capacity}
+//         </p>
+//       </div>
+//       <div className="flex gap-2">
+//         <button onClick={onView} className="p-2 bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors">
+//           <Eye size={18} />
+//         </button>
+//         <button onClick={onEdit} className="p-2 bg-gray-700 hover:bg-gray-600 rounded-lg transition-colors">
+//           <Edit2 size={18} />
+//         </button>
+//         <button onClick={onDelete} className="p-2 bg-red-600 hover:bg-red-700 rounded-lg transition-colors">
+//           <Trash2 size={18} />
+//         </button>
+//       </div>
+//     </div>
+//   </Card>
+// );
 const ClassCard = ({ classItem, onView, onEdit, onDelete, studentCount }) => (
   <Card className="hover:shadow-2xl transition-shadow cursor-pointer">
     <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
@@ -594,7 +711,8 @@ const ClassCard = ({ classItem, onView, onEdit, onDelete, studentCount }) => (
           {classItem.classTeacherArabic && <span dir="rtl"> ({classItem.classTeacherArabic})</span>}
         </p>
         <p className="text-sm text-gray-400">
-          Students: {studentCount || classItem.currentEnrollment || 0}/{classItem.capacity}
+          {/* Use the dynamically passed studentCount instead of stored currentEnrollment */}
+          Students: {studentCount || 0}/{classItem.capacity}
         </p>
       </div>
       <div className="flex gap-2">
