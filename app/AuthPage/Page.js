@@ -273,7 +273,7 @@ const AuthPage = ({ onNavigate, onLogin, isDark, setIsDark }) => {
       <div className="max-w-md w-full">
         <div className="flex justify-between items-center mb-6">
           <button
-            onClick={() => onNavigate('HomePage')}
+            onClick={() => onNavigate('home')}
             className="text-gray-300 hover:text-white transition-colors flex items-center text-sm sm:text-base"
           >
             ← Back to Home
