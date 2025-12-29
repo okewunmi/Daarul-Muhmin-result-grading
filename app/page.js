@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import AuthPage from './AuthPage/Page';
 import DashboardPage from './Dashboard/Page';
+import HomePage from './HomePage/Page';
 import { appwriteAuth } from '../lib/appwrite';
 import { Toaster } from 'react-hot-toast';
 
@@ -54,12 +55,18 @@ const App = () => {
       />
 
       {currentPage === 'auth' && (
-        <AuthPage 
+        <HomePage
           onNavigate={handleNavigate}
           onLogin={handleLogin}
           isDark={isDark}
           setIsDark={setIsDark}
         />
+        // <AuthPage 
+        //   onNavigate={handleNavigate}
+        //   onLogin={handleLogin}
+        //   isDark={isDark}
+        //   setIsDark={setIsDark}
+        // />
       )}
 
       {currentPage === 'dashboard' && user && (
