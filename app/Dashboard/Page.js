@@ -1489,10 +1489,10 @@ const ClassCard = ({ classItem, onView, onEdit, onDelete, studentCount }) => (
           Teacher: {classItem.classTeacher || 'Not assigned'}
           {classItem.classTeacherArabic && <span dir="rtl"> ({classItem.classTeacherArabic})</span>}
         </p>
-        <p className="text-sm text-gray-400">
+        {/* <p className="text-sm text-gray-400"> */}
           {/* Use the dynamically passed studentCount instead of stored currentEnrollment */}
-          Students: {studentCount || 0}/{classItem.capacity}
-        </p>
+          {/* Students: {studentCount || 0}/{classItem.capacity} */}
+        {/* </p> */}
       </div>
       <div className="flex gap-2">
         <button onClick={onView} className="p-2 bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors">
