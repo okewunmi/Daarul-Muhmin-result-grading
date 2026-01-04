@@ -464,6 +464,9 @@ const EmptyState = ({ icon: Icon, title, description, action }) => (
 // Number to Arabic words converter
 
 // Number to Arabic words converter
+
+// Number to Arabic words converter
+
 const numberToArabicWords = (num) => {
   const ones = ['', 'واحد', 'اثنان', 'ثلاثة', 'أربعة', 'خمسة', 'ستة', 'سبعة', 'ثمانية', 'تسعة'];
   const tens = ['', 'عشرة', 'عشرون', 'ثلاثون', 'أربعون', 'خمسون', 'ستون', 'سبعون', 'ثمانون', 'تسعون'];
@@ -886,8 +889,6 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
     </div>
   );
 };
-
-
 
 
 // ============================================
