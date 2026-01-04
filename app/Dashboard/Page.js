@@ -637,9 +637,9 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
                     DAARUL MUHMIN INSTITUTE OF ARABIC AND ISLAMIC STUDIES
                   </h2>
                   <div className="text-xs font-semibold py-0.5">
-                    <span>REPORT SHEET كشف الدرجات</span>
+                    <span>REPORT SHEET   كشف الدرجات</span>
                     <span className="mx-4">    </span> <span className="mx-4">    </span>
-                    <span>EXAMINATION OFFICE إدارة الإمتحانات</span>
+                    <span>EXAMINATION OFFICE   إدارة الإمتحانات</span>
                   </div>
                 </div>
 
@@ -656,7 +656,7 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
                 <div className="flex items-center mb-1.5">
                   <span className="font-semibold w-16">Name:</span>
                   <span className="flex-1 border-b border-dotted border-gray-600 px-2">
-                    {student.fullName} {student.arabicName && `( ${     student.arabicName} )`}
+                    {student.fullName} {student.arabicName && `("    "${student.arabicName} )`}
                   </span>
                   <span className="mr-2" dir="rtl">اسم الطالب</span>
                 </div>
@@ -665,7 +665,7 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
                 <div className="flex items-center mb-1.5">
                   <span className="font-semibold w-16">Session:</span>
                   <span className="flex-1 border-b border-dotted border-gray-600 px-2">
-                    {session?.sessionName} {session?.sessionNameArabic && `/ ${   session.sessionNameArabic}`}
+                    {session?.sessionName} {session?.sessionNameArabic && `/ "  "${session.sessionNameArabic}`}
                   </span>
                   <span className="mr-2" dir="rtl">العام الدراسي</span>
                 </div>
@@ -810,7 +810,7 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
               <div className="mb-2 text-xs">
                 <div className="flex items-center mb-1">
                   <span className="font-semibold whitespace-nowrap">Class Teacher's Remark:</span>
-                  <span className="flex-1"></span>
+                  {/* <span className="flex-1"></span> */}
                   <span dir="rtl" className="whitespace-nowrap">ملاحظة المدرس</span>
                 </div>
                 <div className="border-b border-dotted border-gray-600 min-h-[50px] flex items-end justify-center pb-1" dir="rtl">
