@@ -638,7 +638,7 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
                   </h2>
                   <div className="text-xs font-semibold py-0.5">
                     <span>REPORT SHEET كشف الدرجات</span>
-                    <span className="mx-4">    </span>
+                    <span className="mx-4">    </span> <span className="mx-4">    </span>
                     <span>EXAMINATION OFFICE إدارة الإمتحانات</span>
                   </div>
                 </div>
