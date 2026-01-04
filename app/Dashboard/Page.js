@@ -458,6 +458,7 @@ const EmptyState = ({ icon: Icon, title, description, action }) => (
 
 // Number to Arabic words converter
 
+// Number to Arabic words converter
 const numberToArabicWords = (num) => {
   const ones = ['', 'واحد', 'اثنان', 'ثلاثة', 'أربعة', 'خمسة', 'ستة', 'سبعة', 'ثمانية', 'تسعة'];
   const tens = ['', 'عشرة', 'عشرون', 'ثلاثون', 'أربعون', 'خمسون', 'ستون', 'سبعون', 'ثمانون', 'تسعون'];
@@ -479,14 +480,10 @@ const numberToArabicWords = (num) => {
   return result.join(' و ') || 'صفر';
 };
 
-// This component integrates with your existing code
 const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subjects }) => {
   const [reportData, setReportData] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  // Import these from your lib/appwrite
-  // Make sure to pass resultsManager, studentsManager, gradingSystem as props or import them
-  
   useEffect(() => {
     if (student && isOpen) {
       loadReportCardData();
@@ -496,7 +493,6 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
   const loadReportCardData = async () => {
     setLoading(true);
     try {
-      // Get student's results - you need to import resultsManager
       const { resultsManager, studentsManager } = await import('../../lib/appwrite');
       
       const resultsResponse = await resultsManager.getByStudent(student.$id);
@@ -505,7 +501,8 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
       if (resultsResponse.success && classStudentsResponse.success) {
         const results = resultsResponse.results;
         const totalScore = results.reduce((sum, r) => sum + r.score, 0);
-        const percentage = results.length > 0 ? ((totalScore / (results.length * 100)) * 100).toFixed(2) : 0;
+        const totalMax = results.length * 100;
+        const percentage = results.length > 0 ? ((totalScore / totalMax) * 100).toFixed(2) : 0;
         
         const classPosition = await calculateClassPosition(
           student.$id, 
@@ -513,10 +510,15 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
           resultsManager
         );
         
+        // Calculate overall grade
+        const overallGrade = calculateGrade(parseFloat(percentage));
+        
         setReportData({
           results,
           totalScore,
+          totalMax,
           percentage,
+          overallGrade,
           classPosition,
           totalStudents: classStudentsResponse.students.length
         });
@@ -561,7 +563,6 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
     return 'th';
   };
 
-  // Import gradingSystem from your lib
   const calculateGrade = (score) => {
     if (score >= 90) return { english: 'Excellent', arabic: 'ممتاز', remarkArabic: 'نجح' };
     if (score >= 80) return { english: 'Very Good', arabic: 'جيد جداً', remarkArabic: 'نجح' };
@@ -603,6 +604,8 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
           <div className="p-8 print:p-4 bg-white relative">
             {/* Watermark Logo Background */}
             <div className="absolute inset-0 flex items-center justify-center opacity-5 pointer-events-none z-0">
+              {/* Replace with your logo image: */}
+              {/* <img src="/watermark-logo.png" alt="Watermark" className="w-64 h-64 object-contain" /> */}
               <div className="w-64 h-64 border-4 border-gray-400 rounded-full flex items-center justify-center">
                 <span className="text-6xl font-bold">LOGO</span>
               </div>
@@ -614,6 +617,7 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
               <div className="flex items-start justify-between mb-3">
                 {/* Left Logo */}
                 <div className="w-20 h-20 border-2 border-gray-400 rounded-full flex items-center justify-center flex-shrink-0">
+                  {/* Replace with: <img src="/left-logo.png" alt="Logo" className="w-20 h-20 object-contain" /> */}
                   <span className="text-xs">Logo</span>
                 </div>
 
@@ -625,24 +629,24 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
                     DAARUL MUHMIN INSTITUTE OF ARABIC AND ISLAMIC STUDIES
                   </h2>
                   <p className="text-xs font-semibold border-t border-b border-gray-400 py-0.5">
-                    REPORT SHEET كشف الدرجات
+                    REPORT SHEET كشف الدرجات  EXAMINATION OFFICE إدارة الإمتحانات
                   </p>
-                  <p className="text-xs">EXAMINATION OFFICE إدارة الإمتحانات</p>
                 </div>
 
                 {/* Right Logo */}
                 <div className="w-20 h-20 border-2 border-gray-400 rounded-full flex items-center justify-center flex-shrink-0">
+                  {/* Replace with: <img src="/right-logo.png" alt="Logo" className="w-20 h-20 object-contain" /> */}
                   <span className="text-xs">Logo</span>
                 </div>
               </div>
 
               {/* Student Information Section */}
               <div className="mb-3 text-sm border-t-2 border-black pt-2">
-                {/* Name Row */}
+                {/* Name Row - Include both English and Arabic names */}
                 <div className="flex items-center mb-1.5">
                   <span className="font-semibold w-16">Name:</span>
                   <span className="flex-1 border-b border-dotted border-gray-600 px-2">
-                    {student.fullName}
+                    {student.fullName} {student.arabicName && `(${student.arabicName})`}
                   </span>
                   <span className="mr-2" dir="rtl">اسم الطالب</span>
                 </div>
@@ -684,28 +688,25 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
                 </div>
               </div>
 
-              {/* Grades Table - 7 Columns (Right to Left for Arabic) */}
-              <table className="w-full border-2 border-black text-xs mb-3">
+              {/* Grades Table - RIGHT TO LEFT (Arabic Direction) */}
+              <table className="w-full border-2 border-black text-xs mb-3" dir="rtl">
                 <thead>
                   <tr className="border-b-2 border-black">
-                    <th className="border-l-2 border-black p-1 w-8 text-center" dir="rtl">ت</th>
+                    <th className="border-l-2 border-black p-1 w-8 text-center">ت</th>
                     <th className="border-l-2 border-black p-1 text-center">
                       المواد الدراسية<br/>SUBJECT
                     </th>
-                    <th className="border-l-2 border-black p-1 w-16 text-center" dir="rtl">
+                    <th className="border-l-2 border-black p-1 w-16 text-center">
                       الدرجة
                     </th>
-                    <th className="border-l-2 border-black p-1 w-16 text-center" dir="rtl">
+                    <th className="border-l-2 border-black p-1 w-16 text-center">
                       رقماً
                     </th>
-                    <th className="border-l-2 border-black p-1 w-24 text-center" dir="rtl">
+                    <th className="border-l-2 border-black p-1 w-24 text-center">
                       كتابة
                     </th>
-                    <th className="border-l-2 border-black p-1 w-20 text-center" dir="rtl">
-                      التقدير
-                    </th>
-                    <th className="p-1 w-20 text-center" dir="rtl">
-                      ملحوظة
+                    <th className="border-l-2 border-black p-1 w-32 text-center" colSpan="2">
+                      التقدير / ملحوظة
                     </th>
                   </tr>
                 </thead>
@@ -720,24 +721,24 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
                         <td className="border-l-2 border-black p-1 text-center">{index + 1}</td>
                         <td className="border-l-2 border-black p-1">
                           <div className="flex justify-between items-center">
-                            <span className="text-left">{subject.englishName}</span>
-                            <span dir="rtl" className="text-gray-700">{subject.arabicName}</span>
+                            <span>{subject.arabicName}</span>
+                            <span className="text-gray-600 text-left">{subject.englishName}</span>
                           </div>
                         </td>
                         <td className="border-l-2 border-black p-1 text-center font-bold">100</td>
                         <td className="border-l-2 border-black p-1 text-center font-bold">
                           {result ? result.score : ''}
                         </td>
-                        <td className="border-l-2 border-black p-1 text-center" dir="rtl">
+                        <td className="border-l-2 border-black p-1 text-center">
                           <span className="text-xs">{scoreInWords}</span>
                         </td>
-                        <td className="border-l-2 border-black p-1 text-center" dir="rtl">
-                          {gradeInfo?.arabic || ''}
-                        </td>
-                        <td className="p-1 text-center" dir="rtl">
-                          <span className={result && result.score >= 50 ? '' : 'text-red-600'}>
-                            {gradeInfo?.remarkArabic || ''}
-                          </span>
+                        <td className="border-l-2 border-black p-1 text-center" colSpan="2">
+                          <div className="flex justify-around items-center">
+                            <span>{gradeInfo?.arabic || ''}</span>
+                            <span className={result && result.score >= 50 ? '' : 'text-red-600'}>
+                              {gradeInfo?.remarkArabic || ''}
+                            </span>
+                          </div>
                         </td>
                       </tr>
                     );
@@ -745,29 +746,28 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
 
                   {/* Total Row */}
                   <tr className="border-t-2 border-black font-bold">
-                    <td className="border-l-2 border-black p-1 text-center" colSpan="2" dir="rtl">
-                      TOTAL المجموع الكلي
+                    <td className="border-l-2 border-black p-2 text-center" colSpan="2">
+                      المجموع الكلي<br/>TOTAL
                     </td>
-                    <td className="border-l-2 border-black p-1 text-center">
-                      {subjects.length * 100}
+                    <td className="border-l-2 border-black p-2 text-center">
+                      {reportData.totalMax}
                     </td>
-                    <td className="border-l-2 border-black p-1 text-center text-base">
+                    <td className="border-l-2 border-black p-2 text-center text-base" colSpan="4">
                       {reportData.totalScore}
                     </td>
-                    <td className="p-1 text-center" colSpan="3"></td>
                   </tr>
 
                   {/* Percentage Row */}
                   <tr className="border-t border-black">
-                    <td className="p-1 text-center" colSpan="7" dir="rtl">
-                      <span className="font-bold">PERCENTAGE النسبة المئوية</span>
+                    <td className="p-2 text-center font-bold" colSpan="7">
+                      النسبة المئوية PERCENTAGE
                     </td>
                   </tr>
 
                   {/* Grade Row */}
                   <tr className="border-t border-black">
-                    <td className="p-1 text-center" colSpan="7" dir="rtl">
-                      <span className="font-bold">GRADE التقدير العام</span>
+                    <td className="p-2 text-center font-bold" colSpan="7">
+                      التقدير العام GRADE
                     </td>
                   </tr>
                 </tbody>
@@ -787,11 +787,13 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
                 </div>
               </div>
 
-              {/* Class Teacher's Remark */}
+              {/* Class Teacher's Remark - IN ARABIC */}
               <div className="mb-2 text-xs">
                 <div className="flex items-start">
                   <span className="font-semibold whitespace-nowrap">Class Teacher's Remark:</span>
-                  <span className="flex-1 border-b border-dotted border-gray-600 mx-2 min-h-[40px]"></span>
+                  <span className="flex-1 border-b border-dotted border-gray-600 mx-2 min-h-[40px]" dir="rtl">
+                    {/* Teacher's remark in Arabic will be inserted here */}
+                  </span>
                   <span dir="rtl" className="whitespace-nowrap">ملاحظة المدرس</span>
                 </div>
               </div>
@@ -801,8 +803,8 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
                 <div>
                   <div className="flex items-center mb-2">
                     <span className="font-semibold whitespace-nowrap">Principal's Sign:</span>
-                    <span className="flex-1 border-b border-dotted border-gray-600 mx-2 min-h-[50px]">
-                      {/* Add principal signature image here */}
+                    <span className="flex-1 border-b border-dotted border-gray-600 mx-2 min-h-[50px] flex items-end justify-center">
+                      {/* Replace with: <img src="/principal-signature.png" alt="Signature" className="h-12 object-contain" /> */}
                     </span>
                     <span dir="rtl" className="whitespace-nowrap">توقيع الوكيل</span>
                   </div>
@@ -864,6 +866,7 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
     </div>
   );
 };
+
 
 
 
