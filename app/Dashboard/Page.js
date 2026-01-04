@@ -459,6 +459,11 @@ const EmptyState = ({ icon: Icon, title, description, action }) => (
 // Number to Arabic words converter
 
 // Number to Arabic words converter
+
+
+// Number to Arabic words converter
+
+// Number to Arabic words converter
 const numberToArabicWords = (num) => {
   const ones = ['', 'واحد', 'اثنان', 'ثلاثة', 'أربعة', 'خمسة', 'ستة', 'سبعة', 'ثمانية', 'تسعة'];
   const tens = ['', 'عشرة', 'عشرون', 'ثلاثون', 'أربعون', 'خمسون', 'ستون', 'سبعون', 'ثمانون', 'تسعون'];
@@ -624,13 +629,15 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
                 {/* Center Header */}
                 <div className="flex-1 text-center px-4">
                   <p className="text-xs mb-1">بسم الله الرحمن الرحيم</p>
-                  <h1 className="text-base font-bold mb-0.5">معهد دار المؤمن للدراسات العربية والإسلامية</h1>
-                  <h2 className="text-sm font-bold mb-0.5">
+                  <h1 className="text-base font-bold mb-1">معهد دار المؤمن للدراسات العربية والإسلامية</h1>
+                  <h2 className="text-sm font-bold mb-1">
                     DAARUL MUHMIN INSTITUTE OF ARABIC AND ISLAMIC STUDIES
                   </h2>
-                  <p className="text-xs font-semibold border-t border-b border-gray-400 py-0.5">
-                    REPORT SHEET كشف الدرجات  EXAMINATION OFFICE إدارة الإمتحانات
-                  </p>
+                  <div className="text-xs font-semibold border-t border-b border-gray-400 py-0.5">
+                    <span>REPORT SHEET كشف الدرجات</span>
+                    <span className="mx-4">    </span>
+                    <span>EXAMINATION OFFICE إدارة الإمتحانات</span>
+                  </div>
                 </div>
 
                 {/* Right Logo */}
@@ -642,20 +649,20 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
 
               {/* Student Information Section */}
               <div className="mb-3 text-sm border-t-2 border-black pt-2">
-                {/* Name Row - Include both English and Arabic names */}
+                {/* Name Row - With space between English and Arabic */}
                 <div className="flex items-center mb-1.5">
                   <span className="font-semibold w-16">Name:</span>
                   <span className="flex-1 border-b border-dotted border-gray-600 px-2">
-                    {student.fullName} {student.arabicName && `(${student.arabicName})`}
+                    {student.fullName} {student.arabicName && `( ${student.arabicName} )`}
                   </span>
                   <span className="mr-2" dir="rtl">اسم الطالب</span>
                 </div>
 
-                {/* Session Row */}
+                {/* Session Row - With space between names */}
                 <div className="flex items-center mb-1.5">
                   <span className="font-semibold w-16">Session:</span>
                   <span className="flex-1 border-b border-dotted border-gray-600 px-2">
-                    {session?.sessionName}
+                    {session?.sessionName} {session?.sessionNameArabic && `/ ${session.sessionNameArabic}`}
                   </span>
                   <span className="mr-2" dir="rtl">العام الدراسي</span>
                 </div>
@@ -688,7 +695,7 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
                 </div>
               </div>
 
-              {/* Grades Table - RIGHT TO LEFT (Arabic Direction) */}
+              {/* Grades Table - RIGHT TO LEFT with TWO separate columns for التقدير and ملحوظة */}
               <table className="w-full border-2 border-black text-xs mb-3" dir="rtl">
                 <thead>
                   <tr className="border-b-2 border-black">
@@ -705,8 +712,11 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
                     <th className="border-l-2 border-black p-1 w-24 text-center">
                       كتابة
                     </th>
-                    <th className="border-l-2 border-black p-1 w-32 text-center" colSpan="2">
-                      التقدير / ملحوظة
+                    <th className="border-l-2 border-black p-1 w-20 text-center">
+                      التقدير
+                    </th>
+                    <th className="p-1 w-20 text-center">
+                      ملحوظة
                     </th>
                   </tr>
                 </thead>
@@ -732,19 +742,19 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
                         <td className="border-l-2 border-black p-1 text-center">
                           <span className="text-xs">{scoreInWords}</span>
                         </td>
-                        <td className="border-l-2 border-black p-1 text-center" colSpan="2">
-                          <div className="flex justify-around items-center">
-                            <span>{gradeInfo?.arabic || ''}</span>
-                            <span className={result && result.score >= 50 ? '' : 'text-red-600'}>
-                              {gradeInfo?.remarkArabic || ''}
-                            </span>
-                          </div>
+                        <td className="border-l-2 border-black p-1 text-center">
+                          {gradeInfo?.arabic || ''}
+                        </td>
+                        <td className="p-1 text-center">
+                          <span className={result && result.score >= 50 ? '' : 'text-red-600'}>
+                            {gradeInfo?.remarkArabic || ''}
+                          </span>
                         </td>
                       </tr>
                     );
                   })}
 
-                  {/* Total Row */}
+                  {/* Total Row - Subject column merged, numbers span other columns */}
                   <tr className="border-t-2 border-black font-bold">
                     <td className="border-l-2 border-black p-2 text-center" colSpan="2">
                       المجموع الكلي<br/>TOTAL
@@ -752,22 +762,28 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
                     <td className="border-l-2 border-black p-2 text-center">
                       {reportData.totalMax}
                     </td>
-                    <td className="border-l-2 border-black p-2 text-center text-base" colSpan="4">
+                    <td className="p-2 text-center text-base" colSpan="4">
                       {reportData.totalScore}
                     </td>
                   </tr>
 
                   {/* Percentage Row */}
-                  <tr className="border-t border-black">
-                    <td className="p-2 text-center font-bold" colSpan="7">
-                      النسبة المئوية PERCENTAGE
+                  <tr className="border-t border-black font-bold">
+                    <td className="border-l-2 border-black p-2 text-center" colSpan="2">
+                      النسبة المئوية<br/>PERCENTAGE
+                    </td>
+                    <td className="p-2 text-center text-base" colSpan="5">
+                      {reportData.percentage}%
                     </td>
                   </tr>
 
                   {/* Grade Row */}
-                  <tr className="border-t border-black">
-                    <td className="p-2 text-center font-bold" colSpan="7">
-                      التقدير العام GRADE
+                  <tr className="border-t border-black font-bold">
+                    <td className="border-l-2 border-black p-2 text-center" colSpan="2">
+                      التقدير العام<br/>GRADE
+                    </td>
+                    <td className="p-2 text-center text-base" colSpan="5">
+                      {reportData.overallGrade.arabic} / {reportData.overallGrade.english}
                     </td>
                   </tr>
                 </tbody>
@@ -787,14 +803,18 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
                 </div>
               </div>
 
-              {/* Class Teacher's Remark - IN ARABIC */}
+              {/* Class Teacher's Remark - Centered under line */}
               <div className="mb-2 text-xs">
-                <div className="flex items-start">
+                <div className="flex items-center mb-1">
                   <span className="font-semibold whitespace-nowrap">Class Teacher's Remark:</span>
-                  <span className="flex-1 border-b border-dotted border-gray-600 mx-2 min-h-[40px]" dir="rtl">
-                    {/* Teacher's remark in Arabic will be inserted here */}
-                  </span>
+                  <span className="flex-1"></span>
                   <span dir="rtl" className="whitespace-nowrap">ملاحظة المدرس</span>
+                </div>
+                <div className="border-b border-dotted border-gray-600 min-h-[50px] flex items-end justify-center pb-1" dir="rtl">
+                  {/* Teacher's remark in Arabic centered under the line */}
+                  <span className="text-center">
+                    {/* Add teacher remark here */}
+                  </span>
                 </div>
               </div>
 
