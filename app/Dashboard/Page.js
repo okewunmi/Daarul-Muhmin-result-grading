@@ -636,7 +636,7 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
                   <h2 className="text-sm font-bold mb-1">
                     DAARUL MUHMIN INSTITUTE OF ARABIC AND ISLAMIC STUDIES
                   </h2>
-                  <div className="text-xs font-semibold border-t border-b border-gray-400 py-0.5">
+                  <div className="text-xs font-semibold py-0.5">
                     <span>REPORT SHEET كشف الدرجات</span>
                     <span className="mx-4">    </span>
                     <span>EXAMINATION OFFICE إدارة الإمتحانات</span>
@@ -656,7 +656,7 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
                 <div className="flex items-center mb-1.5">
                   <span className="font-semibold w-16">Name:</span>
                   <span className="flex-1 border-b border-dotted border-gray-600 px-2">
-                    {student.fullName} {student.arabicName && `( ${student.arabicName} )`}
+                    {student.fullName} {student.arabicName && `( ${     student.arabicName} )`}
                   </span>
                   <span className="mr-2" dir="rtl">اسم الطالب</span>
                 </div>
@@ -665,7 +665,7 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
                 <div className="flex items-center mb-1.5">
                   <span className="font-semibold w-16">Session:</span>
                   <span className="flex-1 border-b border-dotted border-gray-600 px-2">
-                    {session?.sessionName} {session?.sessionNameArabic && `/ ${session.sessionNameArabic}`}
+                    {session?.sessionName} {session?.sessionNameArabic && `/ ${   session.sessionNameArabic}`}
                   </span>
                   <span className="mr-2" dir="rtl">العام الدراسي</span>
                 </div>
@@ -704,7 +704,7 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
                   <tr className="border-b-2 border-black">
                     <th className="border-l-2 border-black p-1 w-8 text-center">ت</th>
                     <th className="border-l-2 border-black p-1 text-center">
-                      المواد الدراسية<br/>SUBJECT
+                      المواد الدراسية     SUBJECT
                     </th>
                     <th className="border-l-2 border-black p-1 w-16 text-center">
                       الدرجة
@@ -760,7 +760,7 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
                   {/* Total Row - Subject column merged, numbers span other columns */}
                   <tr className="border-t-2 border-black font-bold">
                     <td className="border-l-2 border-black p-2 text-center" colSpan="2">
-                      المجموع الكلي<br/>TOTAL
+                      المجموع الكلي   TOTAL
                     </td>
                     <td className="border-l-2 border-black p-2 text-center">
                       {reportData.totalMax}
@@ -773,7 +773,7 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
                   {/* Percentage Row */}
                   <tr className="border-t border-black font-bold">
                     <td className="border-l-2 border-black p-2 text-center" colSpan="2">
-                      النسبة المئوية<br/>PERCENTAGE
+                      النسبة المئوية    PERCENTAGE
                     </td>
                     <td className="p-2 text-center text-base" colSpan="5">
                       {reportData.percentage}%
@@ -783,7 +783,7 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
                   {/* Grade Row */}
                   <tr className="border-t border-black font-bold">
                     <td className="border-l-2 border-black p-2 text-center" colSpan="2">
-                      التقدير العام<br/>GRADE
+                      التقدير العام    GRADE
                     </td>
                     <td className="p-2 text-center text-base" colSpan="5">
                       {reportData.overallGrade.arabic} / {reportData.overallGrade.english}
