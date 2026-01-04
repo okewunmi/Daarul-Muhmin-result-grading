@@ -758,7 +758,7 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
                   })}
 
                   {/* Total Row - Subject column merged, numbers span other columns */}
-                  <tr className="border-t-2 border-black font-bold">
+                  <tr className="border-t-2 border-black text-xs">
                     <td className="border-l-2 border-black p-2 text-center" colSpan="2">
                       المجموع الكلي   TOTAL
                     </td>
@@ -771,7 +771,7 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
                   </tr>
 
                   {/* Percentage Row */}
-                  <tr className="border-t border-black font-bold">
+                  <tr className="border-t border-black text-xs">
                     <td className="border-l-2 border-black p-2 text-center" colSpan="2">
                       النسبة المئوية    PERCENTAGE
                     </td>
@@ -781,7 +781,7 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
                   </tr>
 
                   {/* Grade Row */}
-                  <tr className="border-t border-black font-bold">
+                  <tr className="border-t border-black text-xs">
                     <td className="border-l-2 border-black p-2 text-center" colSpan="2">
                       التقدير العام    GRADE
                     </td>
