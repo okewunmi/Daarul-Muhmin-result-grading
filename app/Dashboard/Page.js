@@ -98,375 +98,6 @@ const EmptyState = ({ icon: Icon, title, description, action }) => (
   </div>
 );
 
-// const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subjects }) => {
-//   const [reportData, setReportData] = useState(null);
-//   const [loading, setLoading] = useState(false);
-
-//   useEffect(() => {
-//     if (student && isOpen) {
-//       loadReportCardData();
-//     }
-//   }, [student, isOpen]);
-
-//   const loadReportCardData = async () => {
-//     setLoading(true);
-//     try {
-//       // Get student's results
-//       const resultsResponse = await resultsManager.getByStudent(student.$id);
-      
-//       // Get all students in the same class to calculate position
-//       const classStudentsResponse = await studentsManager.getByClass(student.classId);
-      
-//       if (resultsResponse.success && classStudentsResponse.success) {
-//         // Calculate student's total score and average
-//         const results = resultsResponse.results;
-//         const totalScore = results.reduce((sum, r) => sum + r.score, 0);
-//         const average = results.length > 0 ? (totalScore / results.length).toFixed(2) : 0;
-        
-//         // Calculate class position
-//         const classPosition = await calculateClassPosition(
-//           student.$id, 
-//           classStudentsResponse.students
-//         );
-        
-//         setReportData({
-//           results,
-//           totalScore,
-//           average,
-//           classPosition,
-//           totalStudents: classStudentsResponse.students.length
-//         });
-//       }
-//     } catch (error) {
-//       console.error('Error loading report card:', error);
-//       alert('Failed to load report card data');
-//     } finally {
-//       setLoading(false);
-//     }
-//   };
-
-//   const calculateClassPosition = async (studentId, classStudents) => {
-//     try {
-//       // Get results for all students in the class
-//       const studentsWithScores = await Promise.all(
-//         classStudents.map(async (s) => {
-//           const res = await resultsManager.getByStudent(s.$id);
-//           const total = res.success 
-//             ? res.results.reduce((sum, r) => sum + r.score, 0) 
-//             : 0;
-//           return { studentId: s.$id, totalScore: total };
-//         })
-//       );
-
-//       // Sort by total score (highest first)
-//       studentsWithScores.sort((a, b) => b.totalScore - a.totalScore);
-      
-//       // Find position
-//       const position = studentsWithScores.findIndex(s => s.studentId === studentId) + 1;
-//       return position;
-//     } catch (error) {
-//       console.error('Error calculating position:', error);
-//       return 0;
-//     }
-//   };
-
-//   const handlePrint = () => {
-//     window.print();
-//   };
-
-//   const getPositionSuffix = (position) => {
-//     if (position === 1) return 'st';
-//     if (position === 2) return 'nd';
-//     if (position === 3) return 'rd';
-//     return 'th';
-//   };
-
-//   if (!isOpen) return null;
-
-//   return (
-//     <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4">
-//       <div className="bg-white rounded-xl shadow-2xl w-full max-w-4xl max-h-[95vh] overflow-y-auto">
-//         {/* Print/Close Buttons - Hide on print */}
-//         <div className="flex justify-end gap-2 p-4 print:hidden bg-gray-100">
-//           <button
-//             onClick={handlePrint}
-//             className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
-//           >
-//             <Printer size={18} />
-//             Print Report Card
-//           </button>
-//           <button
-//             onClick={onClose}
-//             className="flex items-center gap-2 px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors"
-//           >
-//             <X size={18} />
-//             Close
-//           </button>
-//         </div>
-
-//         {loading && (
-//           <div className="flex justify-center items-center py-12">
-//             <div className="w-12 h-12 border-4 border-green-500 border-t-transparent rounded-full animate-spin"></div>
-//           </div>
-//         )}
-
-//         {!loading && reportData && (
-//           <div className="p-8 print:p-6">
-//             {/* Report Card Content */}
-//             <div className="border-4 border-green-600 rounded-lg p-6">
-//               {/* Header */}
-//               <div className="text-center mb-6 border-b-2 border-gray-300 pb-4">
-//                 <h1 className="text-3xl font-bold text-green-700 mb-2">
-//                   Daarul Muhmin Institute
-//                 </h1>
-//                 <h2 className="text-2xl font-bold text-green-600 mb-3" dir="rtl">
-//                   معهد دار المؤمن للدراسات العربية والإسلامية
-//                 </h2>
-//                 <p className="text-lg font-semibold text-gray-700">
-//                   Academic Report Card - التقرير الأكاديمي
-//                 </p>
-//               </div>
-
-//               {/* Student Information */}
-//               <div className="grid grid-cols-2 gap-4 mb-6 bg-gray-50 p-4 rounded-lg">
-//                 <div>
-//                   <p className="text-sm text-gray-600 mb-1">Student Name:</p>
-//                   <p className="font-bold text-lg">{student.fullName}</p>
-//                 </div>
-//                 <div dir="rtl">
-//                   <p className="text-sm text-gray-600 mb-1">اسم الطالب:</p>
-//                   <p className="font-bold text-lg">{student.arabicName || student.fullName}</p>
-//                 </div>
-                
-//                 <div>
-//                   <p className="text-sm text-gray-600 mb-1">Academic Session:</p>
-//                   <p className="font-bold">{session?.sessionName}</p>
-//                 </div>
-//                 <div dir="rtl">
-//                   <p className="text-sm text-gray-600 mb-1">السنة الدراسية:</p>
-//                   <p className="font-bold">{session?.sessionNameArabic || session?.sessionName}</p>
-//                 </div>
-
-//                 <div>
-//                   <p className="text-sm text-gray-600 mb-1">Class:</p>
-//                   <p className="font-bold">{classInfo?.className}</p>
-//                 </div>
-//                 <div dir="rtl">
-//                   <p className="text-sm text-gray-600 mb-1">الصف:</p>
-//                   <p className="font-bold">{classInfo?.classNameArabic || classInfo?.className}</p>
-//                 </div>
-
-//                 <div>
-//                   <p className="text-sm text-gray-600 mb-1">Gender:</p>
-//                   <p className="font-bold">{student.gender}</p>
-//                 </div>
-//                 <div dir="rtl">
-//                   <p className="text-sm text-gray-600 mb-1">الجنس:</p>
-//                   <p className="font-bold">{student.gender === 'Male' ? 'ذكر' : 'أنثى'}</p>
-//                 </div>
-
-//                 <div>
-//                   <p className="text-sm text-gray-600 mb-1">Number of Students:</p>
-//                   <p className="font-bold">{reportData.totalStudents}</p>
-//                 </div>
-//                 <div dir="rtl">
-//                   <p className="text-sm text-gray-600 mb-1">عدد الطلاب:</p>
-//                   <p className="font-bold">{reportData.totalStudents}</p>
-//                 </div>
-
-//                 <div>
-//                   <p className="text-sm text-gray-600 mb-1">Position in Class:</p>
-//                   <p className="font-bold text-green-600 text-xl">
-//                     {reportData.classPosition}{getPositionSuffix(reportData.classPosition)}
-//                   </p>
-//                 </div>
-//                 <div dir="rtl">
-//                   <p className="text-sm text-gray-600 mb-1">الترتيب في الصف:</p>
-//                   <p className="font-bold text-green-600 text-xl">
-//                     {reportData.classPosition}
-//                   </p>
-//                 </div>
-//               </div>
-
-//               {/* Grades Table */}
-//               <div className="mb-6">
-//                 <h3 className="text-xl font-bold text-center mb-4 text-gray-800">
-//                   Academic Performance - الأداء الأكاديمي
-//                 </h3>
-                
-//                 <table className="w-full border-collapse border-2 border-gray-300">
-//                   <thead>
-//                     <tr className="bg-green-600 text-white">
-//                       <th className="border border-gray-300 p-2 text-left">Subject<br/>المادة</th>
-//                       <th className="border border-gray-300 p-2">Max Score<br/>النهاية العظمى</th>
-//                       <th className="border border-gray-300 p-2">Score<br/>الدرجة</th>
-//                       <th className="border border-gray-300 p-2">Grade<br/>التقدير</th>
-//                       <th className="border border-gray-300 p-2">Remark<br/>الملاحظة</th>
-//                     </tr>
-//                   </thead>
-//                   <tbody>
-//                     {subjects.map((subject) => {
-//                       const result = reportData.results.find(r => r.subjectId === subject.$id);
-//                       const gradeInfo = result ? gradingSystem.calculateGrade(result.score) : null;
-                      
-//                       return (
-//                         <tr key={subject.$id} className="hover:bg-gray-50">
-//                           <td className="border border-gray-300 p-2">
-//                             <div>{subject.englishName}</div>
-//                             <div className="text-sm text-gray-600" dir="rtl">{subject.arabicName}</div>
-//                           </td>
-//                           <td className="border border-gray-300 p-2 text-center font-bold">
-//                             100
-//                           </td>
-//                           <td className="border border-gray-300 p-2 text-center font-bold text-lg">
-//                             {result ? result.score : '-'}
-//                           </td>
-//                           <td className="border border-gray-300 p-2 text-center" dir="rtl">
-//                             <div className="font-bold text-green-700">{gradeInfo?.arabic || '-'}</div>
-//                             <div className="text-sm text-gray-600">{gradeInfo?.english || '-'}</div>
-//                           </td>
-//                           <td className="border border-gray-300 p-2 text-center" dir="rtl">
-//                             <span className={`font-bold ${
-//                               gradeInfo?.remarkArabic === 'نجح' ? 'text-green-600' : 'text-red-600'
-//                             }`}>
-//                               {gradeInfo?.remarkArabic || '-'}
-//                             </span>
-//                           </td>
-//                         </tr>
-//                       );
-//                     })}
-                    
-//                     {/* Total Row */}
-//                     <tr className="bg-gray-100 font-bold">
-//                       <td className="border border-gray-300 p-2">
-//                         Total / المجموع
-//                       </td>
-//                       <td className="border border-gray-300 p-2 text-center">
-//                         {subjects.length * 100}
-//                       </td>
-//                       <td className="border border-gray-300 p-2 text-center text-lg text-green-700">
-//                         {reportData.totalScore}
-//                       </td>
-//                       <td className="border border-gray-300 p-2 text-center" colSpan="2">
-//                         Average: {reportData.average}%
-//                       </td>
-//                     </tr>
-//                   </tbody>
-//                 </table>
-//               </div>
-
-//               {/* Teacher's Comments */}
-//               <div className="mb-6 p-4 bg-gray-50 rounded-lg">
-//                 <h4 className="font-bold mb-2">Class Teacher's Remarks - ملاحظات معلم الصف</h4>
-//                 <div className="min-h-[60px] border-b-2 border-gray-300 pb-2">
-//                   {/* This can be filled from results if you add classTeacherRemark */}
-//                   <p className="text-gray-600 italic">
-//                     {reportData.results[0]?.classTeacherRemark || 'Keep up the good work!'}
-//                   </p>
-//                 </div>
-//               </div>
-
-//               {/* Grading Scale */}
-//               <div className="mb-6">
-//                 <h4 className="font-bold mb-3 text-center">Grading Scale - مقياس التقديرات</h4>
-//                 <div className="grid grid-cols-5 gap-2 text-sm">
-//                   <div className="text-center p-2 bg-green-100 rounded">
-//                     <div className="font-bold">90-100</div>
-//                     <div>Excellent</div>
-//                     <div dir="rtl">ممتاز</div>
-//                   </div>
-//                   <div className="text-center p-2 bg-blue-100 rounded">
-//                     <div className="font-bold">80-89</div>
-//                     <div>Very Good</div>
-//                     <div dir="rtl">جيد جداً</div>
-//                   </div>
-//                   <div className="text-center p-2 bg-yellow-100 rounded">
-//                     <div className="font-bold">60-79</div>
-//                     <div>Good</div>
-//                     <div dir="rtl">جيد</div>
-//                   </div>
-//                   <div className="text-center p-2 bg-orange-100 rounded">
-//                     <div className="font-bold">50-59</div>
-//                     <div>Pass</div>
-//                     <div dir="rtl">مقبول</div>
-//                   </div>
-//                   <div className="text-center p-2 bg-red-100 rounded">
-//                     <div className="font-bold">0-49</div>
-//                     <div>Fail</div>
-//                     <div dir="rtl">راسب</div>
-//                   </div>
-//                 </div>
-//               </div>
-
-//               {/* Signatures */}
-//               <div className="grid grid-cols-3 gap-8 mt-8 pt-6 border-t-2 border-gray-300">
-//                 <div className="text-center">
-//                   <div className="border-t-2 border-gray-400 pt-2 mt-12">
-//                     <p className="font-semibold">Class Teacher</p>
-//                     <p className="text-sm" dir="rtl">معلم الصف</p>
-//                   </div>
-//                 </div>
-//                 <div className="text-center">
-//                   <div className="border-t-2 border-gray-400 pt-2 mt-12">
-//                     <p className="font-semibold">Principal</p>
-//                     <p className="text-sm" dir="rtl">المدير</p>
-//                   </div>
-//                 </div>
-//                 <div className="text-center">
-//                   <div className="border-t-2 border-gray-400 pt-2 mt-12">
-//                     <p className="font-semibold">Date</p>
-//                     <p className="text-sm" dir="rtl">التاريخ</p>
-//                     <p className="text-sm mt-1">{new Date().toLocaleDateString()}</p>
-//                   </div>
-//                 </div>
-//               </div>
-//             </div>
-//           </div>
-//         )}
-//       </div>
-
-//       {/* Print Styles */}
-//       <style jsx>{`
-//         @media print {
-//           body * {
-//             visibility: hidden;
-//           }
-//           .fixed.inset-0 * {
-//             visibility: visible;
-//           }
-//           .fixed.inset-0 {
-//             position: absolute;
-//             left: 0;
-//             top: 0;
-//             width: 100%;
-//             height: auto;
-//             background: white;
-//           }
-//           .print\\:hidden {
-//             display: none !important;
-//           }
-//           @page {
-//             margin: 0.5cm;
-//             size: A4;
-//           }
-//         }
-//       `}</style>
-//     </div>
-//   );
-// };
-
-
-// Number to Arabic words converter
-
-// Number to Arabic words converter
-
-
-// Number to Arabic words converter
-
-// Number to Arabic words converter
-
-// Number to Arabic words converter
-
 const numberToArabicWords = (num) => {
   const ones = ['', 'واحد', 'اثنان', 'ثلاثة', 'أربعة', 'خمسة', 'ستة', 'سبعة', 'ثمانية', 'تسعة'];
   const tens = ['', 'عشرة', 'عشرون', 'ثلاثون', 'أربعون', 'خمسون', 'ستون', 'سبعون', 'ثمانون', 'تسعون'];
@@ -572,17 +203,17 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
   };
 
   const calculateGrade = (score) => {
-    if (score >= 90) return { english: 'Excellent', arabic: 'ممتاز', remarkArabic: 'نجح' };
-    if (score >= 80) return { english: 'Very Good', arabic: 'جيد جداً', remarkArabic: 'نجح' };
-    if (score >= 60) return { english: 'Good', arabic: 'جيد', remarkArabic: 'نجح' };
-    if (score >= 50) return { english: 'Pass', arabic: 'مقبول', remarkArabic: 'نجح' };
-    return { english: 'Fail', arabic: 'راسب', remarkArabic: 'راسب' };
+    if (score >= 90) return { english: 'Excellent', arabic: 'ممتاز', remarkArabic: 'نجح', teacherRemarkArabic: 'امتياز' };
+    if (score >= 80) return { english: 'Very Good', arabic: 'جيد جداً', remarkArabic: 'نجح', teacherRemarkArabic: 'مجتهدا' };
+    if (score >= 60) return { english: 'Good', arabic: 'جيد', remarkArabic: 'نجح', teacherRemarkArabic: 'اجتهادا' };
+    if (score >= 50) return { english: 'Pass', arabic: 'مقبول', remarkArabic: 'نجح', teacherRemarkArabic: 'كن مجتهدا' };
+    return { english: 'Fail', arabic: 'راسب', remarkArabic: 'راسب', teacherRemarkArabic: 'اجتهد نفسك' };
   };
 
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4">
+    <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4 overflow-auto">
       <div className="bg-white rounded-lg shadow-2xl w-full max-w-4xl max-h-[95vh] overflow-y-auto">
         {/* Print/Close Buttons */}
         <div className="flex justify-end gap-2 p-4 print:hidden bg-gray-100 border-b">
@@ -609,130 +240,116 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
         )}
 
         {!loading && reportData && (
-          <div className="p-8 print:p-4 bg-white relative">
+                        <div className="p-6 print:p-6 bg-white relative">
+            {/* Watermark Logo Background */}
             <div className="absolute inset-0 flex items-center justify-center opacity-5 pointer-events-none z-0">
-              {/* Replace with your logo image: */}
-              <div className="w-250 h-250  flex items-center justify-center">
-               <img 
-                src="/logo.png" 
-                alt="School Logo" 
-                className="w-250 h-250 object-contain"
-              />
+              <div className="w-200 h-200 flex items-center justify-center">
+                <img 
+                  src="/logo.png" 
+                  alt="School Logo" 
+                  className="w-full h-full object-contain"
+                />
               </div>
             </div>
 
             {/* Content */}
             <div className="relative z-10">
               {/* Header Section with Logos */}
-              <div className="flex items-start justify-between mb-3 bg-gray-100" >
+              <div className="flex items-start justify-between print:mb-4 bg-gray-100">
                 {/* Left Logo */}
-                <div className="w-24 h-24 flex items-center justify-center flex-shrink-0">
+                <div className="w-26 h-26 print:w-26 print:h-26 flex items-center justify-center flex-shrink-0">
                   <img 
                     src="/logo.png" 
                     alt="School Logo" 
-                    className="w-24 h-24 object-contain"
+                    className="w-full h-full object-contain"
                   />
                 </div>
 
                 {/* Center Header */}
-                <div className="flex-1 text-center">
-                  <p className="text-xs mb-1">بسم الله الرحمن الرحيم</p>
-                  <h1 className="text-base font-bold mb-1">معهد دار المؤمن للدراسات العربية والإسلامية</h1>
-                  <h2 className="text-sm font-bold mb-1">
+                <div className="flex-1 text-center p-1">
+                  <p className="text-[10px] print:text-xs mb-1">بسم الله الرحمن الرحيم</p>
+                  <h1 className="text-sm print:text-base font-bold mb-1">معهد دار المؤمن للدراسات العربية والإسلامية</h1>
+                  <h2 className="text-xs print:text-sm font-bold mb-1">
                     DAARUL MUHMIN INSTITUTE OF ARABIC AND ISLAMIC STUDIES
                   </h2>
-                  <div className="text-xs font-semibold py-0.5">
-                    <span>REPORT SHEET</span>
-
-                    <span> كشف الدرجات</span>
-                    <span className="mx-4"></span>   
-                    <span>EXAMINATION OFFICE</span>
-              
-                    <span> إدارة الإمتحانات</span>
+                  <div className="text-[10px] print:text-xs font-semibold py-1 ">
+                    <span>REPORT SHEET كشف الدرجات</span>
+                    <span className="mx-3"></span>   
+                    <span>EXAMINATION OFFICE إدارة الإمتحانات</span>
                   </div>
                 </div>
 
                 {/* Right Logo */}
-                <div className="w-24 h-24  flex items-center justify-center flex-shrink-0">
+                <div className="w-26 h-26 print:w-26 print:h-26 flex items-center justify-center flex-shrink-0">
                   <img 
                     src="/logo.png" 
                     alt="School Logo" 
-                    className="w-24 h-24 object-contain"
+                    className="w-full h-full object-contain"
                   />
                 </div>
               </div>
 
               {/* Student Information Section */}
-              <div className="mb-3 text-sm">
-                {/* Name Row - With space between English and Arabic */}
-                <div className="flex items-center mb-1.5">
-                  <span className="font-semibold w-16">Name:</span>
-                  <span className="flex-1 border-b border-dotted border-gray-600 px-2">
-                    {student.fullName} {student.arabicName && `("    "${student.arabicName} )`}
+              <div className="mb-3 print:mb-4 text-[11px] print:text-xs">
+                {/* Name Row */}
+                <div className="flex items-center mb-2">
+                  <span className="font-semibold w-14 text-[10px] print:text-xs">Name:</span>
+                  <span className="flex-1 border-b border-dotted border-gray-600 px-2 text-[10px] print:text-xs">
+                    {student.fullName} {student.arabicName && `( ${student.arabicName} )`}
                   </span>
-                  <span className="mr-2" dir="rtl">اسم الطالب</span>
+                  <span className="mr-2 text-[10px] print:text-xs" dir="rtl">اسم الطالب</span>
                 </div>
 
-                {/* Session Row - With space between names */}
-                <div className="flex items-center mb-1.5">
-                  <span className="font-semibold w-16">Session:</span>
-                  <span className="flex-1 border-b border-dotted border-gray-600 px-2">
-                    {session?.sessionName} {session?.sessionNameArabic && `/ "  "${session.sessionNameArabic}`}
+                {/* Session Row */}
+                <div className="flex items-center mb-2">
+                  <span className="font-semibold w-14 text-[10px] print:text-xs">Session:</span>
+                  <span className="flex-1 border-b border-dotted border-gray-600 px-2 text-[10px] print:text-xs">
+                    {session?.sessionName} {session?.sessionNameArabic && `/ ${session.sessionNameArabic}`}
                   </span>
-                  <span className="mr-2" dir="rtl">العام الدراسي</span>
+                  <span className="mr-2 text-[10px] print:text-xs" dir="rtl">العام الدراسي</span>
                 </div>
 
                 {/* Position, No. in Class, Class Row */}
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-3">
                   <div className="flex items-center flex-1">
-                    <span className="font-semibold whitespace-nowrap">Position:</span>
-                    <span className="flex-1 border-b border-dotted border-gray-600 px-2 mx-1">
+                    <span className="font-semibold whitespace-nowrap text-[10px] print:text-xs">Position:</span>
+                    <span className="flex-1 border-b border-dotted border-gray-600 px-1 mx-1 text-[10px] print:text-xs">
                       {reportData.classPosition}{getPositionSuffix(reportData.classPosition)}
                     </span>
-                    <span dir="rtl" className="whitespace-nowrap">الترتيب</span>
+                    <span dir="rtl" className="whitespace-nowrap text-[10px] print:text-xs">الترتيب</span>
                   </div>
 
                   <div className="flex items-center flex-1">
-                    <span className="font-semibold whitespace-nowrap">No. in Class:</span>
-                    <span className="flex-1 border-b border-dotted border-gray-600 px-2 mx-1">
+                    <span className="font-semibold whitespace-nowrap text-[10px] print:text-xs">No. in Class:</span>
+                    <span className="flex-1 border-b border-dotted border-gray-600 px-1 mx-1 text-[10px] print:text-xs">
                       {reportData.totalStudents}
                     </span>
-                    <span dir="rtl" className="whitespace-nowrap">عدد الطلاب</span>
+                    <span dir="rtl" className="whitespace-nowrap text-[10px] print:text-xs">عدد الطلاب</span>
                   </div>
 
                   <div className="flex items-center flex-1">
-                    <span className="font-semibold whitespace-nowrap">Class:</span>
-                    <span className="flex-1 border-b border-dotted border-gray-600 px-2 mx-1">
+                    <span className="font-semibold whitespace-nowrap text-[10px] print:text-xs">Class:</span>
+                    <span className="flex-1 border-b border-dotted border-gray-600 px-1 mx-1 text-[10px] print:text-xs">
                       {classInfo?.className}
                     </span>
-                    <span dir="rtl" className="whitespace-nowrap">الصف</span>
+                    <span dir="rtl" className="whitespace-nowrap text-[10px] print:text-xs">الصف</span>
                   </div>
                 </div>
               </div>
 
-              {/* Grades Table - RIGHT TO LEFT with TWO separate columns for التقدير and ملحوظة */}
-              <table className="w-full border-1 border-black text-xs mb-3" dir="rtl">
+              {/* Grades Table - Larger for printing */}
+              <table className="w-full border border-black text-[9px] print:text-[10px] mb-3 print:mb-4" dir="rtl">
                 <thead>
-                  <tr className="border-b-1 border-black">
-                    <th className="border-l-1 border-black p-1 w-8 text-center">ت</th>
-                    <th className="border-l-1 border-black p-1 text-center">
-                      المواد الدراسية     SUBJECT
+                  <tr className="border-b border-black">
+                    <th className="border-l border-black p-1 print:p-1.5 w-6 text-center">ت</th>
+                    <th className="border-l border-black p-1 print:p-1.5 text-center">
+                      المواد الدراسية SUBJECT
                     </th>
-                    <th className="border-l-1 border-black p-1 w-16 text-center">
-                      الدرجة
-                    </th>
-                    <th className="border-l-1 border-black p-1 w-16 text-center">
-                      رقماً
-                    </th>
-                    <th className="border-l-1 border-black p-1 w-24 text-center">
-                      كتابة
-                    </th>
-                    <th className="border-l-1 border-black p-1 w-20 text-center">
-                      التقدير
-                    </th>
-                    <th className="p-1 w-20 text-center">
-                      ملحوظة
-                    </th>
+                    <th className="border-l border-black p-1 print:p-1.5 w-10 text-center">الدرجة</th>
+                    <th className="border-l border-black p-1 print:p-1.5 w-10 text-center">رقماً</th>
+                    <th className="border-l border-black p-1 print:p-1.5 w-16 text-center">كتابة</th>
+                    <th className="border-l border-black p-1 print:p-1.5 w-14 text-center">التقدير</th>
+                    <th className="p-1 print:p-1.5 w-12 text-center">ملحوظة</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -743,24 +360,24 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
                     
                     return (
                       <tr key={subject.$id} className="border-b border-black">
-                        <td className="border-l-1 border-black p-1 text-center">{index + 1}</td>
-                        <td className="border-l-1 border-black p-1">
-                          <div className="flex justify-between items-center">
-                            <span>{subject.arabicName}</span>
-                            <span className="text-gray-600 text-left">{subject.englishName}</span>
+                        <td className="border-l border-black p-1 print:p-1.5 text-center">{index + 1}</td>
+                        <td className="border-l border-black p-1 print:p-1.5">
+                          <div className="flex justify-between items-center gap-1">
+                            <span className="text-[9px] print:text-[10px]">{subject.arabicName}</span>
+                            <span className="text-gray-600 text-left text-[8px] print:text-[9px]">{subject.englishName}</span>
                           </div>
                         </td>
-                        <td className="border-l-1 border-black p-1 text-center font-bold">100</td>
-                        <td className="border-l-1 border-black p-1 text-center font-bold">
+                        <td className="border-l border-black p-1 print:p-1.5 text-center font-bold">100</td>
+                        <td className="border-l border-black p-1 print:p-1.5 text-center font-bold">
                           {result ? result.score : ''}
                         </td>
-                        <td className="border-l-1 border-black p-1 text-center">
-                          <span className="text-xs">{scoreInWords}</span>
+                        <td className="border-l border-black p-1 print:p-1.5 text-center">
+                          <span className="text-[8px] print:text-[9px]">{scoreInWords}</span>
                         </td>
-                        <td className="border-l-1 border-black p-1 text-center">
+                        <td className="border-l border-black p-1 print:p-1.5 text-center">
                           {gradeInfo?.arabic || ''}
                         </td>
-                        <td className="p-1 text-center">
+                        <td className="p-1 print:p-1.5 text-center">
                           <span className={result && result.score >= 50 ? '' : 'text-red-600'}>
                             {gradeInfo?.remarkArabic || ''}
                           </span>
@@ -769,35 +386,35 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
                     );
                   })}
 
-                  {/* Total Row - Subject column merged, numbers span other columns */}
-                  <tr className="border-t-1 border-black text-xs">
-                    <td className="border-l-1 border-black p-2 text-center" colSpan="2">
-                      المجموع الكلي   TOTAL
+                  {/* Total Row */}
+                  <tr className="border-t border-black font-bold">
+                    <td className="border-l border-black p-2 text-center text-[9px] print:text-[8px]" colSpan="2">
+                      المجموع الكلي TOTAL
                     </td>
-                    <td className="border-l-1 border-black p-2 text-center">
+                    <td className="border-l border-black p-2 text-center">
                       {reportData.totalMax}
                     </td>
-                    <td className="p-2 text-center text-xs" colSpan="4">
+                    <td className="p-2 text-center" colSpan="4">
                       {reportData.totalScore}
                     </td>
                   </tr>
 
                   {/* Percentage Row */}
-                  <tr className="border-t border-black text-xs">
-                    <td className="border-l-1 border-black p-2 text-center" colSpan="2">
-                      النسبة المئوية    PERCENTAGE
+                  <tr className="border-t border-black font-bold">
+                    <td className="border-l border-black p-2 text-center text-[9px] print:text-[8px]" colSpan="2">
+                      النسبة المئوية PERCENTAGE
                     </td>
-                    <td className="p-2 text-center text-xs" colSpan="5">
+                    <td className="p-2 text-center" colSpan="5">
                       {reportData.percentage}%
                     </td>
                   </tr>
 
                   {/* Grade Row */}
-                  <tr className="border-t border-black text-xs">
-                    <td className="border-l-1 border-black p-2 text-center" colSpan="2">
-                      التقدير العام    GRADE
+                  <tr className="border-t border-black font-bold">
+                    <td className="border-l border-black p-2 text-center text-[9px] print:text-[8px]" colSpan="2">
+                      التقدير العام GRADE
                     </td>
-                    <td className="p-2 text-center text-xs" colSpan="5">
+                    <td className="p-2 text-center" colSpan="5">
                       {reportData.overallGrade.arabic} / {reportData.overallGrade.english}
                     </td>
                   </tr>
@@ -805,69 +422,65 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
               </table>
 
               {/* Next Term & Promoted Section */}
-              <div className="grid grid-cols-2 gap-4 mb-2 text-xs">
+              <div className="grid grid-cols-2 gap-3 print:mb-4 text-[10px] print:text-xs">
                 <div className="flex items-center">
-                  <span className="font-semibold whitespace-nowrap">Next Term Begins:</span>
-                  <span className="flex-1 border-b border-dotted border-gray-600 mx-2"></span>
-                  <span dir="rtl" className="whitespace-nowrap">بداية الفصل الدراسي الجديد</span>
+                  <span className="font-semibold whitespace-nowrap text-[10px] print:text-xs">Next Term Begins:</span>
+                  <span className="flex-1 border-b border-dotted border-gray-600 "></span>
+                  <span dir="rtl" className="whitespace-nowrap text-[10px] print:text-xs">بداية الفصل الدراسي الجديد</span>
                 </div>
                 <div className="flex items-center">
-                  <span className="font-semibold whitespace-nowrap">Promoted:</span>
+                  <span className="font-semibold whitespace-nowrap text-[10px] print:text-xs">Promoted:</span>
                   <span className="flex-1 border-b border-dotted border-gray-600 mx-2"></span>
-                  <span dir="rtl" className="whitespace-nowrap">منقول إلى</span>
+                  <span dir="rtl" className="whitespace-nowrap text-[10px] print:text-xs">منقول إلى</span>
                 </div>
               </div>
 
-              {/* Class Teacher's Remark - Centered under line */}
-              <div className="mb-2 text-xs">
-                <div className="flex items-center mb-1">
-                  <span className="font-semibold whitespace-nowrap">Class Teacher's Remark:</span>
-                  {/* <span className="flex-1"></span> */}
-                  <span dir="rtl" className="whitespace-nowrap">ملاحظة المدرس</span>
-                </div>
-                <div className="border-b border-dotted border-gray-600 min-h-[50px] flex items-end justify-center pb-1" dir="rtl">
-                  {/* Teacher's remark in Arabic centered under the line */}
-                  <span className="text-center">
-                    {/* Add teacher remark here */}
+              {/* Class Teacher's Remark - Display teacherRemarkArabic */}
+              <div className=" print:mb-2 text-[10px] print:text-xs">
+                <div className="flex items-center mb-2">
+                  <span className="font-semibold whitespace-nowrap text-[10px] print:text-xs">Class Teacher's Remark:</span>
+                  <span className="flex-1 border-b border-dotted border-gray-600 mx-2 min-h-[20px] print:min-h-[24px] text-center font-bold" dir="rtl">
+                    {reportData.overallGrade.teacherRemarkArabic}
                   </span>
+                  <span dir="rtl" className="whitespace-nowrap text-[10px] print:text-xs">ملاحظة المدرس</span>
                 </div>
               </div>
 
               {/* Signatures Section */}
-              <div className="grid grid-cols-2 gap-8 text-xs">
+              <div className="grid grid-cols-2 gap-6 text-[10px] print:text-xs">
                 <div>
-                  <div className="flex items-center mb-2">
-                    <span className="font-semibold whitespace-nowrap">Principal's Sign:</span>
-                    <span className="flex-1 border-b border-dotted border-gray-600 mx-2 min-h-[50px] flex items-end justify-center">
+                  <div className="flex items-center mb-2 print:mb-3">
+                    <span className="font-semibold whitespace-nowrap text-[10px] print:text-xs">Principal's Sign:</span>
+                    <span className="flex-1 border-b border-dotted border-gray-600 flex items-end justify-center mx-1">
                       <img 
-                    src="/InkedInkedsign2_LI.jpg" 
-                    alt="School Logo" 
-                    className="w-24 h-24 object-contain"
-                  />
+                        src="/sign2.png" 
+                        alt="Principal Signature" 
+                        className="w-20 h-5 print:w-24 print:h-6 object-contain"
+                      />
                     </span>
-                    <span dir="rtl" className="whitespace-nowrap">توقيع الوكيل</span>
+                    <span dir="rtl" className="whitespace-nowrap text-[10px] print:text-xs">توقيع الوكيل</span>
                   </div>
                   
                   <div className="flex items-center mb-2">
-                    <span className="font-semibold whitespace-nowrap">Signature:</span>
-                    <span className="flex-1 border-b border-dotted border-gray-600 mx-2 min-h-[50px]"></span>
-                    <span dir="rtl" className="whitespace-nowrap">التوقيع</span>
+                    <span className="font-semibold whitespace-nowrap text-[10px] print:text-xs">Date:</span>
+                    <span className="flex-1 border-b border-dotted border-gray-600 mx-2 min-h-[18px] print:min-h-[22px] text-center text-[10px] print:text-xs">
+                      {new Date().toLocaleDateString()}
+                    </span>
+                    <span dir="rtl" className="whitespace-nowrap text-[10px] print:text-xs">التاريخ</span>
                   </div>
                 </div>
 
                 <div>
-                  <div className="flex items-center mb-2">
-                    <span className="font-semibold whitespace-nowrap">Date:</span>
-                    <span className="flex-1 border-b border-dotted border-gray-600 mx-2">
-                      {new Date().toLocaleDateString()}
-                    </span>
-                    <span dir="rtl" className="whitespace-nowrap">التاريخ</span>
+                  <div className="flex items-center mb-2 print:mb-3">
+                    <span className="font-semibold whitespace-nowrap text-[10px] print:text-xs">Signature:</span>
+                    <span className="flex-1 border-b border-dotted border-gray-600 mx-2 min-h-[22px] print:min-h-[26px]"></span>
+                    <span dir="rtl" className="whitespace-nowrap text-[10px] print:text-xs">التوقيع</span>
                   </div>
                   
                   <div className="flex items-center">
-                    <span className="font-semibold whitespace-nowrap">Stamp:</span>
-                    <span className="flex-1 border-b border-dotted border-gray-600 mx-2 min-h-[80px]"></span>
-                    <span dir="rtl" className="whitespace-nowrap">الختم</span>
+                    <span className="font-semibold whitespace-nowrap text-[10px] print:text-xs">Stamp:</span>
+                    <span className="flex-1 border-b border-dotted border-gray-600 mx-2 min-h-[18px] print:min-h-[22px]"></span>
+                    <span dir="rtl" className="whitespace-nowrap text-[10px] print:text-xs">الختم</span>
                   </div>
                 </div>
               </div>
@@ -876,15 +489,28 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
         )}
       </div>
 
-      {/* Print Styles */}
+      {/* Enhanced Print Styles */}
       <style jsx>{`
         @media print {
+          * {
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+          }
+          
           body * {
             visibility: hidden;
           }
+          
           .fixed * {
             visibility: visible;
           }
+          .bg-black {
+  background-color: white !important;
+}
+
+.bg-opacity-75 {
+  background-opacity: 1 !important;
+}
           .fixed {
             position: absolute;
             left: 0;
@@ -892,13 +518,88 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
             width: 100%;
             height: 100%;
             background: white;
+            overflow: visible;
           }
+          
           .print\\:hidden {
             display: none !important;
           }
+          
+          .print\\:p-2 {
+            padding: 1cm 1.5cm !important;
+          }
+          
+          .print\\:mb-2 {
+            margin-bottom: .2rem !important;
+          }
+          
+          .print\\:mb-3 {
+            margin-bottom: 0.5rem !important;
+          }
+          
+          .print\\:text-xs {
+            font-size: 12px !important;
+          }
+          
+          .print\\:text-sm {
+            font-size: 12px !important;
+          }
+          
+          .print\\:text-base {
+            font-size: 12px !important;
+          }
+          
+          .print\\:text-\\[10px\\] {
+            font-size: 10px !important;
+          }
+          
+          .print\\:text-\\[9px\\] {
+            font-size: 9px !important;
+          }
+          
+          .print\\:w-20 {
+            width: 5rem !important;
+          }
+          
+          .print\\:h-20 {
+            height: 5rem !important;
+          }
+          
+          .print\\:w-24 {
+            width: 6rem !important;
+          }
+          
+          .print\\:h-6 {
+            height: 1.5rem !important;
+          }
+          
+          .print\\:p-1\\.5 {
+            padding: 0.375rem !important;
+          }
+          
+          .print\\:min-h-\\[24px\\] {
+            min-height: 24px !important;
+          }
+          
+          .print\\:min-h-\\[22px\\] {
+            min-height: 22px !important;
+          }
+          
+          .print\\:min-h-\\[26px\\] {
+            min-height: 26px !important;
+          }
+          
           @page {
-            margin: 1cm;
-            size: A4;
+            margin: .4cm;
+            size: A4 portrait;
+          }
+          
+          table {
+            page-break-inside: avoid;
+          }
+          
+          tr {
+            page-break-inside: avoid;
           }
         }
       `}</style>
@@ -906,12 +607,6 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
   );
 };
 
-
-// ============================================
-// MODAL COMPONENTS - SESSION & CLASS
-// ============================================
-
-// Session Modal (Create & Edit)
 const SessionModal = ({ isOpen, onClose, onSave, editingSession }) => {
   const [formData, setFormData] = useState({
     sessionName: '',
