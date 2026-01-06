@@ -98,6 +98,641 @@ const EmptyState = ({ icon: Icon, title, description, action }) => (
   </div>
 );
 
+// const numberToArabicWords = (num) => {
+//   // Convert to integer
+//   const n = parseInt(num);
+  
+//   // Explicit mapping for all numbers 0-100
+//   switch(n) {
+//     case 0: return 'صفر';
+//     case 1: return 'واحد';
+//     case 2: return 'اثنان';
+//     case 3: return 'ثلاثة';
+//     case 4: return 'أربعة';
+//     case 5: return 'خمسة';
+//     case 6: return 'ستة';
+//     case 7: return 'سبعة';
+//     case 8: return 'ثمانية';
+//     case 9: return 'تسعة';
+//     case 10: return 'عشرة';
+//     case 11: return 'أحد عشر';
+//     case 12: return 'اثنا عشر';
+//     case 13: return 'ثلاثة عشر';
+//     case 14: return 'أربعة عشر';
+//     case 15: return 'خمسة عشر';
+//     case 16: return 'ستة عشر';
+//     case 17: return 'سبعة عشر';
+//     case 18: return 'ثمانية عشر';
+//     case 19: return 'تسعة عشر';
+//     case 20: return 'عشرون';
+//     case 21: return 'واحد وعشرون';
+//     case 22: return 'اثنان وعشرون';
+//     case 23: return 'ثلاثة وعشرون';
+//     case 24: return 'أربعة وعشرون';
+//     case 25: return 'خمسة وعشرون';
+//     case 26: return 'ستة وعشرون';
+//     case 27: return 'سبعة وعشرون';
+//     case 28: return 'ثمانية وعشرون';
+//     case 29: return 'تسعة وعشرون';
+//     case 30: return 'ثلاثون';
+//     case 31: return 'واحد وثلاثون';
+//     case 32: return 'اثنان وثلاثون';
+//     case 33: return 'ثلاثة وثلاثون';
+//     case 34: return 'أربعة وثلاثون';
+//     case 35: return 'خمسة وثلاثون';
+//     case 36: return 'ستة وثلاثون';
+//     case 37: return 'سبعة وثلاثون';
+//     case 38: return 'ثمانية وثلاثون';
+//     case 39: return 'تسعة وثلاثون';
+//     case 40: return 'أربعون';
+//     case 41: return 'واحد وأربعون';
+//     case 42: return 'اثنان وأربعون';
+//     case 43: return 'ثلاثة وأربعون';
+//     case 44: return 'أربعة وأربعون';
+//     case 45: return 'خمسة وأربعون';
+//     case 46: return 'ستة وأربعون';
+//     case 47: return 'سبعة وأربعون';
+//     case 48: return 'ثمانية وأربعون';
+//     case 49: return 'تسعة وأربعون';
+//     case 50: return 'خمسون';
+//     case 51: return 'واحد وخمسون';
+//     case 52: return 'اثنان وخمسون';
+//     case 53: return 'ثلاثة وخمسون';
+//     case 54: return 'أربعة وخمسون';
+//     case 55: return 'خمسة وخمسون';
+//     case 56: return 'ستة وخمسون';
+//     case 57: return 'سبعة وخمسون';
+//     case 58: return 'ثمانية وخمسون';
+//     case 59: return 'تسعة وخمسون';
+//     case 60: return 'ستون';
+//     case 61: return 'واحد وستون';
+//     case 62: return 'اثنان وستون';
+//     case 63: return 'ثلاثة وستون';
+//     case 64: return 'أربعة وستون';
+//     case 65: return 'خمسة وستون';
+//     case 66: return 'ستة وستون';
+//     case 67: return 'سبعة وستون';
+//     case 68: return 'ثمانية وستون';
+//     case 69: return 'تسعة وستون';
+//     case 70: return 'سبعون';
+//     case 71: return 'واحد وسبعون';
+//     case 72: return 'اثنان وسبعون';
+//     case 73: return 'ثلاثة وسبعون';
+//     case 74: return 'أربعة وسبعون';
+//     case 75: return 'خمسة وسبعون';
+//     case 76: return 'ستة وسبعون';
+//     case 77: return 'سبعة وسبعون';
+//     case 78: return 'ثمانية وسبعون';
+//     case 79: return 'تسعة وسبعون';
+//     case 80: return 'ثمانون';
+//     case 81: return 'واحد وثمانون';
+//     case 82: return 'اثنان وثمانون';
+//     case 83: return 'ثلاثة وثمانون';
+//     case 84: return 'أربعة وثمانون';
+//     case 85: return 'خمسة وثمانون';
+//     case 86: return 'ستة وثمانون';
+//     case 87: return 'سبعة وثمانون';
+//     case 88: return 'ثمانية وثمانون';
+//     case 89: return 'تسعة وثمانون';
+//     case 90: return 'تسعون';
+//     case 91: return 'واحد وتسعون';
+//     case 92: return 'اثنان وتسعون';
+//     case 93: return 'ثلاثة وتسعون';
+//     case 94: return 'أربعة وتسعون';
+//     case 95: return 'خمسة وتسعون';
+//     case 96: return 'ستة وتسعون';
+//     case 97: return 'سبعة وتسعون';
+//     case 98: return 'ثمانية وتسعون';
+//     case 99: return 'تسعة وتسعون';
+//     case 100: return 'مائة';
+//     default: return String(n); // Return number as string if outside range
+//   }
+// };
+
+// const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subjects }) => {
+//   const [reportData, setReportData] = useState(null);
+//   const [loading, setLoading] = useState(false);
+
+//   useEffect(() => {
+//     if (student && isOpen) {
+//       loadReportCardData();
+//     }
+//   }, [student, isOpen]);
+
+//   const loadReportCardData = async () => {
+//     setLoading(true);
+//     try {
+//       const { resultsManager, studentsManager } = await import('../../lib/appwrite');
+      
+//       const resultsResponse = await resultsManager.getByStudent(student.$id);
+//       const classStudentsResponse = await studentsManager.getByClass(student.classId);
+      
+//       if (resultsResponse.success && classStudentsResponse.success) {
+//         const results = resultsResponse.results;
+//         const totalScore = results.reduce((sum, r) => sum + r.score, 0);
+//         const totalMax = results.length * 100;
+//         const percentage = results.length > 0 ? ((totalScore / totalMax) * 100).toFixed(2) : 0;
+        
+//         const classPosition = await calculateClassPosition(
+//           student.$id, 
+//           classStudentsResponse.students,
+//           resultsManager
+//         );
+        
+//         // Calculate overall grade
+//         const overallGrade = calculateGrade(parseFloat(percentage));
+        
+//         setReportData({
+//           results,
+//           totalScore,
+//           totalMax,
+//           percentage,
+//           overallGrade,
+//           classPosition,
+//           totalStudents: classStudentsResponse.students.length
+//         });
+//       }
+//     } catch (error) {
+//       console.error('Error loading report card:', error);
+//       alert('Failed to load report card data');
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
+
+//   const calculateClassPosition = async (studentId, classStudents, resultsManager) => {
+//     try {
+//       const studentsWithScores = await Promise.all(
+//         classStudents.map(async (s) => {
+//           const res = await resultsManager.getByStudent(s.$id);
+//           const total = res.success 
+//             ? res.results.reduce((sum, r) => sum + r.score, 0) 
+//             : 0;
+//           return { studentId: s.$id, totalScore: total };
+//         })
+//       );
+
+//       studentsWithScores.sort((a, b) => b.totalScore - a.totalScore);
+//       const position = studentsWithScores.findIndex(s => s.studentId === studentId) + 1;
+//       return position;
+//     } catch (error) {
+//       console.error('Error calculating position:', error);
+//       return 0;
+//     }
+//   };
+
+//   const handlePrint = () => {
+//     window.print();
+//   };
+
+//   const getPositionSuffix = (position) => {
+//     if (position === 1) return 'st';
+//     if (position === 2) return 'nd';
+//     if (position === 3) return 'rd';
+//     return 'th';
+//   };
+
+//   const calculateGrade = (score) => {
+//     if (score >= 90) return { english: 'Excellent', arabic: 'ممتاز', remarkArabic: 'نجح', teacherRemarkArabic: 'امتياز' };
+//     if (score >= 80) return { english: 'Very Good', arabic: 'جيد جداً', remarkArabic: 'نجح', teacherRemarkArabic: 'مجتهدا' };
+//     if (score >= 60) return { english: 'Good', arabic: 'جيد', remarkArabic: 'نجح', teacherRemarkArabic: 'اجتهادا' };
+//     if (score >= 50) return { english: 'Pass', arabic: 'مقبول', remarkArabic: 'نجح', teacherRemarkArabic: 'كن مجتهدا' };
+//     return { english: 'Fail', arabic: 'راسب', remarkArabic: 'راسب', teacherRemarkArabic: 'اجتهد نفسك' };
+//   };
+
+//   if (!isOpen) return null;
+
+//   return (
+//     <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4 overflow-auto">
+//       <div className="bg-white rounded-lg shadow-2xl w-full max-w-4xl max-h-[95vh] overflow-y-auto">
+//         {/* Print/Close Buttons */}
+//         <div className="flex justify-end gap-2 p-4 print:hidden bg-gray-100 border-b">
+//           <button
+//             onClick={handlePrint}
+//             className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
+//           >
+//             <Printer size={18} />
+//             Print Report Card
+//           </button>
+//           <button
+//             onClick={onClose}
+//             className="flex items-center gap-2 px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700"
+//           >
+//             <X size={18} />
+//             Close
+//           </button>
+//         </div>
+
+//         {loading && (
+//           <div className="flex justify-center items-center py-12">
+//             <div className="w-12 h-12 border-4 border-green-500 border-t-transparent rounded-full animate-spin"></div>
+//           </div>
+//         )}
+
+//         {!loading && reportData && (
+//                         <div className="p-6 print:p-6 bg-white relative">
+//             {/* Watermark Logo Background */}
+//             <div className="absolute inset-0 flex items-center justify-center opacity-5 pointer-events-none z-0">
+//               <div className="w-250 h-250 flex items-center justify-center">
+//                 <img 
+//                   src="/logo.png" 
+//                   alt="School Logo" 
+//                   className="w-full h-full object-contain"
+//                 />
+//               </div>
+//             </div>
+
+//             {/* Content */}
+//             <div className="relative z-10">
+//               {/* Header Section with Logos */}
+//               <div className="flex items-start justify-between print:mb-4 bg-gray-100">
+//                 {/* Left Logo */}
+//                 <div className="w-26 h-26 print:w-26 print:h-26 flex items-center justify-center flex-shrink-0">
+//                   <img 
+//                     src="/logo.png" 
+//                     alt="School Logo" 
+//                     className="w-full h-full object-contain"
+//                   />
+//                 </div>
+
+//                 {/* Center Header */}
+//                 <div className="flex-1 text-center p-1">
+//                   <p className="text-[10px] print:text-xs mb-1">بسم الله الرحمن الرحيم</p>
+//                   <h1 className="text-sm print:text-base font-bold mb-1">معهد دار المؤمن للدراسات العربية والإسلامية</h1>
+//                   <h2 className="text-xs print:text-sm font-bold mb-1">
+//                     DAARUL MUHMIN INSTITUTE OF ARABIC AND ISLAMIC STUDIES
+//                   </h2>
+//                   <div className="text-[10px] print:text-xs font-semibold py-1 ">
+//                     <span>REPORT SHEET كشف الدرجات</span>
+//                     <span className="mx-3"></span>   
+//                     <span>EXAMINATION OFFICE إدارة الإمتحانات</span>
+//                   </div>
+//                 </div>
+
+//                 {/* Right Logo */}
+//                 <div className="w-26 h-26 print:w-26 print:h-26 flex items-center justify-center flex-shrink-0">
+//                   <img 
+//                     src="/logo.png" 
+//                     alt="School Logo" 
+//                     className="w-full h-full object-contain"
+//                   />
+//                 </div>
+//               </div>
+
+//               {/* Student Information Section */}
+//               <div className="mb-3 print:mb-4 text-[11px] print:text-xs">
+//                 {/* Name Row */}
+//                 <div className="flex items-center mb-2">
+//                   <span className="font-semibold w-14 text-[10px] print:text-xs">Name:</span>
+//                   <span className="flex-1 border-b border-dotted border-gray-600 px-2 text-[10px] print:text-xs">
+//                     {student.fullName} {student.arabicName && `( ${student.arabicName} )`}
+//                   </span>
+//                   <span className="mr-2 text-[10px] print:text-xs" dir="rtl">اسم الطالب</span>
+//                 </div>
+
+//                 {/* Session Row */}
+//                 <div className="flex items-center mb-2">
+//                   <span className="font-semibold w-14 text-[10px] print:text-xs">Session:</span>
+//                   <span className="flex-1 border-b border-dotted border-gray-600 px-2 text-[10px] print:text-xs">
+//                     {session?.sessionName} {session?.sessionNameArabic && `/ ${session.sessionNameArabic}`}
+//                   </span>
+//                   <span className="mr-2 text-[10px] print:text-xs" dir="rtl">العام الدراسي</span>
+//                 </div>
+
+//                 {/* Position, No. in Class, Class Row */}
+//                 <div className="flex items-center gap-3">
+//                   <div className="flex items-center flex-1">
+//                     <span className="font-semibold whitespace-nowrap text-[10px] print:text-xs">Position:</span>
+//                     <span className="flex-1 border-b border-dotted border-gray-600 px-1 mx-1 text-[10px] print:text-xs">
+//                       {reportData.classPosition}{getPositionSuffix(reportData.classPosition)}
+//                     </span>
+//                     <span dir="rtl" className="whitespace-nowrap text-[10px] print:text-xs">الترتيب</span>
+//                   </div>
+
+//                   <div className="flex items-center flex-1">
+//                     <span className="font-semibold whitespace-nowrap text-[10px] print:text-xs">No. in Class:</span>
+//                     <span className="flex-1 border-b border-dotted border-gray-600 px-1 mx-1 text-[10px] print:text-xs">
+//                       {reportData.totalStudents}
+//                     </span>
+//                     <span dir="rtl" className="whitespace-nowrap text-[10px] print:text-xs">عدد الطلاب</span>
+//                   </div>
+
+//                   <div className="flex items-center flex-1">
+//                     <span className="font-semibold whitespace-nowrap text-[10px] print:text-xs">Class:</span>
+//                     <span className="flex-1 border-b border-dotted border-gray-600 px-1 mx-1 text-[10px] print:text-xs">
+//                       {classInfo?.className}
+//                     </span>
+//                     <span dir="rtl" className="whitespace-nowrap text-[10px] print:text-xs">الصف</span>
+//                   </div>
+//                 </div>
+//               </div>
+
+//               {/* Grades Table - Larger for printing */}
+//               <table className="w-full border border-black text-[9px] print:text-[10px] mb-3 print:mb-4" dir="rtl">
+//                 <thead>
+//                   <tr className="border-b border-black">
+//                     <th className="border-l border-black p-1 print:p-1.5 w-6 text-center">ت</th>
+//                     <th className="border-l border-black p-1 print:p-1.5 text-center">
+//                       المواد الدراسية SUBJECT
+//                     </th>
+//                     <th className="border-l border-black p-1 print:p-1.5 w-10 text-center">الدرجة</th>
+//                     <th className="border-l border-black p-1 print:p-1.5 w-10 text-center">رقماً</th>
+//                     <th className="border-l border-black p-1 print:p-1.5 w-16 text-center">كتابة</th>
+//                     <th className="border-l border-black p-1 print:p-1.5 w-14 text-center">التقدير</th>
+//                     <th className="p-1 print:p-1.5 w-12 text-center">ملحوظة</th>
+//                   </tr>
+//                 </thead>
+//                 <tbody>
+//                   {subjects.map((subject, index) => {
+//                     const result = reportData.results.find(r => r.subjectId === subject.$id);
+//                     const gradeInfo = result ? calculateGrade(result.score) : null;
+//                     const scoreInWords = result ? numberToArabicWords(result.score) : '';
+                    
+//                     return (
+//                       <tr key={subject.$id} className="border-b border-black">
+//                         <td className="border-l border-black p-1 print:p-1.5 text-center">{index + 1}</td>
+//                         <td className="border-l border-black p-1 print:p-1.5">
+//                           <div className="flex justify-between items-center gap-1">
+//                             <span className="text-[9px] print:text-[10px]">{subject.arabicName}</span>
+//                             <span className="text-gray-600 text-left text-[8px] print:text-[9px]">{subject.englishName}</span>
+//                           </div>
+//                         </td>
+//                         <td className="border-l border-black p-1 print:p-1.5 text-center font-bold">100</td>
+//                         <td className="border-l border-black p-1 print:p-1.5 text-center font-bold">
+//                           {result ? result.score : ''}
+//                         </td>
+//                         <td className="border-l border-black p-1 print:p-1.5 text-center">
+//                           <span className="text-[8px] print:text-[9px]">{scoreInWords}</span>
+//                         </td>
+//                         <td className="border-l border-black p-1 print:p-1.5 text-center">
+//                           {gradeInfo?.arabic || ''}
+//                         </td>
+//                         <td className="p-1 print:p-1.5 text-center">
+//                           <span className={result && result.score >= 50 ? '' : 'text-red-600'}>
+//                             {gradeInfo?.remarkArabic || ''}
+//                           </span>
+//                         </td>
+//                       </tr>
+//                     );
+//                   })}
+
+//                   {/* Total Row */}
+//                   <tr className="border-t border-black font-bold">
+//                     <td className="border-l border-black p-2 text-center text-[9px] print:text-[8px]" colSpan="2">
+//                       المجموع الكلي TOTAL
+//                     </td>
+//                     <td className="border-l border-black p-2 text-center">
+//                       {reportData.totalMax}
+//                     </td>
+//                     <td className="p-2 text-center" colSpan="4">
+//                       {reportData.totalScore}
+//                     </td>
+//                   </tr>
+
+//                   {/* Percentage Row */}
+//                   <tr className="border-t border-black font-bold">
+//                     <td className="border-l border-black p-2 text-center text-[9px] print:text-[8px]" colSpan="2">
+//                       النسبة المئوية PERCENTAGE
+//                     </td>
+//                     <td className="p-2 text-center" colSpan="5">
+//                       {reportData.percentage}%
+//                     </td>
+//                   </tr>
+
+//                   {/* Grade Row */}
+//                   <tr className="border-t border-black font-bold">
+//                     <td className="border-l border-black p-2 text-center text-[9px] print:text-[8px]" colSpan="2">
+//                       التقدير العام GRADE
+//                     </td>
+//                     <td className="p-2 text-center" colSpan="5">
+//                       {reportData.overallGrade.arabic} / {reportData.overallGrade.english}
+//                     </td>
+//                   </tr>
+//                 </tbody>
+//               </table>
+
+//               {/* Next Term & Promoted Section */}
+//               <div className="grid grid-cols-2 gap-3 print:mb-4 text-[10px] print:text-xs">
+//                 <div className="flex items-center">
+//                   <span className="font-semibold whitespace-nowrap text-[10px] print:text-xs">Next Term Begins:</span>
+//                   <span className="flex-1 border-b border-dotted border-gray-600 "></span>
+//                   <span dir="rtl" className="whitespace-nowrap text-[10px] print:text-xs">بداية الفصل الدراسي الجديد</span>
+//                 </div>
+//                 <div className="flex items-center">
+//                   <span className="font-semibold whitespace-nowrap text-[10px] print:text-xs">Promoted:</span>
+//                   <span className="flex-1 border-b border-dotted border-gray-600 mx-2"></span>
+//                   <span dir="rtl" className="whitespace-nowrap text-[10px] print:text-xs">منقول إلى</span>
+//                 </div>
+//               </div>
+
+//               {/* Class Teacher's Remark - Display teacherRemarkArabic */}
+//               <div className=" print:mb-2 text-[10px] print:text-xs">
+//                 <div className="flex items-center mb-2">
+//                   <span className="font-semibold whitespace-nowrap text-[10px] print:text-xs">Class Teacher's Remark:</span>
+//                   <span className="flex-1 border-b border-dotted border-gray-600 mx-2 min-h-[20px] print:min-h-[24px] text-center font-bold" dir="rtl">
+//                     {reportData.overallGrade.teacherRemarkArabic}
+//                   </span>
+//                   <span dir="rtl" className="whitespace-nowrap text-[10px] print:text-xs">ملاحظة المدرس</span>
+//                 </div>
+//               </div>
+
+//               {/* Signatures Section */}
+//               <div className="grid grid-cols-2 gap-6 text-[10px] print:text-xs">
+//                 <div>
+//                   <div className="flex items-center mb-2 print:mb-3">
+//                     <span className="font-semibold whitespace-nowrap text-[10px] print:text-xs">Principal's Sign:</span>
+//                     <span className="flex-1 border-b border-dotted border-gray-600 flex items-end justify-center mx-1">
+//                       <img 
+//                         src="/sign2.png" 
+//                         alt="Principal Signature" 
+//                         className="w-20 h-5 print:w-24 print:h-6 object-contain"
+//                       />
+//                     </span>
+//                     <span dir="rtl" className="whitespace-nowrap text-[10px] print:text-xs">توقيع الوكيل</span>
+//                   </div>
+                  
+//                   <div className="flex items-center mb-2">
+//                     <span className="font-semibold whitespace-nowrap text-[10px] print:text-xs">Date:</span>
+//                     <span className="flex-1 border-b border-dotted border-gray-600 mx-2 min-h-[18px] print:min-h-[22px] text-center text-[10px] print:text-xs">
+//                       {new Date().toLocaleDateString()}
+//                     </span>
+//                     <span dir="rtl" className="whitespace-nowrap text-[10px] print:text-xs">التاريخ</span>
+//                   </div>
+//                 </div>
+
+//                 <div>
+//                   <div className="flex items-center mb-2 print:mb-3">
+//                     <span className="font-semibold whitespace-nowrap text-[10px] print:text-xs">Signature:</span>
+//                     <span className="flex-1 border-b border-dotted border-gray-600 flex items-end justify-center mx-1">
+//                       <img 
+//                         src="/sign.png" 
+//                         alt="Class Signature" 
+//                         className="w-20 h-5 print:w-24 print:h-6 object-contain"
+//                       />
+//                     </span>
+//                     <span dir="rtl" className="whitespace-nowrap text-[10px] print:text-xs">التوقيع</span>
+//                   </div>
+                  
+//                   <div className="flex items-center">
+//                     <span className="font-semibold whitespace-nowrap text-[10px] print:text-xs">Stamp:</span>
+//                     <span className="flex-1 border-b border-dotted border-gray-600 mx-2 min-h-[18px] print:min-h-[22px]"></span>
+//                     <span dir="rtl" className="whitespace-nowrap text-[10px] print:text-xs">الختم</span>
+//                   </div>
+//                 </div>
+//               </div>
+//             </div>
+//           </div>
+//         )}
+//       </div>
+
+//       {/* Enhanced Print Styles */}
+//       <style jsx>{`
+//   @media print {
+//     * {
+//       -webkit-print-color-adjust: exact !important;
+//       print-color-adjust: exact !important;
+//     }
+    
+//     body * {
+//       visibility: hidden;
+//     }
+    
+//     .fixed * {
+//       visibility: visible;
+//     }
+    
+//     .bg-black {
+//       background-color: white !important;
+//     }
+
+//     .bg-opacity-75 {
+//       background-opacity: 1 !important;
+//     }
+    
+//     .fixed {
+//       position: absolute;
+//       left: 0;
+//       top: 0;
+//       width: 100%;
+//       height: 100%;
+//       background: white !important;
+//       overflow: visible;
+//       padding: 0 !important;
+//     }
+    
+//     .bg-white {
+//       background-color: white !important;
+//     }
+    
+//     .rounded-lg {
+//       border-radius: 0 !important;
+//     }
+    
+//     .max-w-4xl {
+//       max-width: 100% !important;
+//     }
+    
+//     .shadow-2xl {
+//       box-shadow: none !important;
+//     }
+    
+//     .p-4 {
+//       padding: 0 !important;
+//     }
+    
+//     .print\\:hidden {
+//       display: none !important;
+//     }
+    
+//     .print\\:p-2 {
+//       padding: 1cm 1.5cm !important;
+//     }
+    
+//     .print\\:mb-2 {
+//       margin-bottom: .2rem !important;
+//     }
+    
+//     .print\\:mb-3 {
+//       margin-bottom: 0.5rem !important;
+//     }
+    
+//     .print\\:text-xs {
+//       font-size: 12px !important;
+//     }
+    
+//     .print\\:text-sm {
+//       font-size: 12px !important;
+//     }
+    
+//     .print\\:text-base {
+//       font-size: 12px !important;
+//     }
+    
+//     .print\\:text-\\[10px\\] {
+//       font-size: 10px !important;
+//     }
+    
+//     .print\\:text-\\[9px\\] {
+//       font-size: 9px !important;
+//     }
+    
+//     .print\\:w-20 {
+//       width: 5rem !important;
+//     }
+    
+//     .print\\:h-20 {
+//       height: 5rem !important;
+//     }
+    
+//     .print\\:w-24 {
+//       width: 6rem !important;
+//     }
+    
+//     .print\\:h-6 {
+//       height: 1.5rem !important;
+//     }
+    
+//     .print\\:p-1\\.5 {
+//       padding: 0.375rem !important;
+//     }
+    
+//     .print\\:min-h-\\[24px\\] {
+//       min-height: 24px !important;
+//     }
+    
+//     .print\\:min-h-\\[22px\\] {
+//       min-height: 22px !important;
+//     }
+    
+//     .print\\:min-h-\\[26px\\] {
+//       min-height: 26px !important;
+//     }
+    
+//     @page {
+//       margin: .4cm;
+//       size: A4 portrait;
+//     }
+    
+//     table {
+//       page-break-inside: avoid;
+//     }
+    
+//     tr {
+//       page-break-inside: avoid;
+//     }
+//   }
+// `}</style>
+//     </div>
+//   );
+// };
+
+// Number to Arabic numerals converter (for percentage display)
+const toArabicNumerals = (num) => {
+  const arabicNumerals = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
+  return String(num).replace(/\d/g, (digit) => arabicNumerals[parseInt(digit)]);
+};
+
+// Number to Arabic words converter (Explicit 0-100)
 const numberToArabicWords = (num) => {
   // Convert to integer
   const n = parseInt(num);
@@ -303,8 +938,8 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4 overflow-auto">
-      <div className="bg-white rounded-lg shadow-2xl w-full max-w-4xl max-h-[95vh] overflow-y-auto">
+    <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4 overflow-auto print:p-0">
+      <div className="bg-white rounded-lg shadow-2xl w-full max-w-4xl max-h-[95vh] overflow-y-auto print:max-h-none print:overflow-visible print:shadow-none">
         {/* Print/Close Buttons */}
         <div className="flex justify-end gap-2 p-4 print:hidden bg-gray-100 border-b">
           <button
@@ -333,11 +968,11 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
                         <div className="p-6 print:p-6 bg-white relative">
             {/* Watermark Logo Background */}
             <div className="absolute inset-0 flex items-center justify-center opacity-5 pointer-events-none z-0">
-              <div className="w-200 h-200 flex items-center justify-center">
+              <div className="w-64 h-64 flex items-center justify-center">
                 <img 
                   src="/logo.png" 
                   alt="School Logo" 
-                  className="w-full h-full object-contain"
+                  className="w-64 h-64 object-contain"
                 />
               </div>
             </div>
@@ -345,9 +980,9 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
             {/* Content */}
             <div className="relative z-10">
               {/* Header Section with Logos */}
-              <div className="flex items-start justify-between print:mb-4 bg-gray-100">
+              <div className="flex items-start justify-between mb-3 print:mb-4">
                 {/* Left Logo */}
-                <div className="w-26 h-26 print:w-26 print:h-26 flex items-center justify-center flex-shrink-0">
+                <div className="w-16 h-16 print:w-20 print:h-20 flex items-center justify-center flex-shrink-0">
                   <img 
                     src="/logo.png" 
                     alt="School Logo" 
@@ -356,13 +991,13 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
                 </div>
 
                 {/* Center Header */}
-                <div className="flex-1 text-center p-1">
+                <div className="flex-1 text-center px-2">
                   <p className="text-[10px] print:text-xs mb-1">بسم الله الرحمن الرحيم</p>
                   <h1 className="text-sm print:text-base font-bold mb-1">معهد دار المؤمن للدراسات العربية والإسلامية</h1>
                   <h2 className="text-xs print:text-sm font-bold mb-1">
                     DAARUL MUHMIN INSTITUTE OF ARABIC AND ISLAMIC STUDIES
                   </h2>
-                  <div className="text-[10px] print:text-xs font-semibold py-1 ">
+                  <div className="text-[10px] print:text-xs font-semibold py-1 border-t border-b border-gray-400">
                     <span>REPORT SHEET كشف الدرجات</span>
                     <span className="mx-3"></span>   
                     <span>EXAMINATION OFFICE إدارة الإمتحانات</span>
@@ -370,7 +1005,7 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
                 </div>
 
                 {/* Right Logo */}
-                <div className="w-26 h-26 print:w-26 print:h-26 flex items-center justify-center flex-shrink-0">
+                <div className="w-16 h-16 print:w-20 print:h-20 flex items-center justify-center flex-shrink-0">
                   <img 
                     src="/logo.png" 
                     alt="School Logo" 
@@ -380,7 +1015,7 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
               </div>
 
               {/* Student Information Section */}
-              <div className="mb-3 print:mb-4 text-[11px] print:text-xs">
+              <div className="mb-3 print:mb-4 text-[11px] print:text-xs border-t border-black pt-2">
                 {/* Name Row */}
                 <div className="flex items-center mb-2">
                   <span className="font-semibold w-14 text-[10px] print:text-xs">Name:</span>
@@ -435,11 +1070,11 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
                     <th className="border-l border-black p-1 print:p-1.5 text-center">
                       المواد الدراسية SUBJECT
                     </th>
-                    <th className="border-l border-black p-1 print:p-1.5 w-10 text-center">الدرجة</th>
-                    <th className="border-l border-black p-1 print:p-1.5 w-10 text-center">رقماً</th>
-                    <th className="border-l border-black p-1 print:p-1.5 w-16 text-center">كتابة</th>
-                    <th className="border-l border-black p-1 print:p-1.5 w-14 text-center">التقدير</th>
-                    <th className="p-1 print:p-1.5 w-12 text-center">ملحوظة</th>
+                    <th className="border-l border-black p-1 print:p-1.5 w-12 text-center">الدرجة</th>
+                    <th className="border-l border-black p-1 print:p-1.5 w-12 text-center">رقماً</th>
+                    <th className="border-l border-black p-1 print:p-1.5 w-20 text-center">كتابة</th>
+                    <th className="border-l border-black p-1 print:p-1.5 w-16 text-center">التقدير</th>
+                    <th className="p-1 print:p-1.5 w-14 text-center">ملحوظة</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -478,7 +1113,7 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
 
                   {/* Total Row */}
                   <tr className="border-t border-black font-bold">
-                    <td className="border-l border-black p-2 text-center text-[9px] print:text-[8px]" colSpan="2">
+                    <td className="border-l border-black p-2 text-center text-[9px] print:text-[10px]" colSpan="2">
                       المجموع الكلي TOTAL
                     </td>
                     <td className="border-l border-black p-2 text-center">
@@ -491,7 +1126,7 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
 
                   {/* Percentage Row */}
                   <tr className="border-t border-black font-bold">
-                    <td className="border-l border-black p-2 text-center text-[9px] print:text-[8px]" colSpan="2">
+                    <td className="border-l border-black p-2 text-center text-[9px] print:text-[10px]" colSpan="2">
                       النسبة المئوية PERCENTAGE
                     </td>
                     <td className="p-2 text-center" colSpan="5">
@@ -501,7 +1136,7 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
 
                   {/* Grade Row */}
                   <tr className="border-t border-black font-bold">
-                    <td className="border-l border-black p-2 text-center text-[9px] print:text-[8px]" colSpan="2">
+                    <td className="border-l border-black p-2 text-center text-[9px] print:text-[10px]" colSpan="2">
                       التقدير العام GRADE
                     </td>
                     <td className="p-2 text-center" colSpan="5">
@@ -512,10 +1147,10 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
               </table>
 
               {/* Next Term & Promoted Section */}
-              <div className="grid grid-cols-2 gap-3 print:mb-4 text-[10px] print:text-xs">
+              <div className="grid grid-cols-2 gap-3 mb-3 print:mb-4 text-[10px] print:text-xs">
                 <div className="flex items-center">
                   <span className="font-semibold whitespace-nowrap text-[10px] print:text-xs">Next Term Begins:</span>
-                  <span className="flex-1 border-b border-dotted border-gray-600 "></span>
+                  <span className="flex-1 border-b border-dotted border-gray-600 mx-2"></span>
                   <span dir="rtl" className="whitespace-nowrap text-[10px] print:text-xs">بداية الفصل الدراسي الجديد</span>
                 </div>
                 <div className="flex items-center">
@@ -526,7 +1161,7 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
               </div>
 
               {/* Class Teacher's Remark - Display teacherRemarkArabic */}
-              <div className=" print:mb-2 text-[10px] print:text-xs">
+              <div className="mb-3 print:mb-4 text-[10px] print:text-xs">
                 <div className="flex items-center mb-2">
                   <span className="font-semibold whitespace-nowrap text-[10px] print:text-xs">Class Teacher's Remark:</span>
                   <span className="flex-1 border-b border-dotted border-gray-600 mx-2 min-h-[20px] print:min-h-[24px] text-center font-bold" dir="rtl">
@@ -563,13 +1198,7 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
                 <div>
                   <div className="flex items-center mb-2 print:mb-3">
                     <span className="font-semibold whitespace-nowrap text-[10px] print:text-xs">Signature:</span>
-                    <span className="flex-1 border-b border-dotted border-gray-600 flex items-end justify-center mx-1">
-                      <img 
-                        src="/sign.png" 
-                        alt="Class Signature" 
-                        className="w-20 h-5 print:w-24 print:h-6 object-contain"
-                      />
-                    </span>
+                    <span className="flex-1 border-b border-dotted border-gray-600 mx-2 min-h-[22px] print:min-h-[26px]"></span>
                     <span dir="rtl" className="whitespace-nowrap text-[10px] print:text-xs">التوقيع</span>
                   </div>
                   
@@ -587,141 +1216,128 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
 
       {/* Enhanced Print Styles */}
       <style jsx>{`
-  @media print {
-    * {
-      -webkit-print-color-adjust: exact !important;
-      print-color-adjust: exact !important;
-    }
-    
-    body * {
-      visibility: hidden;
-    }
-    
-    .fixed * {
-      visibility: visible;
-    }
-    
-    .bg-black {
-      background-color: white !important;
-    }
-
-    .bg-opacity-75 {
-      background-opacity: 1 !important;
-    }
-    
-    .fixed {
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      background: white !important;
-      overflow: visible;
+        @media print {
+          * {
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+          }
+          
+          body * {
+            visibility: hidden;
+          }
+          
+          .fixed * {
+            visibility: visible;
+          }
+          
+          .fixed {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: white;
+            overflow: visible;
+          }
+          
+          .print\\:p-0 {
       padding: 0 !important;
     }
     
-    .bg-white {
-      background-color: white !important;
+    .print\\:max-h-none {
+      max-height: none !important;
     }
     
-    .rounded-lg {
-      border-radius: 0 !important;
+    .print\\:overflow-visible {
+      overflow: visible !important;
     }
     
-    .max-w-4xl {
-      max-width: 100% !important;
-    }
-    
-    .shadow-2xl {
+    .print\\:shadow-none {
       box-shadow: none !important;
     }
     
-    .p-4 {
-      padding: 0 !important;
-    }
-    
     .print\\:hidden {
-      display: none !important;
-    }
-    
-    .print\\:p-2 {
-      padding: 1cm 1.5cm !important;
-    }
-    
-    .print\\:mb-2 {
-      margin-bottom: .2rem !important;
-    }
-    
-    .print\\:mb-3 {
-      margin-bottom: 0.5rem !important;
-    }
-    
-    .print\\:text-xs {
-      font-size: 12px !important;
-    }
-    
-    .print\\:text-sm {
-      font-size: 12px !important;
-    }
-    
-    .print\\:text-base {
-      font-size: 12px !important;
-    }
-    
-    .print\\:text-\\[10px\\] {
-      font-size: 10px !important;
-    }
-    
-    .print\\:text-\\[9px\\] {
-      font-size: 9px !important;
-    }
-    
-    .print\\:w-20 {
-      width: 5rem !important;
-    }
-    
-    .print\\:h-20 {
-      height: 5rem !important;
-    }
-    
-    .print\\:w-24 {
-      width: 6rem !important;
-    }
-    
-    .print\\:h-6 {
-      height: 1.5rem !important;
-    }
-    
-    .print\\:p-1\\.5 {
-      padding: 0.375rem !important;
-    }
-    
-    .print\\:min-h-\\[24px\\] {
-      min-height: 24px !important;
-    }
-    
-    .print\\:min-h-\\[22px\\] {
-      min-height: 22px !important;
-    }
-    
-    .print\\:min-h-\\[26px\\] {
-      min-height: 26px !important;
-    }
-    
-    @page {
-      margin: .4cm;
-      size: A4 portrait;
-    }
-    
-    table {
-      page-break-inside: avoid;
-    }
-    
-    tr {
-      page-break-inside: avoid;
-    }
-  }
-`}</style>
+            display: none !important;
+          }
+          
+          .print\\:p-6 {
+            padding: 1cm 1.5cm !important;
+          }
+          
+          .print\\:mb-4 {
+            margin-bottom: 1rem !important;
+          }
+          
+          .print\\:mb-3 {
+            margin-bottom: 0.75rem !important;
+          }
+          
+          .print\\:text-xs {
+            font-size: 12px !important;
+          }
+          
+          .print\\:text-sm {
+            font-size: 14px !important;
+          }
+          
+          .print\\:text-base {
+            font-size: 16px !important;
+          }
+          
+          .print\\:text-\\[10px\\] {
+            font-size: 10px !important;
+          }
+          
+          .print\\:text-\\[9px\\] {
+            font-size: 9px !important;
+          }
+          
+          .print\\:w-20 {
+            width: 5rem !important;
+          }
+          
+          .print\\:h-20 {
+            height: 5rem !important;
+          }
+          
+          .print\\:w-24 {
+            width: 6rem !important;
+          }
+          
+          .print\\:h-6 {
+            height: 1.5rem !important;
+          }
+          
+          .print\\:p-1\\.5 {
+            padding: 0.375rem !important;
+          }
+          
+          .print\\:min-h-\\[24px\\] {
+            min-height: 24px !important;
+          }
+          
+          .print\\:min-h-\\[22px\\] {
+            min-height: 22px !important;
+          }
+          
+          .print\\:min-h-\\[26px\\] {
+            min-height: 26px !important;
+          }
+          
+          @page {
+            margin: 1.5cm 1cm;
+            size: A4 portrait;
+          }
+          
+          table {
+            page-break-inside: avoid;
+          }
+          
+          tr {
+            page-break-inside: avoid;
+          }
+        }
+      `}</style>
     </div>
   );
 };
