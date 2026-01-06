@@ -610,48 +610,60 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
 
         {!loading && reportData && (
           <div className="p-8 print:p-4 bg-white relative">
-            {/* Watermark Logo Background */}
             <div className="absolute inset-0 flex items-center justify-center opacity-5 pointer-events-none z-0">
               {/* Replace with your logo image: */}
-              {/* <img src="/watermark-logo.png" alt="Watermark" className="w-64 h-64 object-contain" /> */}
-              <div className="w-64 h-64 border-4 border-gray-400 rounded-full flex items-center justify-center">
-                <span className="text-6xl font-bold">LOGO</span>
+              <div className="w-250 h-250  flex items-center justify-center">
+               <img 
+                src="/logo.png" 
+                alt="School Logo" 
+                className="w-250 h-250 object-contain"
+              />
               </div>
             </div>
 
             {/* Content */}
             <div className="relative z-10">
               {/* Header Section with Logos */}
-              <div className="flex items-start justify-between mb-3">
+              <div className="flex items-start justify-between mb-3 bg-gray-100" >
                 {/* Left Logo */}
-                <div className="w-20 h-20 border-2 border-gray-400 rounded-full flex items-center justify-center flex-shrink-0">
-                  {/* Replace with: <img src="/left-logo.png" alt="Logo" className="w-20 h-20 object-contain" /> */}
-                  <span className="text-xs">Logo</span>
+                <div className="w-24 h-24 flex items-center justify-center flex-shrink-0">
+                  <img 
+                    src="/logo.png" 
+                    alt="School Logo" 
+                    className="w-24 h-24 object-contain"
+                  />
                 </div>
 
                 {/* Center Header */}
-                <div className="flex-1 text-center px-4">
+                <div className="flex-1 text-center">
                   <p className="text-xs mb-1">بسم الله الرحمن الرحيم</p>
                   <h1 className="text-base font-bold mb-1">معهد دار المؤمن للدراسات العربية والإسلامية</h1>
                   <h2 className="text-sm font-bold mb-1">
                     DAARUL MUHMIN INSTITUTE OF ARABIC AND ISLAMIC STUDIES
                   </h2>
                   <div className="text-xs font-semibold py-0.5">
-                    <span>REPORT SHEET   كشف الدرجات</span>
-                    <span className="mx-4">    </span> <span className="mx-4">    </span>
-                    <span>EXAMINATION OFFICE   إدارة الإمتحانات</span>
+                    <span>REPORT SHEET</span>
+
+                    <span> كشف الدرجات</span>
+                    <span className="mx-4"></span>   
+                    <span>EXAMINATION OFFICE</span>
+              
+                    <span> إدارة الإمتحانات</span>
                   </div>
                 </div>
 
                 {/* Right Logo */}
-                <div className="w-20 h-20 border-2 border-gray-400 rounded-full flex items-center justify-center flex-shrink-0">
-                  {/* Replace with: <img src="/right-logo.png" alt="Logo" className="w-20 h-20 object-contain" /> */}
-                  <span className="text-xs">Logo</span>
+                <div className="w-24 h-24  flex items-center justify-center flex-shrink-0">
+                  <img 
+                    src="/logo.png" 
+                    alt="School Logo" 
+                    className="w-24 h-24 object-contain"
+                  />
                 </div>
               </div>
 
               {/* Student Information Section */}
-              <div className="mb-3 text-sm border-t-2 border-black pt-2">
+              <div className="mb-3 text-sm">
                 {/* Name Row - With space between English and Arabic */}
                 <div className="flex items-center mb-1.5">
                   <span className="font-semibold w-16">Name:</span>
@@ -699,23 +711,23 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
               </div>
 
               {/* Grades Table - RIGHT TO LEFT with TWO separate columns for التقدير and ملحوظة */}
-              <table className="w-full border-2 border-black text-xs mb-3" dir="rtl">
+              <table className="w-full border-1 border-black text-xs mb-3" dir="rtl">
                 <thead>
-                  <tr className="border-b-2 border-black">
-                    <th className="border-l-2 border-black p-1 w-8 text-center">ت</th>
-                    <th className="border-l-2 border-black p-1 text-center">
+                  <tr className="border-b-1 border-black">
+                    <th className="border-l-1 border-black p-1 w-8 text-center">ت</th>
+                    <th className="border-l-1 border-black p-1 text-center">
                       المواد الدراسية     SUBJECT
                     </th>
-                    <th className="border-l-2 border-black p-1 w-16 text-center">
+                    <th className="border-l-1 border-black p-1 w-16 text-center">
                       الدرجة
                     </th>
-                    <th className="border-l-2 border-black p-1 w-16 text-center">
+                    <th className="border-l-1 border-black p-1 w-16 text-center">
                       رقماً
                     </th>
-                    <th className="border-l-2 border-black p-1 w-24 text-center">
+                    <th className="border-l-1 border-black p-1 w-24 text-center">
                       كتابة
                     </th>
-                    <th className="border-l-2 border-black p-1 w-20 text-center">
+                    <th className="border-l-1 border-black p-1 w-20 text-center">
                       التقدير
                     </th>
                     <th className="p-1 w-20 text-center">
@@ -731,21 +743,21 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
                     
                     return (
                       <tr key={subject.$id} className="border-b border-black">
-                        <td className="border-l-2 border-black p-1 text-center">{index + 1}</td>
-                        <td className="border-l-2 border-black p-1">
+                        <td className="border-l-1 border-black p-1 text-center">{index + 1}</td>
+                        <td className="border-l-1 border-black p-1">
                           <div className="flex justify-between items-center">
                             <span>{subject.arabicName}</span>
                             <span className="text-gray-600 text-left">{subject.englishName}</span>
                           </div>
                         </td>
-                        <td className="border-l-2 border-black p-1 text-center font-bold">100</td>
-                        <td className="border-l-2 border-black p-1 text-center font-bold">
+                        <td className="border-l-1 border-black p-1 text-center font-bold">100</td>
+                        <td className="border-l-1 border-black p-1 text-center font-bold">
                           {result ? result.score : ''}
                         </td>
-                        <td className="border-l-2 border-black p-1 text-center">
+                        <td className="border-l-1 border-black p-1 text-center">
                           <span className="text-xs">{scoreInWords}</span>
                         </td>
-                        <td className="border-l-2 border-black p-1 text-center">
+                        <td className="border-l-1 border-black p-1 text-center">
                           {gradeInfo?.arabic || ''}
                         </td>
                         <td className="p-1 text-center">
@@ -758,11 +770,11 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
                   })}
 
                   {/* Total Row - Subject column merged, numbers span other columns */}
-                  <tr className="border-t-2 border-black text-xs">
-                    <td className="border-l-2 border-black p-2 text-center" colSpan="2">
+                  <tr className="border-t-1 border-black text-xs">
+                    <td className="border-l-1 border-black p-2 text-center" colSpan="2">
                       المجموع الكلي   TOTAL
                     </td>
-                    <td className="border-l-2 border-black p-2 text-center">
+                    <td className="border-l-1 border-black p-2 text-center">
                       {reportData.totalMax}
                     </td>
                     <td className="p-2 text-center text-xs" colSpan="4">
@@ -772,7 +784,7 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
 
                   {/* Percentage Row */}
                   <tr className="border-t border-black text-xs">
-                    <td className="border-l-2 border-black p-2 text-center" colSpan="2">
+                    <td className="border-l-1 border-black p-2 text-center" colSpan="2">
                       النسبة المئوية    PERCENTAGE
                     </td>
                     <td className="p-2 text-center text-xs" colSpan="5">
@@ -782,7 +794,7 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
 
                   {/* Grade Row */}
                   <tr className="border-t border-black text-xs">
-                    <td className="border-l-2 border-black p-2 text-center" colSpan="2">
+                    <td className="border-l-1 border-black p-2 text-center" colSpan="2">
                       التقدير العام    GRADE
                     </td>
                     <td className="p-2 text-center text-xs" colSpan="5">
@@ -827,7 +839,11 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
                   <div className="flex items-center mb-2">
                     <span className="font-semibold whitespace-nowrap">Principal's Sign:</span>
                     <span className="flex-1 border-b border-dotted border-gray-600 mx-2 min-h-[50px] flex items-end justify-center">
-                      {/* Replace with: <img src="/principal-signature.png" alt="Signature" className="h-12 object-contain" /> */}
+                      <img 
+                    src="/InkedInkedsign2_LI.jpg" 
+                    alt="School Logo" 
+                    className="w-24 h-24 object-contain"
+                  />
                     </span>
                     <span dir="rtl" className="whitespace-nowrap">توقيع الوكيل</span>
                   </div>
@@ -874,7 +890,7 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
             left: 0;
             top: 0;
             width: 100%;
-            height: auto;
+            height: 100%;
             background: white;
           }
           .print\\:hidden {
