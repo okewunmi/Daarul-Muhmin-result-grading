@@ -491,118 +491,141 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
 
       {/* Enhanced Print Styles */}
       <style jsx>{`
-        @media print {
-          * {
-            -webkit-print-color-adjust: exact !important;
-            print-color-adjust: exact !important;
-          }
-          
-          body * {
-            visibility: hidden;
-          }
-          
-          .fixed * {
-            visibility: visible;
-          }
-          .bg-black {
-  background-color: white !important;
-}
+  @media print {
+    * {
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+    
+    body * {
+      visibility: hidden;
+    }
+    
+    .fixed * {
+      visibility: visible;
+    }
+    
+    .bg-black {
+      background-color: white !important;
+    }
 
-.bg-opacity-75 {
-  background-opacity: 1 !important;
-}
-          .fixed {
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background: white;
-            overflow: visible;
-          }
-          
-          .print\\:hidden {
-            display: none !important;
-          }
-          
-          .print\\:p-2 {
-            padding: 1cm 1.5cm !important;
-          }
-          
-          .print\\:mb-2 {
-            margin-bottom: .2rem !important;
-          }
-          
-          .print\\:mb-3 {
-            margin-bottom: 0.5rem !important;
-          }
-          
-          .print\\:text-xs {
-            font-size: 12px !important;
-          }
-          
-          .print\\:text-sm {
-            font-size: 12px !important;
-          }
-          
-          .print\\:text-base {
-            font-size: 12px !important;
-          }
-          
-          .print\\:text-\\[10px\\] {
-            font-size: 10px !important;
-          }
-          
-          .print\\:text-\\[9px\\] {
-            font-size: 9px !important;
-          }
-          
-          .print\\:w-20 {
-            width: 5rem !important;
-          }
-          
-          .print\\:h-20 {
-            height: 5rem !important;
-          }
-          
-          .print\\:w-24 {
-            width: 6rem !important;
-          }
-          
-          .print\\:h-6 {
-            height: 1.5rem !important;
-          }
-          
-          .print\\:p-1\\.5 {
-            padding: 0.375rem !important;
-          }
-          
-          .print\\:min-h-\\[24px\\] {
-            min-height: 24px !important;
-          }
-          
-          .print\\:min-h-\\[22px\\] {
-            min-height: 22px !important;
-          }
-          
-          .print\\:min-h-\\[26px\\] {
-            min-height: 26px !important;
-          }
-          
-          @page {
-            margin: .4cm;
-            size: A4 portrait;
-          }
-          
-          table {
-            page-break-inside: avoid;
-          }
-          
-          tr {
-            page-break-inside: avoid;
-          }
-        }
-      `}</style>
+    .bg-opacity-75 {
+      background-opacity: 1 !important;
+    }
+    
+    .fixed {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: white !important;
+      overflow: visible;
+      padding: 0 !important;
+    }
+    
+    .bg-white {
+      background-color: white !important;
+    }
+    
+    .rounded-lg {
+      border-radius: 0 !important;
+    }
+    
+    .max-w-4xl {
+      max-width: 100% !important;
+    }
+    
+    .shadow-2xl {
+      box-shadow: none !important;
+    }
+    
+    .p-4 {
+      padding: 0 !important;
+    }
+    
+    .print\\:hidden {
+      display: none !important;
+    }
+    
+    .print\\:p-2 {
+      padding: 1cm 1.5cm !important;
+    }
+    
+    .print\\:mb-2 {
+      margin-bottom: .2rem !important;
+    }
+    
+    .print\\:mb-3 {
+      margin-bottom: 0.5rem !important;
+    }
+    
+    .print\\:text-xs {
+      font-size: 12px !important;
+    }
+    
+    .print\\:text-sm {
+      font-size: 12px !important;
+    }
+    
+    .print\\:text-base {
+      font-size: 12px !important;
+    }
+    
+    .print\\:text-\\[10px\\] {
+      font-size: 10px !important;
+    }
+    
+    .print\\:text-\\[9px\\] {
+      font-size: 9px !important;
+    }
+    
+    .print\\:w-20 {
+      width: 5rem !important;
+    }
+    
+    .print\\:h-20 {
+      height: 5rem !important;
+    }
+    
+    .print\\:w-24 {
+      width: 6rem !important;
+    }
+    
+    .print\\:h-6 {
+      height: 1.5rem !important;
+    }
+    
+    .print\\:p-1\\.5 {
+      padding: 0.375rem !important;
+    }
+    
+    .print\\:min-h-\\[24px\\] {
+      min-height: 24px !important;
+    }
+    
+    .print\\:min-h-\\[22px\\] {
+      min-height: 22px !important;
+    }
+    
+    .print\\:min-h-\\[26px\\] {
+      min-height: 26px !important;
+    }
+    
+    @page {
+      margin: .4cm;
+      size: A4 portrait;
+    }
+    
+    table {
+      page-break-inside: avoid;
+    }
+    
+    tr {
+      page-break-inside: avoid;
+    }
+  }
+`}</style>
     </div>
   );
 };
