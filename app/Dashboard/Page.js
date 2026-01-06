@@ -727,6 +727,9 @@ const EmptyState = ({ icon: Icon, title, description, action }) => (
 // };
 
 // Number to Arabic numerals converter (for percentage display)
+
+
+// Number to Arabic numerals converter (for percentage display)
 const toArabicNumerals = (num) => {
   const arabicNumerals = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
   return String(num).replace(/\d/g, (digit) => arabicNumerals[parseInt(digit)]);
@@ -980,7 +983,7 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
             {/* Content */}
             <div className="relative z-10">
               {/* Header Section with Logos */}
-              <div className="flex items-start justify-between mb-3 print:mb-4">
+              <div className="flex items-start justify-between mb-3 print:mb-4 bg-gray-100">
                 {/* Left Logo */}
                 <div className="w-16 h-16 print:w-20 print:h-20 flex items-center justify-center flex-shrink-0">
                   <img 
@@ -997,7 +1000,7 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
                   <h2 className="text-xs print:text-sm font-bold mb-1">
                     DAARUL MUHMIN INSTITUTE OF ARABIC AND ISLAMIC STUDIES
                   </h2>
-                  <div className="text-[10px] print:text-xs font-semibold py-1 border-t border-b border-gray-400">
+                  <div className="text-[10px] print:text-xs font-semibold py-1 ">
                     <span>REPORT SHEET كشف الدرجات</span>
                     <span className="mx-3"></span>   
                     <span>EXAMINATION OFFICE إدارة الإمتحانات</span>
@@ -1015,7 +1018,7 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
               </div>
 
               {/* Student Information Section */}
-              <div className="mb-3 print:mb-4 text-[11px] print:text-xs border-t border-black pt-2">
+              <div className="mb-3 print:mb-4 text-[11px] print:text-xs">
                 {/* Name Row */}
                 <div className="flex items-center mb-2">
                   <span className="font-semibold w-14 text-[10px] print:text-xs">Name:</span>
@@ -1140,7 +1143,9 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
                       التقدير العام GRADE
                     </td>
                     <td className="p-2 text-center" colSpan="5">
-                      {reportData.overallGrade.arabic} / {reportData.overallGrade.english}
+                      {reportData.overallGrade.arabic} 
+                      <span className="mr-20">
+                        </span> {reportData.overallGrade.english}
                     </td>
                   </tr>
                 </tbody>
@@ -1198,7 +1203,13 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
                 <div>
                   <div className="flex items-center mb-2 print:mb-3">
                     <span className="font-semibold whitespace-nowrap text-[10px] print:text-xs">Signature:</span>
-                    <span className="flex-1 border-b border-dotted border-gray-600 mx-2 min-h-[22px] print:min-h-[26px]"></span>
+                    <span className="flex-1 border-b border-dotted border-gray-600 flex items-end justify-center mx-1">
+                      <img 
+                        src="/sign.png" 
+                        alt="Principal Signature" 
+                        className="w-20 h-5 print:w-24 print:h-6 object-contain"
+                      />
+                    </span>
                     <span dir="rtl" className="whitespace-nowrap text-[10px] print:text-xs">التوقيع</span>
                   </div>
                   
@@ -1325,7 +1336,7 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
           }
           
           @page {
-            margin: 1.5cm 1cm;
+            margin: .5cm;
             size: A4 portrait;
           }
           
@@ -1341,6 +1352,8 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
     </div>
   );
 };
+
+
 
 const SessionModal = ({ isOpen, onClose, onSave, editingSession }) => {
   const [formData, setFormData] = useState({
