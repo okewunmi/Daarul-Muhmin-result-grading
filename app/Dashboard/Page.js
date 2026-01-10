@@ -1133,9 +1133,10 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
                       النسبة المئوية <span className="mr-20"> </span>PERCENTAGE
                     </td>
                     <td className="p-2 text-center" colSpan="5">
-                      {/* {reportData.percentage}% */}
+                   {toArabicNumerals(reportData.percentage)}٪
+                   <span className="mr-20"> </span>
                       {reportData.percentage}%  
-                      <span className="mr-20"> </span>{toArabicNumerals(reportData.percentage)}٪
+                      
                     </td>
                   </tr>
 
