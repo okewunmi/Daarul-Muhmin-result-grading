@@ -1117,7 +1117,7 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
                   {/* Total Row */}
                   <tr className="border-t border-black font-bold">
                     <td className="border-l border-black p-2 text-center text-[9px] print:text-[10px]" colSpan="2">
-                      المجموع الكلي TOTAL
+                      المجموع الكلي <span className="mr-20"> </span>TOTAL
                     </td>
                     <td className="border-l border-black p-2 text-center">
                       {reportData.totalMax}
@@ -1130,7 +1130,7 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
                   {/* Percentage Row */}
                   <tr className="border-t border-black font-bold">
                     <td className="border-l border-black p-2 text-center text-[9px] print:text-[10px]" colSpan="2">
-                      النسبة المئوية PERCENTAGE
+                      النسبة المئوية <span className="mr-20"> </span>PERCENTAGE
                     </td>
                     <td className="p-2 text-center" colSpan="5">
                       {/* {reportData.percentage}% */}
@@ -1142,7 +1142,7 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
                   {/* Grade Row */}
                   <tr className="border-t border-black font-bold">
                     <td className="border-l border-black p-2 text-center text-[9px] print:text-[10px]" colSpan="2">
-                      التقدير العام GRADE
+                      التقدير العام <span className="mr-20"> </span>GRADE
                     </td>
                     <td className="p-2 text-center" colSpan="5">
                       {reportData.overallGrade.arabic} 
