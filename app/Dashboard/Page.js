@@ -1135,8 +1135,7 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
                     <td className="p-2 text-center" colSpan="5">
                       {/* {reportData.percentage}% */}
                       {reportData.percentage}%  
-                      <span className="mr-24"> </span> 
-                      {toArabicNumerals(reportData.percentage)}٪
+                      <span className="mr-20"> </span>{toArabicNumerals(reportData.percentage)}٪
                     </td>
                   </tr>
 
