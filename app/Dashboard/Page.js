@@ -973,7 +973,7 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
             <div className="absolute inset-0 flex items-center justify-center opacity-5 pointer-events-none z-0">
               <div className="w-64 h-64 flex items-center justify-center">
                 <img 
-                  src="/logo.png" 
+                  src="/school-logo.jpg" 
                   alt="School Logo" 
                   className="w-64 h-64 object-contain"
                 />
@@ -987,7 +987,7 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
                 {/* Left Logo */}
                 <div className="w-16 h-16 print:w-20 print:h-20 flex items-center justify-center flex-shrink-0">
                   <img 
-                    src="/logo.png" 
+                    src="/school-logo.jpg" 
                     alt="School Logo" 
                     className="w-full h-full object-contain"
                   />
@@ -1010,7 +1010,7 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
                 {/* Right Logo */}
                 <div className="w-16 h-16 print:w-20 print:h-20 flex items-center justify-center flex-shrink-0">
                   <img 
-                    src="/logo.png" 
+                    src="/school-logo.jpg" 
                     alt="School Logo" 
                     className="w-full h-full object-contain"
                   />
