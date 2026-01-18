@@ -971,11 +971,12 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
                         <div className="p-6 print:p-6 bg-white relative">
             {/* Watermark Logo Background */}
             <div className="absolute inset-0 flex items-center justify-center opacity-5 pointer-events-none z-0">
-              <div className="w-64 h-64 flex items-center justify-center">
+              <div className="w-50 h-50 flex items-center justify-center">
                 <img 
+                  
                   src="/school-logo.jpg" 
                   alt="School Logo" 
-                  className="w-64 h-64 object-contain"
+                  className="w-full h-full object-contain"
                 />
               </div>
             </div>
@@ -983,9 +984,10 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
             {/* Content */}
             <div className="relative z-10">
               {/* Header Section with Logos */}
-              <div className="flex items-start justify-between mb-3 print:mb-4 bg-gray-100">
+              {/* <div className="flex items-start justify-between mb-3 print:mb-4 p-2"> */}
+              <div className="flex items-start justify-between mb-3 print:mb-4 bg-gray-50 p-2">
                 {/* Left Logo */}
-                <div className="w-16 h-16 print:w-20 print:h-20 flex items-center justify-center flex-shrink-0">
+                <div className="w-16 h-16 print:w-22 print:h-22 flex items-center justify-center flex-shrink-0 mt-1">
                   <img 
                     src="/school-logo.jpg" 
                     alt="School Logo" 
@@ -1008,7 +1010,7 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
                 </div>
 
                 {/* Right Logo */}
-                <div className="w-16 h-16 print:w-20 print:h-20 flex items-center justify-center flex-shrink-0">
+                <div className="w-16 h-16 print:w-22 print:h-22 flex items-center justify-center flex-shrink-0 mt-1 ">
                   <img 
                     src="/school-logo.jpg" 
                     alt="School Logo" 
@@ -1023,7 +1025,7 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
                 <div className="flex items-center mb-2">
                   <span className="font-semibold w-14 text-[10px] print:text-xs">Name:</span>
                   <span className="flex-1 border-b border-dotted border-gray-600 px-2 text-[10px] print:text-xs">
-                    {student.fullName} {student.arabicName && `( ${student.arabicName} )`}
+                    {student.fullName}  <span className="text-xl font-bold ml-20" >{student.arabicName && ` ${student.arabicName} `}</span>
                   </span>
                   <span className="mr-2 text-[10px] print:text-xs" dir="rtl">اسم الطالب</span>
                 </div>
@@ -1052,7 +1054,8 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
                     <span className="flex-1 border-b border-dotted border-gray-600 px-1 mx-1 text-[10px] print:text-xs">
                       {reportData.totalStudents}
                     </span>
-                    <span dir="rtl" className="whitespace-nowrap text-[10px] print:text-xs">عدد الطلاب</span>
+                     {/* <span dir="rtl" className="whitespace-nowrap text-[10px] print:text-xs">عدد الطلاب</span> */}
+                    <span dir="rtl" className="whitespace-nowrap text-[10px] print:text-xs">عدد الطلبة</span>
                   </div>
 
                   <div className="flex items-center flex-1">
