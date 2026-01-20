@@ -344,38 +344,23 @@ const ReportCardTemplate = () => {
               </tr>
             </thead>
             <tbody>
-              {/* Display actual subjects from database */}
-              {subjects && subjects.length > 0 ? (
-                subjects.map((subject, index) => (
-                  <tr key={subject.$id} className="border-b border-black">
-                    <td className="border-l border-black p-1 print:p-1.5 text-center">{index + 1}</td>
-                    <td className="border-l border-black p-1 print:p-1.5">
-                      <div className="flex justify-between items-center gap-1">
-                        <span className="text-[9px] print:text-[10px]">{subject.arabicName}</span>
-                        <span className="text-gray-600 text-left text-[8px] print:text-[9px]">{subject.englishName}</span>
-                      </div>
-                    </td>
-                    <td className="border-l border-black p-1 print:p-1.5 text-center font-bold">100</td>
-                    <td className="border-l border-black p-1 print:p-1.5 text-center"></td>
-                    <td className="border-l border-black p-1 print:p-1.5 text-center"></td>
-                    <td className="border-l border-black p-1 print:p-1.5 text-center"></td>
-                    <td className="p-1 print:p-1.5 text-center"></td>
-                  </tr>
-                ))
-              ) : (
-                // Fallback: Show 8 empty rows if no subjects
-                [1, 2, 3, 4, 5, 6, 7, 8].map((num) => (
-                  <tr key={num} className="border-b border-black">
-                    <td className="border-l border-black p-1 print:p-1.5 text-center">{num}</td>
-                    <td className="border-l border-black p-1 print:p-1.5 min-h-[24px]"></td>
-                    <td className="border-l border-black p-1 print:p-1.5 text-center font-bold">100</td>
-                    <td className="border-l border-black p-1 print:p-1.5 text-center"></td>
-                    <td className="border-l border-black p-1 print:p-1.5 text-center"></td>
-                    <td className="border-l border-black p-1 print:p-1.5 text-center"></td>
-                    <td className="p-1 print:p-1.5 text-center"></td>
-                  </tr>
-                ))
-              )}
+              {/* Display actual subjects from database - Same format as ReportCardModal */}
+              {subjects.map((subject, index) => (
+                <tr key={subject.$id} className="border-b border-black">
+                  <td className="border-l border-black p-1 print:p-1.5 text-center">{index + 1}</td>
+                  <td className="border-l border-black p-1 print:p-1.5">
+                    <div className="flex justify-between items-center gap-1">
+                      <span className="text-[9px] print:text-[10px]">{subject.arabicName}</span>
+                      <span className="text-gray-600 text-left text-[8px] print:text-[9px]">{subject.englishName}</span>
+                    </div>
+                  </td>
+                  <td className="border-l border-black p-1 print:p-1.5 text-center font-bold">100</td>
+                  <td className="border-l border-black p-1 print:p-1.5 text-center"></td>
+                  <td className="border-l border-black p-1 print:p-1.5 text-center"></td>
+                  <td className="border-l border-black p-1 print:p-1.5 text-center"></td>
+                  <td className="p-1 print:p-1.5 text-center"></td>
+                </tr>
+              ))}
 
               {/* Total Row */}
               <tr className="border-t border-black font-bold">
@@ -383,7 +368,7 @@ const ReportCardTemplate = () => {
                   المجموع الكلي <span className="mr-20"> </span>TOTAL
                 </td>
                 <td className="border-l border-black p-2 text-center">
-                  {subjects && subjects.length > 0 ? subjects.length * 100 : 800}
+                  {subjects.length * 100}
                 </td>
                 <td className="p-2 text-center" colSpan="4">
                 </td>
@@ -2380,41 +2365,31 @@ const handleViewReportCard = (student) => {
                 )}
 
                 {/* Settings View */}
-                {/* {currentView === 'settings' && (
-                  <Card>
-                    <h2 className="text-2xl font-bold text-white mb-4">Settings</h2>
-                    <EmptyState
-                      icon={Settings}
-                      title="Settings Panel"
-                      description="System settings coming soon..."
-                    />
-                  </Card>
-                )} */}
-                {/* Settings View */}
-{currentView === 'settings' && (
-  <div>
-    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-6">
-      <h2 className="text-2xl sm:text-3xl font-bold text-white">Settings</h2>
-    </div>
+                
+                  {currentView === 'settings' && (
+                    <div>
+                      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-6">
+                        <h2 className="text-2xl sm:text-3xl font-bold text-white">Settings</h2>
+                      </div>
 
-    <div className="space-y-6">
-      <Card>
-        <h3 className="text-xl font-bold text-white mb-4">Report Card Template</h3>
-        <p className="text-gray-300 mb-4">Download the blank report card template for printing or reference.</p>
-        <ReportCardTemplate />
-      </Card>
-      
-      <Card>
-        <h3 className="text-xl font-bold text-white mb-4">System Settings</h3>
-        <EmptyState
-          icon={Settings}
-          title="Additional Settings"
-          description="More system settings coming soon..."
-        />
-      </Card>
-    </div>
-  </div>
-)}
+                      <div className="space-y-6">
+                        <Card>
+                          <h3 className="text-xl font-bold text-white mb-4">Report Card Template</h3>
+                          <p className="text-gray-300 mb-4">Download the blank report card template for printing or reference.</p>
+                          <ReportCardTemplate subjects={subjects} />
+                        </Card>
+                        
+                        <Card>
+                          <h3 className="text-xl font-bold text-white mb-4">System Settings</h3>
+                          <EmptyState
+                            icon={Settings}
+                            title="Additional Settings"
+                            description="More system settings coming soon..."
+                          />
+                        </Card>
+                      </div>
+                    </div>
+                  )}
               </>
             )}
           </main>
