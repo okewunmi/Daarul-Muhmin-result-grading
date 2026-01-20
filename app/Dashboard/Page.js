@@ -216,7 +216,7 @@ const numberToArabicWords = (num) => {
   }
 };
 
-const ReportCardTemplate = () => {
+const ReportCardTemplate = ({subjects = []}) => {
   const handleDownloadPDF = () => {
     window.print();
   };
