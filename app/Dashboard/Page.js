@@ -636,10 +636,10 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
   };
 
   const calculateGrade = (score) => {
-    if (score >= 90) return { english: 'Excellent', arabic: 'ممتاز', remarkArabic: 'نجح', teacherRemarkArabic: 'امتياز' };
-    if (score >= 80) return { english: 'Very Good', arabic: 'جيد جداً', remarkArabic: 'نجح', teacherRemarkArabic: 'مجتهدا' };
-    if (score >= 60) return { english: 'Good', arabic: 'جيد', remarkArabic: 'نجح', teacherRemarkArabic: 'اجتهادا' };
-    if (score >= 50) return { english: 'Pass', arabic: 'مقبول', remarkArabic: 'نجح', teacherRemarkArabic: 'كن مجتهدا' };
+    if (score >= 90) return { english: 'Excellent', arabic: 'ممتاز', remarkArabic: 'ناجح', teacherRemarkArabic: 'امتياز' };
+    if (score >= 80) return { english: 'Very Good', arabic: 'جيد جداً', remarkArabic: 'ناجح', teacherRemarkArabic: 'مجتهدا' };
+    if (score >= 60) return { english: 'Good', arabic: 'جيد', remarkArabic: 'ناجح', teacherRemarkArabic: 'اجتهادا' };
+    if (score >= 50) return { english: 'Pass', arabic: 'مقبول', remarkArabic: 'ناجح', teacherRemarkArabic: 'كن مجتهدا' };
     return { english: 'Fail', arabic: 'راسب', remarkArabic: 'راسب', teacherRemarkArabic: 'اجتهد نفسك' };
   };
 
