@@ -455,98 +455,160 @@ const ReportCardTemplate = ({subjects = []}) => {
       </div>
 
       {/* Print Styles */}
-      <style jsx>{`
-        @media print {
-          * {
-            -webkit-print-color-adjust: exact !important;
-            print-color-adjust: exact !important;
-          }
+      // <style jsx>{`
+      //   @media print {
+      //     * {
+      //       -webkit-print-color-adjust: exact !important;
+      //       print-color-adjust: exact !important;
+      //     }
           
-          body * {
-            visibility: hidden;
-          }
+      //     body * {
+      //       visibility: hidden;
+      //     }
           
-          #report-template, #report-template * {
-            visibility: visible;
-          }
+      //     #report-template, #report-template * {
+      //       visibility: visible;
+      //     }
           
-          #report-template {
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 100%;
-          }
+      //     #report-template {
+      //       position: absolute;
+      //       left: 0;
+      //       top: 0;
+      //       width: 100%;
+      //     }
           
-          .print\\:hidden {
-            display: none !important;
-          }
+      //     .print\\:hidden {
+      //       display: none !important;
+      //     }
           
-          .print\\:p-6 {
-            padding: 1cm 1.5cm !important;
-          }
+      //     .print\\:p-6 {
+      //       padding: 1cm 1.5cm !important;
+      //     }
           
-          .print\\:mb-4 {
-            margin-bottom: 1rem !important;
-          }
+      //     .print\\:mb-4 {
+      //       margin-bottom: 1rem !important;
+      //     }
           
-          .print\\:mb-3 {
-            margin-bottom: 0.75rem !important;
-          }
+      //     .print\\:mb-3 {
+      //       margin-bottom: 0.75rem !important;
+      //     }
           
-          .print\\:text-xs {
-            font-size: 12px !important;
-          }
+      //     .print\\:text-xs {
+      //       font-size: 12px !important;
+      //     }
           
-          .print\\:text-sm {
-            font-size: 14px !important;
-          }
+      //     .print\\:text-sm {
+      //       font-size: 14px !important;
+      //     }
           
-          .print\\:text-base {
-            font-size: 16px !important;
-          }
+      //     .print\\:text-base {
+      //       font-size: 16px !important;
+      //     }
           
-          .print\\:text-\\[10px\\] {
-            font-size: 10px !important;
-          }
+      //     .print\\:text-\\[10px\\] {
+      //       font-size: 10px !important;
+      //     }
           
-          .print\\:text-\\[9px\\] {
-            font-size: 9px !important;
-          }
+      //     .print\\:text-\\[9px\\] {
+      //       font-size: 9px !important;
+      //     }
           
-          .print\\:w-22 {
-            width: 5.5rem !important;
-          }
+      //     .print\\:w-22 {
+      //       width: 5.5rem !important;
+      //     }
           
-          .print\\:h-22 {
-            height: 5.5rem !important;
-          }
+      //     .print\\:h-22 {
+      //       height: 5.5rem !important;
+      //     }
           
-          .print\\:p-1\\.5 {
-            padding: 0.375rem !important;
-          }
+      //     .print\\:p-1\\.5 {
+      //       padding: 0.375rem !important;
+      //     }
           
-          .print\\:min-h-\\[24px\\] {
-            min-height: 24px !important;
-          }
+      //     .print\\:min-h-\\[24px\\] {
+      //       min-height: 24px !important;
+      //     }
           
-          .print\\:min-h-\\[22px\\] {
-            min-height: 22px !important;
-          }
+      //     .print\\:min-h-\\[22px\\] {
+      //       min-height: 22px !important;
+      //     }
           
-          @page {
-            margin: 0.5cm;
-            size: A4 portrait;
-          }
+      //     @page {
+      //       margin: 0.5cm;
+      //       size: A4 portrait;
+      //     }
           
-          table {
-            page-break-inside: avoid;
-          }
+      //     table {
+      //       page-break-inside: avoid;
+      //     }
           
-          tr {
-            page-break-inside: avoid;
-          }
-        }
-      `}</style>
+      //     tr {
+      //       page-break-inside: avoid;
+      //     }
+      //   }
+      // `}</style>
+
+<style jsx>{`
+  @media print {
+    * {
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+
+    /* Hide everything on the page */
+    body * {
+      visibility: hidden;
+    }
+
+    /* Show ONLY the report card content — not the backdrop */
+    #report-card-print-area,
+    #report-card-print-area * {
+      visibility: visible;
+    }
+
+    /* Position the report to fill the page cleanly */
+    #report-card-print-area {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 0.5cm 1.5cm;
+      background: white;
+      overflow: visible;
+    }
+
+    .print\\:hidden {
+      display: none !important;
+    }
+
+    .print\\:p-6 {
+      padding: 1cm 1.5cm !important;
+    }
+
+    .print\\:mb-4 { margin-bottom: 1rem !important; }
+    .print\\:mb-3 { margin-bottom: 0.75rem !important; }
+    .print\\:text-xs { font-size: 12px !important; }
+    .print\\:text-sm { font-size: 14px !important; }
+    .print\\:text-base { font-size: 16px !important; }
+    .print\\:text-\\[10px\\] { font-size: 10px !important; }
+    .print\\:text-\\[9px\\] { font-size: 9px !important; }
+    .print\\:w-20 { width: 5rem !important; }
+    .print\\:h-20 { height: 5rem !important; }
+    .print\\:w-24 { width: 6rem !important; }
+    .print\\:h-6 { height: 1.5rem !important; }
+    .print\\:p-1\\.5 { padding: 0.375rem !important; }
+    .print\\:min-h-\\[24px\\] { min-height: 24px !important; }
+    .print\\:min-h-\\[22px\\] { min-height: 22px !important; }
+
+    @page {
+      margin: 0.5cm;
+      size: A4 portrait;
+    }
+
+    table { page-break-inside: avoid; }
+    tr { page-break-inside: avoid; }
+  }
+`}</style>
     </div>
   );
 };
@@ -672,8 +734,10 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
           </div>
         )}
 
-        {!loading && reportData && (
-                        <div className="p-6 print:p-6 bg-white relative">
+        // {!loading && reportData && (
+        //                 <div className="p-6 print:p-6 bg-white relative">
+  {!loading && reportData && (
+  <div id="report-card-print-area" className="p-6 print:p-6 bg-white relative">
             {/* Watermark Logo Background */}
             <div className="absolute inset-0 flex items-center justify-center opacity-5 pointer-events-none z-0">
               <div className="w-50 h-50 flex items-center justify-center">
