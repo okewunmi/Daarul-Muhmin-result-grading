@@ -642,8 +642,6 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
           </div>
         )}
 
-        // {!loading && reportData && (
-        //                 <div className="p-6 print:p-6 bg-white relative">
   {!loading && reportData && (
   <div id="report-card-print-area" className="p-6 print:p-6 bg-white relative">
             {/* Watermark Logo Background */}
