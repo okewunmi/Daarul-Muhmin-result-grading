@@ -907,129 +907,54 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
       </div>
 
       {/* Enhanced Print Styles */}
-      <style jsx>{`
-        @media print {
-          * {
-            -webkit-print-color-adjust: exact !important;
-            print-color-adjust: exact !important;
-          }
-          
-          body * {
-            visibility: hidden;
-          }
-          
-          .fixed * {
-            visibility: visible;
-          }
-          
-          .fixed {
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background: white;
-            overflow: visible;
-          }
-          
-          .print\\:p-0 {
-      padding: 0 !important;
+      {/* Enhanced Print Styles */}
+<style jsx>{`
+  @media print {
+    * {
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
     }
-    
-    .print\\:max-h-none {
-      max-height: none !important;
+
+    body * { visibility: hidden; }
+
+    #report-card-print-area,
+    #report-card-print-area * {
+      visibility: visible;
     }
-    
-    .print\\:overflow-visible {
-      overflow: visible !important;
+
+    #report-card-print-area {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: white;
+      overflow: visible;
     }
-    
-    .print\\:shadow-none {
-      box-shadow: none !important;
+
+    .print\\:hidden { display: none !important; }
+    .print\\:p-6 { padding: 1cm 1.5cm !important; }
+    .print\\:mb-4 { margin-bottom: 1rem !important; }
+    .print\\:mb-3 { margin-bottom: 0.75rem !important; }
+    .print\\:text-xs { font-size: 12px !important; }
+    .print\\:text-sm { font-size: 14px !important; }
+    .print\\:text-base { font-size: 16px !important; }
+    .print\\:text-\\[10px\\] { font-size: 10px !important; }
+    .print\\:text-\\[9px\\] { font-size: 9px !important; }
+    .print\\:w-24 { width: 6rem !important; }
+    .print\\:h-6 { height: 1.5rem !important; }
+    .print\\:p-1\\.5 { padding: 0.375rem !important; }
+    .print\\:min-h-\\[24px\\] { min-height: 24px !important; }
+    .print\\:min-h-\\[22px\\] { min-height: 22px !important; }
+
+    @page {
+      margin: 0.5cm;
+      size: A4 portrait;
     }
-    
-    .print\\:hidden {
-            display: none !important;
-          }
-          
-          .print\\:p-6 {
-            padding: 1cm 1.5cm !important;
-          }
-          
-          .print\\:mb-4 {
-            margin-bottom: 1rem !important;
-          }
-          
-          .print\\:mb-3 {
-            margin-bottom: 0.75rem !important;
-          }
-          
-          .print\\:text-xs {
-            font-size: 12px !important;
-          }
-          
-          .print\\:text-sm {
-            font-size: 14px !important;
-          }
-          
-          .print\\:text-base {
-            font-size: 16px !important;
-          }
-          
-          .print\\:text-\\[10px\\] {
-            font-size: 10px !important;
-          }
-          
-          .print\\:text-\\[9px\\] {
-            font-size: 9px !important;
-          }
-          
-          .print\\:w-20 {
-            width: 5rem !important;
-          }
-          
-          .print\\:h-20 {
-            height: 5rem !important;
-          }
-          
-          .print\\:w-24 {
-            width: 6rem !important;
-          }
-          
-          .print\\:h-6 {
-            height: 1.5rem !important;
-          }
-          
-          .print\\:p-1\\.5 {
-            padding: 0.375rem !important;
-          }
-          
-          .print\\:min-h-\\[24px\\] {
-            min-height: 24px !important;
-          }
-          
-          .print\\:min-h-\\[22px\\] {
-            min-height: 22px !important;
-          }
-          
-          .print\\:min-h-\\[26px\\] {
-            min-height: 26px !important;
-          }
-          
-          @page {
-            margin: .5cm;
-            size: A4 portrait;
-          }
-          
-          table {
-            page-break-inside: avoid;
-          }
-          
-          tr {
-            page-break-inside: avoid;
-          }
-        }
-      `}</style>
+
+    table { page-break-inside: avoid; }
+    tr { page-break-inside: avoid; }
+  }
+`}</style>
     </div>
   );
 };
