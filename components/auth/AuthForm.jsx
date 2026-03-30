@@ -370,3 +370,81 @@ export const RegisterForm = ({ data, loading, onChange, onSubmit, onKeyPress }) 
     </div>
   );
 };
+export const ForgotPasswordForm = ({ data, loading, onChange, onSubmit }) => {
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  return (
+    <div>
+      <div className="mb-4">
+        <label className="block text-gray-300 mb-2 text-sm sm:text-base">
+          Email <span className="text-red-400">*</span>
+        </label>
+        <input
+          type="email"
+          value={data.email}
+          onChange={(e) => onChange('email', e.target.value)}
+          className="w-full px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+          placeholder="Enter your registered email"
+          disabled={loading}
+        />
+      </div>
+
+      <div className="mb-4">
+        <label className="block text-gray-300 mb-2 text-sm sm:text-base">
+          New Password <span className="text-red-400">*</span>
+        </label>
+        <div className="relative">
+          <input
+            type={showPassword ? 'text' : 'password'}
+            value={data.newPassword}
+            onChange={(e) => onChange('newPassword', e.target.value)}
+            className="w-full px-3 sm:px-4 py-2 sm:py-3 pr-12 text-sm sm:text-base bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+            placeholder="Enter new password"
+            disabled={loading}
+          />
+          <button
+            type="button"
+            onClick={() => setShowPassword(!showPassword)}
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white transition-colors"
+          >
+            {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+          </button>
+        </div>
+        <p className="text-gray-400 text-xs mt-1">Minimum 8 characters</p>
+      </div>
+
+      <div className="mb-6">
+        <label className="block text-gray-300 mb-2 text-sm sm:text-base">
+          Confirm New Password <span className="text-red-400">*</span>
+        </label>
+        <div className="relative">
+          <input
+            type={showConfirmPassword ? 'text' : 'password'}
+            value={data.confirmPassword}
+            onChange={(e) => onChange('confirmPassword', e.target.value)}
+            onKeyDown={(e) => e.key === 'Enter' && onSubmit()}
+            className="w-full px-3 sm:px-4 py-2 sm:py-3 pr-12 text-sm sm:text-base bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+            placeholder="Confirm new password"
+            disabled={loading}
+          />
+          <button
+            type="button"
+            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white transition-colors"
+          >
+            {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+          </button>
+        </div>
+      </div>
+
+      <button
+        onClick={onSubmit}
+        disabled={loading}
+        className="w-full py-2 sm:py-3 text-sm sm:text-base bg-gradient-to-r from-green-600 to-green-500 text-white font-bold rounded-lg hover:shadow-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+      >
+        {loading ? 'Resetting...' : 'Reset Password'}
+      </button>
+    </div>
+  );
+};
