@@ -532,68 +532,143 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
     }
   }, [student, isOpen]);
 
-  const loadReportCardData = async () => {
-    setLoading(true);
-    try {
-      const { resultsManager, studentsManager } = await import('../../lib/appwrite');
+  // const loadReportCardData = async () => {
+  //   setLoading(true);
+  //   try {
+  //     const { resultsManager, studentsManager } = await import('../../lib/appwrite');
       
-      const resultsResponse = await resultsManager.getByStudent(student.$id);
-      const classStudentsResponse = await studentsManager.getByClass(student.classId);
+  //     const resultsResponse = await resultsManager.getByStudent(student.$id);
+  //     const classStudentsResponse = await studentsManager.getByClass(student.classId);
       
-      if (resultsResponse.success && classStudentsResponse.success) {
-        const results = resultsResponse.results;
-        const totalScore = results.reduce((sum, r) => sum + r.score, 0);
-        const totalMax = results.length * 100;
-        const percentage = results.length > 0 ? ((totalScore / totalMax) * 100).toFixed(2) : 0;
+  //     if (resultsResponse.success && classStudentsResponse.success) {
+  //       const results = resultsResponse.results;
+  //       const totalScore = results.reduce((sum, r) => sum + r.score, 0);
+  //       const totalMax = results.length * 100;
+  //       const percentage = results.length > 0 ? ((totalScore / totalMax) * 100).toFixed(2) : 0;
         
-        const classPosition = await calculateClassPosition(
-          student.$id, 
-          classStudentsResponse.students,
-          resultsManager
-        );
+  //       const classPosition = await calculateClassPosition(
+  //         student.$id, 
+  //         classStudentsResponse.students,
+  //         resultsManager
+  //       );
         
-        // Calculate overall grade
-        const overallGrade = calculateGrade(parseFloat(percentage));
+  //       // Calculate overall grade
+  //       const overallGrade = calculateGrade(parseFloat(percentage));
         
-        setReportData({
-          results,
-          totalScore,
-          totalMax,
-          percentage,
-          overallGrade,
-          classPosition,
-          totalStudents: classStudentsResponse.students.length
-        });
-      }
-    } catch (error) {
-      console.error('Error loading report card:', error);
-      alert('Failed to load report card data');
-    } finally {
-      setLoading(false);
-    }
-  };
+  //       setReportData({
+  //         results,
+  //         totalScore,
+  //         totalMax,
+  //         percentage,
+  //         overallGrade,
+  //         classPosition,
+  //         totalStudents: classStudentsResponse.students.length
+  //       });
+  //     }
+  //   } catch (error) {
+  //     console.error('Error loading report card:', error);
+  //     alert('Failed to load report card data');
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+const loadReportCardData = async () => {
+  setLoading(true);
+  try {
+    // ❌ REMOVE THIS - already imported at top of file
+    // const { resultsManager, studentsManager } = await import('../../lib/appwrite');
 
-  const calculateClassPosition = async (studentId, classStudents, resultsManager) => {
-    try {
-      const studentsWithScores = await Promise.all(
-        classStudents.map(async (s) => {
-          const res = await resultsManager.getByStudent(s.$id);
-          const total = res.success 
-            ? res.results.reduce((sum, r) => sum + r.score, 0) 
-            : 0;
-          return { studentId: s.$id, totalScore: total };
-        })
+    if (!student?.classId) {
+      throw new Error('Student has no classId');
+    }
+
+    // ✅ Use already-imported managers directly
+    const [resultsResponse, classStudentsResponse] = await Promise.all([
+      resultsManager.getByStudent(student.$id),
+      studentsManager.getByClass(student.classId)
+    ]);
+
+    if (resultsResponse.success && classStudentsResponse.success) {
+      const results = resultsResponse.results;
+      const totalScore = results.reduce((sum, r) => sum + r.score, 0);
+      const totalMax = results.length * 100;
+      const percentage = results.length > 0 
+        ? ((totalScore / totalMax) * 100).toFixed(2) 
+        : 0;
+
+      const classPosition = await calculateClassPosition(
+        student.$id,
+        classStudentsResponse.students
       );
 
-      studentsWithScores.sort((a, b) => b.totalScore - a.totalScore);
-      const position = studentsWithScores.findIndex(s => s.studentId === studentId) + 1;
-      return position;
-    } catch (error) {
-      console.error('Error calculating position:', error);
-      return 0;
-    }
-  };
+      const overallGrade = calculateGrade(parseFloat(percentage));
 
+      setReportData({
+        results,
+        totalScore,
+        totalMax,
+        percentage,
+        overallGrade,
+        classPosition,
+        totalStudents: classStudentsResponse.students.length
+      });
+    } else {
+      // Log what actually failed
+      console.error('Results response:', resultsResponse);
+      console.error('Class students response:', classStudentsResponse);
+      throw new Error(
+        resultsResponse.message || 
+        classStudentsResponse.message || 
+        'Failed to fetch data'
+      );
+    }
+  } catch (error) {
+    console.error('Error loading report card:', error);
+    alert('Failed to load report card data: ' + error.message);
+  } finally {
+    setLoading(false);
+  }
+};
+  
+  // const calculateClassPosition = async (studentId, classStudents, resultsManager) => {
+  //   try {
+  //     const studentsWithScores = await Promise.all(
+  //       classStudents.map(async (s) => {
+  //         const res = await resultsManager.getByStudent(s.$id);
+  //         const total = res.success 
+  //           ? res.results.reduce((sum, r) => sum + r.score, 0) 
+  //           : 0;
+  //         return { studentId: s.$id, totalScore: total };
+  //       })
+  //     );
+
+  //     studentsWithScores.sort((a, b) => b.totalScore - a.totalScore);
+  //     const position = studentsWithScores.findIndex(s => s.studentId === studentId) + 1;
+  //     return position;
+  //   } catch (error) {
+  //     console.error('Error calculating position:', error);
+  //     return 0;
+  //   }
+  // };
+const calculateClassPosition = async (studentId, classStudents) => {
+  try {
+    const studentsWithScores = await Promise.all(
+      classStudents.map(async (s) => {
+        const res = await resultsManager.getByStudent(s.$id); // use imported directly
+        const total = res.success
+          ? res.results.reduce((sum, r) => sum + r.score, 0)
+          : 0;
+        return { studentId: s.$id, totalScore: total };
+      })
+    );
+
+    studentsWithScores.sort((a, b) => b.totalScore - a.totalScore);
+    return studentsWithScores.findIndex(s => s.studentId === studentId) + 1;
+  } catch (error) {
+    console.error('Error calculating position:', error);
+    return 0;
+  }
+};
   // const handlePrint = () => {
   //   window.print();
   // };
@@ -2118,10 +2193,10 @@ const handleSaveGrades = () => {
     setCurrentView('sessions');
   };
 
-  const handleBackToClasses = () => {
+ const handleBackToClasses = () => {
     setSelectedClass(null);
-    setCurrentView('students');
-  };
+    setCurrentView('classes'); // ✅
+};
 
 const handleViewReportCard = (student) => {
   setSelectedStudentForReport(student);
