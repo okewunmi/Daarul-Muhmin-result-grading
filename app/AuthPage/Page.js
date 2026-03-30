@@ -1,19 +1,190 @@
+// 'use client'
+// import { useState } from 'react';
+// import { BookOpen, Sun, Moon, Eye, EyeOff } from 'lucide-react';
+// import { AuthToggle } from '../../components/auth/AuthToggle';
+// import { LoginForm, RegisterForm } from '../../components/auth/AuthForm';
+// import { AuthForm } from '../../components/auth/AuthForm';
+// import { MessageAlert } from '../../components/common/MessageAlert';
+// import { adminUserManagement } from '../../lib/appwrite';
+
+// const AuthPage = ({ onNavigate, onLogin, isDark, setIsDark }) => {
+//   const [isLogin, setIsLogin] = useState(true);
+//   const [loading, setLoading] = useState(false);
+//   const [message, setMessage] = useState({ text: '', type: '' });
+//   const [showPassword, setShowPassword] = useState(false);
+//   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  
+//   const [formData, setFormData] = useState({
+//     email: '',
+//     password: '',
+//     name: '',
+//     arabicName: '',
+//     confirmPassword: ''
+//   });
+
+//   const handleSubmit = async () => {
+//     if (isLogin) {
+//       await handleLogin();
+//     } else {
+//       await handleRegister();
+//     }
+//   };
+
+//   const handleLogin = async () => {
+//     setLoading(true);
+//     setMessage({ text: '', type: '' });
+
+//     if (!formData.email || !formData.password) {
+//       setMessage({ text: 'Please fill in all fields', type: 'error' });
+//       setLoading(false);
+//       return;
+//     }
+
+//     const result = await adminUserManagement.login(formData.email, formData.password);
+    
+//     setLoading(false);
+    
+//     if (result.success) {
+//       setMessage({ text: result.message, type: 'success' });
+//       setTimeout(() => {
+//         onLogin(result.user);
+//       }, 1000);
+//     } else {
+//       setMessage({ text: result.message, type: 'error' });
+//     }
+//   };
+
+//   const handleRegister = async () => {
+//     setLoading(true);
+//     setMessage({ text: '', type: '' });
+
+//     if (!formData.name || !formData.email || !formData.password || !formData.confirmPassword) {
+//       setMessage({ text: 'Please fill in all required fields', type: 'error' });
+//       setLoading(false);
+//       return;
+//     }
+
+//     const result = await adminUserManagement.createUser(
+//       formData.name,
+//       formData.arabicName,
+//       formData.email,
+//       formData.password,
+//       formData.confirmPassword,
+//       'self-registration'
+//     );
+    
+//     setLoading(false);
+    
+//     if (result.success) {
+//       setMessage({ text: result.message, type: 'success' });
+//       setTimeout(() => {
+//         setIsLogin(true);
+//         setFormData({
+//           email: formData.email,
+//           password: '',
+//           name: '',
+//           arabicName: '',
+//           confirmPassword: ''
+//         });
+//         setMessage({ text: 'Please login with your credentials', type: 'success' });
+//       }, 1500);
+//     } else {
+//       setMessage({ text: result.message, type: 'error' });
+//     }
+//   };
+
+//   const handleChange = (field, value) => {
+//     setFormData(prev => ({ ...prev, [field]: value }));
+//   };
+
+//   const handleKeyPress = (e, action) => {
+//     if (e.key === 'Enter') {
+//       action();
+//     }
+//   };
+
+//   return (
+//     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900 flex items-center justify-center px-4 py-8">
+//       <div className="max-w-md w-full">
+//         <div className="flex justify-between items-center mb-6">
+//           <button
+//             onClick={() => onNavigate('home')}
+//             className="text-gray-300 hover:text-white transition-colors flex items-center text-sm sm:text-base"
+//           >
+//             ← Back to Home
+//           </button>
+          
+//           <button
+//             onClick={() => setIsDark(!isDark)}
+//             className={`p-2 rounded-lg ${isDark ? 'bg-gray-800 text-yellow-400' : 'bg-white text-gray-700'} shadow-lg transition-all hover:scale-110`}
+//           >
+//             {isDark ? <Sun size={20} /> : <Moon size={20} />}
+//           </button>
+//         </div>
+
+//         <div className="bg-gray-800 bg-opacity-50 backdrop-blur-lg rounded-2xl shadow-2xl p-6 sm:p-8">
+//           <div className="text-center mb-6 sm:mb-8">
+//             <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-3 sm:mb-4 rounded-full bg-green-600 flex items-center justify-center">
+//               <BookOpen className="text-white" size={32} />
+//             </div>
+//             <h2 className="text-xl sm:text-2xl font-bold text-white mb-2">
+//               Daarul Muhmin Institute
+//             </h2>
+//             <p className="text-gray-300 text-xs sm:text-sm">
+//               معهد دار المؤمن
+//             </p>
+//           </div>
+
+//           <AuthToggle isLogin={isLogin} onToggle={setIsLogin} />
+
+//           <MessageAlert message={message.text} type={message.type} />
+
+//           {isLogin ? (
+//             <LoginForm 
+//               data={formData}
+//               loading={loading}
+//               onChange={handleChange}
+//               onSubmit={handleSubmit}
+//               onKeyPress={handleKeyPress}
+//               showPassword={showPassword}
+//               setShowPassword={setShowPassword}
+//             />
+//           ) : (
+//             <RegisterForm
+//               data={formData}
+//               loading={loading}
+//               onChange={handleChange}
+//               onSubmit={handleSubmit}
+//               onKeyPress={handleKeyPress}
+//               showPassword={showPassword}
+//               setShowPassword={setShowPassword}
+//               showConfirmPassword={showConfirmPassword}
+//               setShowConfirmPassword={setShowConfirmPassword}
+//             />
+//           )}
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
+
+
+// export default AuthPage;
+
 'use client'
 import { useState } from 'react';
-import { BookOpen, Sun, Moon, Eye, EyeOff } from 'lucide-react';
+import { BookOpen, Sun, Moon } from 'lucide-react';
 import { AuthToggle } from '../../components/auth/AuthToggle';
-import { LoginForm, RegisterForm } from '../../components/auth/AuthForm';
-import { AuthForm } from '../../components/auth/AuthForm';
+import { LoginForm, RegisterForm, ForgotPasswordForm } from '../../components/auth/AuthForm';
 import { MessageAlert } from '../../components/common/MessageAlert';
 import { adminUserManagement } from '../../lib/appwrite';
 
 const AuthPage = ({ onNavigate, onLogin, isDark, setIsDark }) => {
   const [isLogin, setIsLogin] = useState(true);
+  const [isForgotPassword, setIsForgotPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState({ text: '', type: '' });
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  
+
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -22,12 +193,14 @@ const AuthPage = ({ onNavigate, onLogin, isDark, setIsDark }) => {
     confirmPassword: ''
   });
 
+  const [forgotData, setForgotData] = useState({
+    email: '',
+    newPassword: '',
+    confirmPassword: ''
+  });
+
   const handleSubmit = async () => {
-    if (isLogin) {
-      await handleLogin();
-    } else {
-      await handleRegister();
-    }
+    isLogin ? await handleLogin() : await handleRegister();
   };
 
   const handleLogin = async () => {
@@ -41,14 +214,11 @@ const AuthPage = ({ onNavigate, onLogin, isDark, setIsDark }) => {
     }
 
     const result = await adminUserManagement.login(formData.email, formData.password);
-    
     setLoading(false);
-    
+
     if (result.success) {
       setMessage({ text: result.message, type: 'success' });
-      setTimeout(() => {
-        onLogin(result.user);
-      }, 1000);
+      setTimeout(() => onLogin(result.user), 1000);
     } else {
       setMessage({ text: result.message, type: 'error' });
     }
@@ -72,20 +242,14 @@ const AuthPage = ({ onNavigate, onLogin, isDark, setIsDark }) => {
       formData.confirmPassword,
       'self-registration'
     );
-    
+
     setLoading(false);
-    
+
     if (result.success) {
       setMessage({ text: result.message, type: 'success' });
       setTimeout(() => {
         setIsLogin(true);
-        setFormData({
-          email: formData.email,
-          password: '',
-          name: '',
-          arabicName: '',
-          confirmPassword: ''
-        });
+        setFormData({ email: formData.email, password: '', name: '', arabicName: '', confirmPassword: '' });
         setMessage({ text: 'Please login with your credentials', type: 'success' });
       }, 1500);
     } else {
@@ -93,27 +257,65 @@ const AuthPage = ({ onNavigate, onLogin, isDark, setIsDark }) => {
     }
   };
 
+  const handleForgotPassword = async () => {
+    setLoading(true);
+    setMessage({ text: '', type: '' });
+
+    const result = await adminUserManagement.forgotPassword(
+      forgotData.email,
+      forgotData.newPassword,
+      forgotData.confirmPassword
+    );
+
+    setLoading(false);
+
+    if (result.success) {
+      setMessage({ text: result.message, type: 'success' });
+      setTimeout(() => {
+        setIsForgotPassword(false);
+        setIsLogin(true);
+        setFormData(prev => ({ ...prev, email: forgotData.email, password: '' }));
+        setForgotData({ email: '', newPassword: '', confirmPassword: '' });
+        setMessage({ text: '', type: '' });
+      }, 2000);
+    } else {
+      setMessage({ text: result.message, type: 'error' });
+    }
+  };
+
+  const openForgotPassword = () => {
+    setIsForgotPassword(true);
+    setMessage({ text: '', type: '' });
+    // Pre-fill email if already typed on login form
+    setForgotData({ email: formData.email, newPassword: '', confirmPassword: '' });
+  };
+
+  const closeForgotPassword = () => {
+    setIsForgotPassword(false);
+    setMessage({ text: '', type: '' });
+  };
+
   const handleChange = (field, value) => {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 
   const handleKeyPress = (e, action) => {
-    if (e.key === 'Enter') {
-      action();
-    }
+    if (e.key === 'Enter') action();
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900 flex items-center justify-center px-4 py-8">
       <div className="max-w-md w-full">
+
+        {/* Top bar */}
         <div className="flex justify-between items-center mb-6">
           <button
-            onClick={() => onNavigate('home')}
+            onClick={isForgotPassword ? closeForgotPassword : () => onNavigate('home')}
             className="text-gray-300 hover:text-white transition-colors flex items-center text-sm sm:text-base"
           >
-            ← Back to Home
+            ← {isForgotPassword ? 'Back to Login' : 'Back to Home'}
           </button>
-          
+
           <button
             onClick={() => setIsDark(!isDark)}
             className={`p-2 rounded-lg ${isDark ? 'bg-gray-800 text-yellow-400' : 'bg-white text-gray-700'} shadow-lg transition-all hover:scale-110`}
@@ -122,7 +324,10 @@ const AuthPage = ({ onNavigate, onLogin, isDark, setIsDark }) => {
           </button>
         </div>
 
+        {/* Card */}
         <div className="bg-gray-800 bg-opacity-50 backdrop-blur-lg rounded-2xl shadow-2xl p-6 sm:p-8">
+
+          {/* Logo */}
           <div className="text-center mb-6 sm:mb-8">
             <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-3 sm:mb-4 rounded-full bg-green-600 flex items-center justify-center">
               <BookOpen className="text-white" size={32} />
@@ -130,43 +335,76 @@ const AuthPage = ({ onNavigate, onLogin, isDark, setIsDark }) => {
             <h2 className="text-xl sm:text-2xl font-bold text-white mb-2">
               Daarul Muhmin Institute
             </h2>
-            <p className="text-gray-300 text-xs sm:text-sm">
-              معهد دار المؤمن
-            </p>
+            <p className="text-gray-300 text-xs sm:text-sm">معهد دار المؤمن</p>
           </div>
 
-          <AuthToggle isLogin={isLogin} onToggle={setIsLogin} />
+          {/* Forgot Password View */}
+          {isForgotPassword ? (
+            <div>
+              <h3 className="text-white font-bold text-lg mb-1 text-center">Reset Password</h3>
+              <p className="text-gray-400 text-xs text-center mb-6">
+                Enter your registered email and choose a new password
+              </p>
 
-          <MessageAlert message={message.text} type={message.type} />
+              <MessageAlert message={message.text} type={message.type} />
 
-          {isLogin ? (
-            <LoginForm 
-              data={formData}
-              loading={loading}
-              onChange={handleChange}
-              onSubmit={handleSubmit}
-              onKeyPress={handleKeyPress}
-              showPassword={showPassword}
-              setShowPassword={setShowPassword}
-            />
+              <ForgotPasswordForm
+                data={forgotData}
+                loading={loading}
+                onChange={(field, value) => setForgotData(prev => ({ ...prev, [field]: value }))}
+                onSubmit={handleForgotPassword}
+              />
+
+              <button
+                onClick={closeForgotPassword}
+                className="w-full mt-3 text-gray-400 hover:text-white text-sm transition-colors text-center"
+              >
+                Back to Login
+              </button>
+            </div>
+
           ) : (
-            <RegisterForm
-              data={formData}
-              loading={loading}
-              onChange={handleChange}
-              onSubmit={handleSubmit}
-              onKeyPress={handleKeyPress}
-              showPassword={showPassword}
-              setShowPassword={setShowPassword}
-              showConfirmPassword={showConfirmPassword}
-              setShowConfirmPassword={setShowConfirmPassword}
-            />
+            /* Login / Register View */
+            <>
+              <AuthToggle isLogin={isLogin} onToggle={(val) => {
+                setIsLogin(val);
+                setMessage({ text: '', type: '' });
+              }} />
+
+              <MessageAlert message={message.text} type={message.type} />
+
+              {isLogin ? (
+                <>
+                  <LoginForm
+                    data={formData}
+                    loading={loading}
+                    onChange={handleChange}
+                    onSubmit={handleSubmit}
+                    onKeyPress={handleKeyPress}
+                  />
+                  <button
+                    onClick={openForgotPassword}
+                    className="w-full mt-4 text-green-400 hover:text-green-300 text-sm transition-colors text-center"
+                  >
+                    Forgot Password?
+                  </button>
+                </>
+              ) : (
+                <RegisterForm
+                  data={formData}
+                  loading={loading}
+                  onChange={handleChange}
+                  onSubmit={handleSubmit}
+                  onKeyPress={handleKeyPress}
+                />
+              )}
+            </>
           )}
+
         </div>
       </div>
     </div>
   );
 };
-
 
 export default AuthPage;
