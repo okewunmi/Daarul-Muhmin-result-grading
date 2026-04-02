@@ -532,52 +532,10 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
     }
   }, [student, isOpen]);
 
-  // const loadReportCardData = async () => {
-  //   setLoading(true);
-  //   try {
-  //     const { resultsManager, studentsManager } = await import('../../lib/appwrite');
-      
-  //     const resultsResponse = await resultsManager.getByStudent(student.$id);
-  //     const classStudentsResponse = await studentsManager.getByClass(student.classId);
-      
-  //     if (resultsResponse.success && classStudentsResponse.success) {
-  //       const results = resultsResponse.results;
-  //       const totalScore = results.reduce((sum, r) => sum + r.score, 0);
-  //       const totalMax = results.length * 100;
-  //       const percentage = results.length > 0 ? ((totalScore / totalMax) * 100).toFixed(2) : 0;
-        
-  //       const classPosition = await calculateClassPosition(
-  //         student.$id, 
-  //         classStudentsResponse.students,
-  //         resultsManager
-  //       );
-        
-  //       // Calculate overall grade
-  //       const overallGrade = calculateGrade(parseFloat(percentage));
-        
-  //       setReportData({
-  //         results,
-  //         totalScore,
-  //         totalMax,
-  //         percentage,
-  //         overallGrade,
-  //         classPosition,
-  //         totalStudents: classStudentsResponse.students.length
-  //       });
-  //     }
-  //   } catch (error) {
-  //     console.error('Error loading report card:', error);
-  //     alert('Failed to load report card data');
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
+  
 const loadReportCardData = async () => {
   setLoading(true);
   try {
-    // ❌ REMOVE THIS - already imported at top of file
-    // const { resultsManager, studentsManager } = await import('../../lib/appwrite');
-
     if (!student?.classId) {
       throw new Error('Student has no classId');
     }
@@ -630,26 +588,7 @@ const loadReportCardData = async () => {
   }
 };
   
-  // const calculateClassPosition = async (studentId, classStudents, resultsManager) => {
-  //   try {
-  //     const studentsWithScores = await Promise.all(
-  //       classStudents.map(async (s) => {
-  //         const res = await resultsManager.getByStudent(s.$id);
-  //         const total = res.success 
-  //           ? res.results.reduce((sum, r) => sum + r.score, 0) 
-  //           : 0;
-  //         return { studentId: s.$id, totalScore: total };
-  //       })
-  //     );
-
-  //     studentsWithScores.sort((a, b) => b.totalScore - a.totalScore);
-  //     const position = studentsWithScores.findIndex(s => s.studentId === studentId) + 1;
-  //     return position;
-  //   } catch (error) {
-  //     console.error('Error calculating position:', error);
-  //     return 0;
-  //   }
-  // };
+  
 const calculateClassPosition = async (studentId, classStudents) => {
   try {
     const studentsWithScores = await Promise.all(
@@ -669,10 +608,6 @@ const calculateClassPosition = async (studentId, classStudents) => {
     return 0;
   }
 };
-  // const handlePrint = () => {
-  //   window.print();
-  // };
-
 
 const handlePrint = () => {
   const printContent = document.getElementById('report-card-print-area');
@@ -922,7 +857,7 @@ const handlePrint = () => {
                 <div className="flex items-center mb-2">
                   <span className="font-semibold w-14 text-[10px] print:text-xs">Name:</span>
                   <span className="flex-1 border-b border-dotted border-gray-600 px-2 text-[10px] print:text-xs">
-                    {student.fullName}  <span className="text-xl font-bold ml-20" >{student.arabicName && ` ${student.arabicName} `}</span>
+                    {student.fullName}  <span className="text-xl font-bold ml-90 " >{student.arabicName && ` ${student.arabicName} `}</span>
                   </span>
                   <span className="mr-2 text-[10px] print:text-xs" dir="rtl">اسم الطالب</span>
                 </div>
@@ -937,32 +872,68 @@ const handlePrint = () => {
                 </div>
 
                 {/* Position, No. in Class, Class Row */}
-                <div className="flex items-center gap-3">
-                  <div className="flex items-center flex-1">
-                    <span className="font-semibold whitespace-nowrap text-[10px] print:text-xs">Position:</span>
-                    <span className="flex-1 border-b border-dotted border-gray-600 px-1 mx-1 text-[10px] print:text-xs">
-                      {reportData.classPosition}{getPositionSuffix(reportData.classPosition)}
-                    </span>
-                    <span dir="rtl" className="whitespace-nowrap text-[10px] print:text-xs">الترتيب</span>
-                  </div>
+                // <div className="flex items-center gap-3">
+                //   <div className="flex items-center flex-1">
+                //     <span className="font-semibold whitespace-nowrap text-[10px] print:text-xs">Position:</span>
+                //     <span className="flex-1 border-b border-dotted border-gray-600 px-1 mx-1 text-[10px] print:text-xs">
+                //       {reportData.classPosition}{getPositionSuffix(reportData.classPosition)}
+                //     </span>
+                //     <span dir="rtl" className="whitespace-nowrap text-[10px] print:text-xs">الترتيب</span>
+                //   </div>
 
-                  <div className="flex items-center flex-1">
-                    <span className="font-semibold whitespace-nowrap text-[10px] print:text-xs">No. in Class:</span>
-                    <span className="flex-1 border-b border-dotted border-gray-600 px-1 mx-1 text-[10px] print:text-xs">
-                      {reportData.totalStudents}
-                    </span>
-                     {/* <span dir="rtl" className="whitespace-nowrap text-[10px] print:text-xs">عدد الطلاب</span> */}
-                    <span dir="rtl" className="whitespace-nowrap text-[10px] print:text-xs">عدد الطلبة</span>
-                  </div>
+                //   <div className="flex items-center flex-1">
+                //     <span className="font-semibold whitespace-nowrap text-[10px] print:text-xs">No. in Class:</span>
+                //     <span className="flex-1 border-b border-dotted border-gray-600 px-1 mx-1 text-[10px] print:text-xs">
+                //       {reportData.totalStudents}
+                //     </span>
+                //      {/* <span dir="rtl" className="whitespace-nowrap text-[10px] print:text-xs">عدد الطلاب</span> */}
+                //     <span dir="rtl" className="whitespace-nowrap text-[10px] print:text-xs">عدد الطلبة</span>
+                //   </div>
 
-                  <div className="flex items-center flex-1">
-                    <span className="font-semibold whitespace-nowrap text-[10px] print:text-xs">Class:</span>
-                    <span className="flex-1 border-b border-dotted border-gray-600 px-1 mx-1 text-[10px] print:text-xs">
-                      {classInfo?.className}
-                    </span>
-                    <span dir="rtl" className="whitespace-nowrap text-[10px] print:text-xs">الصف</span>
-                  </div>
-                </div>
+                //   <div className="flex items-center flex-1">
+                //     <span className="font-semibold whitespace-nowrap text-[10px] print:text-xs">Class:</span>
+                //     <span className="flex-1 border-b border-dotted border-gray-600 px-1 mx-1 text-[10px] print:text-xs">
+                //       {classInfo?.className}
+                //     </span>
+                //     <span dir="rtl" className="whitespace-nowrap text-[10px] print:text-xs">الصف</span>
+                //   </div>
+                // </div>
+{/* Position, No. in Class, Class Row */}
+<div className="flex items-center gap-3">
+  <div className="flex items-center flex-1">
+    <span className="font-semibold whitespace-nowrap text-[10px] print:text-xs">Position:</span>
+    <span className="flex-1 border-b border-dotted border-gray-600 px-1 mx-1 text-[10px] print:text-xs text-center">
+      {reportData.classPosition}{getPositionSuffix(reportData.classPosition)}
+      <span className="mx-1 text-gray-400">|</span>
+      <span dir="rtl">{toArabicNumerals(reportData.classPosition)}</span>
+    </span>
+    <span dir="rtl" className="whitespace-nowrap text-[10px] print:text-xs">الترتيب</span>
+  </div>
+
+  <div className="flex items-center flex-1">
+    <span className="font-semibold whitespace-nowrap text-[10px] print:text-xs">No. in Class:</span>
+    <span className="flex-1 border-b border-dotted border-gray-600 px-1 mx-1 text-[10px] print:text-xs text-center">
+      {reportData.totalStudents}
+      <span className="mx-1 text-gray-400">|</span>
+      <span dir="rtl">{toArabicNumerals(reportData.totalStudents)}</span>
+    </span>
+    <span dir="rtl" className="whitespace-nowrap text-[10px] print:text-xs">عدد الطلبة</span>
+  </div>
+
+  <div className="flex items-center flex-1">
+    <span className="font-semibold whitespace-nowrap text-[10px] print:text-xs">Class:</span>
+    <span className="flex-1 border-b border-dotted border-gray-600 px-1 mx-1 text-[10px] print:text-xs text-center">
+      {classInfo?.className}
+      {classInfo?.classNameArabic && (
+        <>
+          <span className="mx-1 text-gray-400">|</span>
+          <span dir="rtl">{classInfo.classNameArabic}</span>
+        </>
+      )}
+    </span>
+    <span dir="rtl" className="whitespace-nowrap text-[10px] print:text-xs">الصف</span>
+  </div>
+</div>
               </div>
 
               {/* Grades Table - Larger for printing */}
@@ -1308,26 +1279,6 @@ const ClassModal = ({ isOpen, onClose, onSave, sessionId, editingClass }) => {
         placeholder="الصف الأول أ"
         dir="rtl"
       />
-      {/* <Input
-        label="Class Teacher"
-        value={formData.classTeacher}
-        onChange={(e) => setFormData({ ...formData, classTeacher: e.target.value })}
-        placeholder="e.g., Ustadh Ahmad"
-      /> */}
-      {/* <Input
-        label="Teacher Name (Arabic) - اسم المعلم بالعربية"
-        value={formData.classTeacherArabic}
-        onChange={(e) => setFormData({ ...formData, classTeacherArabic: e.target.value })}
-        placeholder="الأستاذ أحمد"
-        dir="rtl"
-      /> */}
-      {/* <Input
-        label="Capacity"
-        type="number"
-        value={formData.capacity}
-        onChange={(e) => setFormData({ ...formData, capacity: parseInt(e.target.value) })}
-        required
-      /> */}
       <div className="flex gap-3 mt-6">
         <Button onClick={handleSubmit} icon={Check}>
           {editingClass ? 'Update Class' : 'Save Class'}
@@ -1860,6 +1811,357 @@ const SubjectCard = ({ subject, onEdit, onDelete }) => (
     </div>
   </Card>
 );
+
+           // ============================================
+// BROADSHEET COMPONENT
+// ============================================
+
+const BroadsheetView = ({ sessions, subjects }) => {
+  const [selectedSessionId, setSelectedSessionId] = useState('');
+  const [selectedClassId, setSelectedClassId] = useState('');
+  const [availableClasses, setAvailableClasses] = useState([]);
+  const [broadsheetData, setBroadsheetData] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  // Load classes when session changes
+  useEffect(() => {
+    if (selectedSessionId) {
+      loadClasses(selectedSessionId);
+      setSelectedClassId('');
+      setBroadsheetData(null);
+    }
+  }, [selectedSessionId]);
+
+  const loadClasses = async (sessionId) => {
+    const result = await classesManager.getBySession(sessionId);
+    if (result.success) setAvailableClasses(result.classes);
+  };
+
+  const generateBroadsheet = async () => {
+    if (!selectedClassId) return;
+    setLoading(true);
+
+    try {
+      const studentsResult = await studentsManager.getByClass(selectedClassId);
+      if (!studentsResult.success) throw new Error('Failed to load students');
+
+      const students = studentsResult.students;
+
+      // Load results for all students
+      const studentsWithResults = await Promise.all(
+        students.map(async (student) => {
+          const resultsResult = await resultsManager.getByStudent(student.$id);
+          const results = resultsResult.success ? resultsResult.results : [];
+
+          const subjectScores = {};
+          subjects.forEach(subject => {
+            const result = results.find(r => r.subjectId === subject.$id);
+            subjectScores[subject.$id] = result ? result.score : null;
+          });
+
+          const scores = Object.values(subjectScores).filter(s => s !== null);
+          const totalScore = scores.reduce((sum, s) => sum + s, 0);
+          const totalMax = subjects.length * 100;
+          const percentage = scores.length > 0
+            ? ((totalScore / totalMax) * 100).toFixed(1)
+            : '0.0';
+
+          return {
+            ...student,
+            subjectScores,
+            totalScore,
+            totalMax,
+            percentage: parseFloat(percentage)
+          };
+        })
+      );
+
+      // Sort by total score descending and assign positions
+      const sorted = [...studentsWithResults].sort((a, b) => b.totalScore - a.totalScore);
+      sorted.forEach((student, index) => {
+        student.position = index + 1;
+      });
+
+      // Restore original order (by name) but keep position
+      const finalData = studentsWithResults.map(s => ({
+        ...s,
+        position: sorted.find(ss => ss.$id === s.$id)?.position || 0
+      }));
+
+      setBroadsheetData(finalData);
+    } catch (error) {
+      console.error('Broadsheet error:', error);
+      alert('Failed to generate broadsheet: ' + error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handlePrintBroadsheet = () => {
+    const printContent = document.getElementById('broadsheet-print-area');
+    if (!printContent) return;
+
+    const selectedClass = availableClasses.find(c => c.$id === selectedClassId);
+    const selectedSession = sessions.find(s => s.$id === selectedSessionId);
+
+    const printWindow = window.open('', '_blank', 'width=1200,height=800');
+    printWindow.document.write(`
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <title>Broadsheet - ${selectedClass?.className}</title>
+          <meta charset="utf-8">
+          <style>
+            * { box-sizing: border-box; margin: 0; padding: 0; -webkit-print-color-adjust: exact !important; }
+            body { font-family: sans-serif; font-size: 9px; background: white; }
+            table { border-collapse: collapse; width: 100%; }
+            th, td { border: 1px solid black; padding: 3px 4px; text-align: center; }
+            th { background-color: #f0f0f0; font-weight: bold; }
+            .text-left { text-align: left; }
+            .font-bold { font-weight: bold; }
+            .header { text-align: center; margin-bottom: 8px; }
+            .header h1 { font-size: 13px; }
+            .header h2 { font-size: 11px; }
+            .header p { font-size: 9px; }
+            .fail { color: red; }
+            @page { margin: 0.5cm; size: A4 landscape; }
+          </style>
+        </head>
+        <body>
+          ${printContent.innerHTML}
+          <script>
+            window.onload = function() {
+              window.print();
+              window.onafterprint = function() { window.close(); };
+            };
+          <\/script>
+        </body>
+      </html>
+    `);
+    printWindow.document.close();
+  };
+
+  const getPositionSuffix = (n) => {
+    if (n === 1) return 'st';
+    if (n === 2) return 'nd';
+    if (n === 3) return 'rd';
+    return 'th';
+  };
+
+  const getGradeLabel = (score) => {
+    if (score === null) return '-';
+    if (score >= 90) return 'A+';
+    if (score >= 80) return 'A';
+    if (score >= 60) return 'B';
+    if (score >= 50) return 'C';
+    return 'F';
+  };
+
+  const selectedClass = availableClasses.find(c => c.$id === selectedClassId);
+  const selectedSession = sessions.find(s => s.$id === selectedSessionId);
+
+  return (
+    <div>
+      {/* Controls */}
+      <div className="flex flex-wrap gap-4 mb-6">
+        <div className="flex-1 min-w-[180px]">
+          <label className="block text-gray-300 mb-2 text-sm">Academic Session</label>
+          <select
+            value={selectedSessionId}
+            onChange={(e) => setSelectedSessionId(e.target.value)}
+            className="w-full px-3 py-2 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+          >
+            <option value="">Select Session...</option>
+            {sessions.map(s => (
+              <option key={s.$id} value={s.$id}>{s.sessionName}</option>
+            ))}
+          </select>
+        </div>
+
+        <div className="flex-1 min-w-[180px]">
+          <label className="block text-gray-300 mb-2 text-sm">Class</label>
+          <select
+            value={selectedClassId}
+            onChange={(e) => setSelectedClassId(e.target.value)}
+            disabled={!selectedSessionId}
+            className="w-full px-3 py-2 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 disabled:opacity-50"
+          >
+            <option value="">Select Class...</option>
+            {availableClasses.map(c => (
+              <option key={c.$id} value={c.$id}>{c.className}</option>
+            ))}
+          </select>
+        </div>
+
+        <div className="flex items-end gap-2">
+          <button
+            onClick={generateBroadsheet}
+            disabled={!selectedClassId || loading}
+            className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg font-medium transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {loading ? 'Generating...' : 'Generate Broadsheet'}
+          </button>
+
+          {broadsheetData && (
+            <button
+              onClick={handlePrintBroadsheet}
+              className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-all"
+            >
+              <Printer size={16} />
+              Print
+            </button>
+          )}
+        </div>
+      </div>
+
+      {/* Loading */}
+      {loading && (
+        <div className="flex justify-center py-12">
+          <div className="w-10 h-10 border-4 border-green-500 border-t-transparent rounded-full animate-spin"></div>
+        </div>
+      )}
+
+      {/* Broadsheet Table */}
+      {!loading && broadsheetData && (
+        <div className="overflow-x-auto">
+          <div id="broadsheet-print-area" className="bg-white text-black p-4 rounded-lg">
+            {/* Header */}
+            <div className="text-center mb-4">
+              <p className="text-[10px]">بسم الله الرحمن الرحيم</p>
+              <h1 className="font-bold text-sm">معهد دار المؤمن للدراسات العربية والإسلامية</h1>
+              <h2 className="font-bold text-xs">DAARUL MUHMIN INSTITUTE OF ARABIC AND ISLAMIC STUDIES</h2>
+              <p className="text-xs font-semibold mt-1">CLASS BROADSHEET — كشف درجات الصف</p>
+              <div className="flex justify-center gap-8 mt-1 text-[10px]">
+                <span>Session: <strong>{selectedSession?.sessionName}</strong></span>
+                <span>Class: <strong>{selectedClass?.className}</strong>
+                  {selectedClass?.classNameArabic && <span dir="rtl"> | {selectedClass.classNameArabic}</span>}
+                </span>
+                <span>Total Students: <strong>{broadsheetData.length}</strong></span>
+              </div>
+            </div>
+
+            {/* Table */}
+            <table className="w-full border border-black text-[8px]" style={{ fontSize: '8px' }}>
+              <thead>
+                <tr>
+                  <th className="border border-black p-1 w-5">S/N</th>
+                  <th className="border border-black p-1 text-left min-w-[100px]">Student Name / اسم الطالب</th>
+                  {subjects.map(subject => (
+                    <th key={subject.$id} className="border border-black p-1 min-w-[50px]">
+                      <div>{subject.arabicName}</div>
+                      <div className="text-[7px] text-gray-600">{subject.englishName}</div>
+                      <div className="text-[7px]">/100</div>
+                    </th>
+                  ))}
+                  <th className="border border-black p-1 min-w-[45px]">Total<br/>المجموع</th>
+                  <th className="border border-black p-1 min-w-[40px]">Max<br/>الكلي</th>
+                  <th className="border border-black p-1 min-w-[40px]">%<br/>النسبة</th>
+                  <th className="border border-black p-1 min-w-[35px]">Grade<br/>التقدير</th>
+                  <th className="border border-black p-1 min-w-[40px]">Position<br/>الترتيب</th>
+                </tr>
+              </thead>
+              <tbody>
+                {broadsheetData.map((student, index) => {
+                  const grade = student.percentage >= 90 ? 'Excellent / ممتاز'
+                    : student.percentage >= 80 ? 'Very Good / جيد جداً'
+                    : student.percentage >= 60 ? 'Good / جيد'
+                    : student.percentage >= 50 ? 'Pass / مقبول'
+                    : 'Fail / راسب';
+                  const isFail = student.percentage < 50;
+
+                  return (
+                    <tr key={student.$id} className={index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}>
+                      <td className="border border-black p-1 text-center">{index + 1}</td>
+                      <td className="border border-black p-1 text-left">
+                        <div className="font-bold">{student.fullName}</div>
+                        {student.arabicName && (
+                          <div className="text-[7px] text-gray-600" dir="rtl">{student.arabicName}</div>
+                        )}
+                      </td>
+                      {subjects.map(subject => {
+                        const score = student.subjectScores[subject.$id];
+                        const subFail = score !== null && score < 50;
+                        return (
+                          <td
+                            key={subject.$id}
+                            className={`border border-black p-1 text-center font-bold ${subFail ? 'text-red-600' : ''}`}
+                          >
+                            {score !== null ? score : '-'}
+                          </td>
+                        );
+                      })}
+                      <td className="border border-black p-1 text-center font-bold">{student.totalScore}</td>
+                      <td className="border border-black p-1 text-center">{student.totalMax}</td>
+                      <td className={`border border-black p-1 text-center font-bold ${isFail ? 'text-red-600' : 'text-green-700'}`}>
+                        {student.percentage}%
+                      </td>
+                      <td className={`border border-black p-1 text-center text-[7px] ${isFail ? 'text-red-600' : ''}`}>
+                        {grade}
+                      </td>
+                      <td className="border border-black p-1 text-center font-bold">
+                        {student.position}{getPositionSuffix(student.position)}
+                        <div className="text-[7px]" dir="rtl">{toArabicNumerals(student.position)}</div>
+                      </td>
+                    </tr>
+                  );
+                })}
+
+                {/* Summary Row */}
+                <tr className="font-bold bg-gray-100">
+                  <td className="border border-black p-1 text-center" colSpan="2">
+                    Class Average / معدل الصف
+                  </td>
+                  {subjects.map(subject => {
+                    const scores = broadsheetData
+                      .map(s => s.subjectScores[subject.$id])
+                      .filter(s => s !== null);
+                    const avg = scores.length > 0
+                      ? (scores.reduce((a, b) => a + b, 0) / scores.length).toFixed(1)
+                      : '-';
+                    return (
+                      <td key={subject.$id} className="border border-black p-1 text-center">
+                        {avg}
+                      </td>
+                    );
+                  })}
+                  <td className="border border-black p-1 text-center" colSpan="5">
+                    Class Avg %:{' '}
+                    {(broadsheetData.reduce((sum, s) => sum + s.percentage, 0) / broadsheetData.length).toFixed(1)}%
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+            {/* Footer */}
+            <div className="flex justify-between mt-4 text-[9px]">
+              <div>
+                <span className="font-semibold">Prepared by:</span>
+                <span className="border-b border-dotted border-gray-500 inline-block w-32 ml-2"></span>
+              </div>
+              <div>
+                <span className="font-semibold">Date:</span>
+                <span className="ml-2">{new Date().toLocaleDateString()}</span>
+              </div>
+              <div>
+                <span className="font-semibold">Principal's Sign:</span>
+                <span className="border-b border-dotted border-gray-500 inline-block w-32 ml-2"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Empty state */}
+      {!loading && !broadsheetData && (
+        <div className="text-center py-12 text-gray-400">
+          <FileText size={48} className="mx-auto mb-4 opacity-30" />
+          <p>Select a session and class, then click Generate Broadsheet</p>
+          <p className="text-xs mt-1" dir="rtl">اختر السنة الدراسية والصف ثم انقر على إنشاء الكشف</p>
+        </div>
+      )}
+    </div>
+  );
+};
 
 // ============================================
 // MAIN ADMIN DASHBOARD COMPONENT
@@ -2483,30 +2785,65 @@ const handleViewReportCard = (student) => {
 
                 {/* Settings View */}
                 
-                  {currentView === 'settings' && (
-                    <div>
-                      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-6">
-                        <h2 className="text-2xl sm:text-3xl font-bold text-white">Settings</h2>
-                      </div>
+                  // {currentView === 'settings' && (
+                  //   <div>
+                  //     <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-6">
+                  //       <h2 className="text-2xl sm:text-3xl font-bold text-white">Settings</h2>
+                  //     </div>
 
-                      <div className="space-y-6">
-                        <Card>
-                          <h3 className="text-xl font-bold text-white mb-4">Report Card Template</h3>
-                          <p className="text-gray-300 mb-4">Download the blank report card template for printing or reference.</p>
-                          <ReportCardTemplate subjects={subjects} />
-                        </Card>
+                  //     <div className="space-y-6">
+                  //       <Card>
+                  //         <h3 className="text-xl font-bold text-white mb-4">Report Card Template</h3>
+                  //         <p className="text-gray-300 mb-4">Download the blank report card template for printing or reference.</p>
+                  //         <ReportCardTemplate subjects={subjects} />
+                  //       </Card>
                         
-                        <Card>
-                          <h3 className="text-xl font-bold text-white mb-4">System Settings</h3>
-                          <EmptyState
-                            icon={Settings}
-                            title="Additional Settings"
-                            description="More system settings coming soon..."
-                          />
-                        </Card>
-                      </div>
-                    </div>
-                  )}
+                  //       <Card>
+                  //         <h3 className="text-xl font-bold text-white mb-4">System Settings</h3>
+                  //         <EmptyState
+                  //           icon={Settings}
+                  //           title="Additional Settings"
+                  //           description="More system settings coming soon..."
+                  //         />
+                  //       </Card>
+                  //     </div>
+                  //   </div>
+                  // )}
+{currentView === 'settings' && (
+  <div>
+    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-6">
+      <h2 className="text-2xl sm:text-3xl font-bold text-white">Settings</h2>
+    </div>
+
+    <div className="space-y-6">
+      {/* ✅ NEW - Broadsheet Section */}
+      <Card>
+        <h3 className="text-xl font-bold text-white mb-2">Class Broadsheet</h3>
+        <p className="text-gray-300 mb-4 text-sm">
+          Generate and print the full result broadsheet for any class.
+          كشف درجات كامل للصف
+        </p>
+        <BroadsheetView sessions={sessions} subjects={subjects} />
+      </Card>
+
+      {/* Report Card Template */}
+      <Card>
+        <h3 className="text-xl font-bold text-white mb-4">Report Card Template</h3>
+        <p className="text-gray-300 mb-4">Download the blank report card template for printing or reference.</p>
+        <ReportCardTemplate subjects={subjects} />
+      </Card>
+
+      <Card>
+        <h3 className="text-xl font-bold text-white mb-4">System Settings</h3>
+        <EmptyState
+          icon={Settings}
+          title="Additional Settings"
+          description="More system settings coming soon..."
+        />
+      </Card>
+    </div>
+  </div>
+)}
               </>
             )}
           </main>
