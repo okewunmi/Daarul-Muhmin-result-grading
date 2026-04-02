@@ -998,6 +998,7 @@ const handlePrint = () => {
               </table>
 
               {/* Next Term & Promoted Section */}
+ {/*
               <div className="grid grid-cols-2 gap-3 mb-3 print:mb-4 text-[10px] print:text-xs">
                 <div className="flex items-center">
                   <span className="font-semibold whitespace-nowrap text-[10px] print:text-xs">Next Term Begins:</span>
@@ -1009,8 +1010,30 @@ const handlePrint = () => {
                   <span className="flex-1 border-b border-dotted border-gray-600 mx-2"></span>
                   <span dir="rtl" className="whitespace-nowrap text-[10px] print:text-xs">منقول إلى</span>
                 </div>
-              </div>
+              </div>*/}
+{/* Next Term & Promoted Section */}
+<div className="grid grid-cols-2 gap-3 mb-3 print:mb-4 text-[10px] print:text-xs">
+  <div className="flex items-center">
+    <span className="font-semibold whitespace-nowrap text-[10px] print:text-xs">Next Term Begins:</span>
+    <span className="flex-1 border-b border-dotted border-gray-600 mx-2 text-center text-[10px] print:text-xs">
+      {/* ✅ Show date if set, otherwise blank line */}
+      {session?.nextTermBegins
+        ? new Date(session.nextTermBegins).toLocaleDateString('en-GB', {
+            day: '2-digit',
+            month: 'long',
+            year: 'numeric'
+          })
+        : ''}
+    </span>
+    <span dir="rtl" className="whitespace-nowrap text-[10px] print:text-xs">بداية الفصل الدراسي الجديد</span>
+  </div>
 
+  <div className="flex items-center">
+    <span className="font-semibold whitespace-nowrap text-[10px] print:text-xs">Promoted:</span>
+    <span className="flex-1 border-b border-dotted border-gray-600 mx-2"></span>
+    <span dir="rtl" className="whitespace-nowrap text-[10px] print:text-xs">منقول إلى</span>
+  </div>
+</div>
               {/* Class Teacher's Remark - Display teacherRemarkArabic */}
               <div className="mb-3 print:mb-4 text-[10px] print:text-xs">
                 <div className="flex items-center mb-2">
