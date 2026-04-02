@@ -866,7 +866,7 @@ const handlePrint = () => {
                 <div className="flex items-center mb-2">
                   <span className="font-semibold w-14 text-[10px] print:text-xs">Session:</span>
                   <span className="flex-1 border-b border-dotted border-gray-600 px-2 text-[10px] print:text-xs">
-                    {session?.sessionName} <span className="text-xl font-bold ml-90 " >{session?.sessionNameArabic && `/ ${session.sessionNameArabic}`}
+                    {session?.sessionName} <span className="ml-90 " >{session?.sessionNameArabic && `/ ${session.sessionNameArabic}`}
                   </span>    </span>
                   <span className="mr-2 text-[10px] print:text-xs" dir="rtl">العام الدراسي</span>
                 </div>
