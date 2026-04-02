@@ -870,34 +870,6 @@ const handlePrint = () => {
                   </span>
                   <span className="mr-2 text-[10px] print:text-xs" dir="rtl">العام الدراسي</span>
                 </div>
-
-                {/* Position, No. in Class, Class Row */}
-                {/*<div className="flex items-center gap-3">
-                  <div className="flex items-center flex-1">
-                    <span className="font-semibold whitespace-nowrap text-[10px] print:text-xs">Position:</span>
-                    <span className="flex-1 border-b border-dotted border-gray-600 px-1 mx-1 text-[10px] print:text-xs">
-                      {reportData.classPosition}{getPositionSuffix(reportData.classPosition)}
-                    </span>
-                    <span dir="rtl" className="whitespace-nowrap text-[10px] print:text-xs">الترتيب</span>
-                  </div>
-
-                  <div className="flex items-center flex-1">
-                    <span className="font-semibold whitespace-nowrap text-[10px] print:text-xs">No. in Class:</span>
-                    <span className="flex-1 border-b border-dotted border-gray-600 px-1 mx-1 text-[10px] print:text-xs">
-                      {reportData.totalStudents}
-                    </span>
-                     
-                    <span dir="rtl" className="whitespace-nowrap text-[10px] print:text-xs">عدد الطلبة</span>
-                  </div>
-
-                  <div className="flex items-center flex-1">
-                    <span className="font-semibold whitespace-nowrap text-[10px] print:text-xs">Class:</span>
-                    <span className="flex-1 border-b border-dotted border-gray-600 px-1 mx-1 text-[10px] print:text-xs">
-                      {classInfo?.className}
-                    </span>
-                    <span dir="rtl" className="whitespace-nowrap text-[10px] print:text-xs">الصف</span>
-                  </div>
-                </div>*/}
 {/* Position, No. in Class, Class Row */}
 <div className="flex items-center gap-3">
   <div className="flex items-center flex-1">
@@ -1152,7 +1124,7 @@ const handlePrint = () => {
   );
 };
 
-
+{/*
 const SessionModal = ({ isOpen, onClose, onSave, editingSession }) => {
   const [formData, setFormData] = useState({
     sessionName: '',
@@ -1226,7 +1198,99 @@ const SessionModal = ({ isOpen, onClose, onSave, editingSession }) => {
     </Modal>
   );
 };
+*/}
+const SessionModal = ({ isOpen, onClose, onSave, editingSession }) => {
+  const [formData, setFormData] = useState({
+    sessionName: '',
+    sessionNameArabic: '',
+    startDate: '',
+    endDate: '',
+    nextTermBegins: '', // ✅ NEW
+    isActive: true
+  });
 
+  useEffect(() => {
+    if (editingSession) {
+      setFormData({
+        sessionName: editingSession.sessionName || '',
+        sessionNameArabic: editingSession.sessionNameArabic || '',
+        startDate: editingSession.startDate || '',
+        endDate: editingSession.endDate || '',
+        nextTermBegins: editingSession.nextTermBegins || '', // ✅ NEW
+        isActive: editingSession.isActive ?? true
+      });
+    } else {
+      setFormData({
+        sessionName: '',
+        sessionNameArabic: '',
+        startDate: '',
+        endDate: '',
+        nextTermBegins: '', // ✅ NEW
+        isActive: true
+      });
+    }
+  }, [editingSession, isOpen]);
+
+  const handleSubmit = () => {
+    onSave(formData, editingSession?.$id);
+    setFormData({ 
+      sessionName: '', 
+      sessionNameArabic: '', 
+      startDate: '', 
+      endDate: '', 
+      nextTermBegins: '', // ✅ NEW
+      isActive: true 
+    });
+  };
+
+  return (
+    <Modal isOpen={isOpen} onClose={onClose} title={editingSession ? "Edit Academic Session" : "Add Academic Session"}>
+      <Input
+        label="Session Name"
+        value={formData.sessionName}
+        onChange={(e) => setFormData({ ...formData, sessionName: e.target.value })}
+        placeholder="e.g., 2025/2026"
+        required
+      />
+      <Input
+        label="Session Name (Arabic) - اسم السنة بالعربية"
+        value={formData.sessionNameArabic}
+        onChange={(e) => setFormData({ ...formData, sessionNameArabic: e.target.value })}
+        placeholder="٢٠٢٥/٢٠٢٦"
+        dir="rtl"
+      />
+      <Input
+        label="Start Date"
+        type="date"
+        value={formData.startDate}
+        onChange={(e) => setFormData({ ...formData, startDate: e.target.value })}
+        required
+      />
+      <Input
+        label="End Date"
+        type="date"
+        value={formData.endDate}
+        onChange={(e) => setFormData({ ...formData, endDate: e.target.value })}
+        required
+      />
+
+      {/* ✅ NEW FIELD */}
+      <Input
+        label="Next Term Begins (Optional) - بداية الفصل الدراسي الجديد"
+        type="date"
+        value={formData.nextTermBegins}
+        onChange={(e) => setFormData({ ...formData, nextTermBegins: e.target.value })}
+      />
+
+      <div className="flex gap-3 mt-6">
+        <Button onClick={handleSubmit} icon={Check}>
+          {editingSession ? 'Update Session' : 'Save Session'}
+        </Button>
+        <Button onClick={onClose} variant="secondary">Cancel</Button>
+      </div>
+    </Modal>
+  );
+};
 // Class Modal (Create & Edit)
 const ClassModal = ({ isOpen, onClose, onSave, sessionId, editingClass }) => {
   const [formData, setFormData] = useState({
