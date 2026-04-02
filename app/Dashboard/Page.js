@@ -904,9 +904,9 @@ const handlePrint = () => {
                 {/* Name Row */}
                 <div className="flex items-center mb-2">
                   <span className="font-semibold w-14 text-[10px] print:text-xs">Name:</span>
-                  // <span className="flex-1 border-b border-dotted border-gray-600 px-2 text-[10px] print:text-xs">
+                 {/* // <span className="flex-1 border-b border-dotted border-gray-600 px-2 text-[10px] print:text-xs">
                   //   {student.fullName}  <span className="text-xl font-bold ml-30 " >{student.arabicName && ` ${student.arabicName} `}</span>
-                  // </span>
+                  // </span>*/}
                 <span className="flex-1 border-b border-dotted border-gray-600 px-2 text-[10px] print:text-xs flex justify-between items-center">
   <span>{student.fullName}</span>
   <span className="text-xl font-bold">{student.arabicName && `${student.arabicName}`}</span>
@@ -917,9 +917,9 @@ const handlePrint = () => {
                 {/* Session Row */}
                 <div className="flex items-center mb-2">
                   <span className="font-semibold w-14 text-[10px] print:text-xs">Session:</span>
-                  // <span className="flex-1 border-b border-dotted border-gray-600 px-2 text-[10px] print:text-xs">
+                   {/*// <span className="flex-1 border-b border-dotted border-gray-600 px-2 text-[10px] print:text-xs">
                   //   {session?.sessionName} <span className="ml-30" >{session?.sessionNameArabic && `/ ${session.sessionNameArabic}`}
-                  // </span>    </span>
+                  // </span>    </span>*/}
                   <span className="flex-1 border-b border-dotted border-gray-600 px-2 text-[10px] print:text-xs flex justify-between items-center">
   <span>{session?.sessionName}</span>
   <span>{session?.sessionNameArabic && `/ ${session.sessionNameArabic}`}</span>
