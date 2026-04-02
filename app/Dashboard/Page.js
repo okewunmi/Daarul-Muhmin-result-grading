@@ -872,32 +872,32 @@ const handlePrint = () => {
                 </div>
 
                 {/* Position, No. in Class, Class Row */}
-                // <div className="flex items-center gap-3">
-                //   <div className="flex items-center flex-1">
-                //     <span className="font-semibold whitespace-nowrap text-[10px] print:text-xs">Position:</span>
-                //     <span className="flex-1 border-b border-dotted border-gray-600 px-1 mx-1 text-[10px] print:text-xs">
-                //       {reportData.classPosition}{getPositionSuffix(reportData.classPosition)}
-                //     </span>
-                //     <span dir="rtl" className="whitespace-nowrap text-[10px] print:text-xs">الترتيب</span>
-                //   </div>
+                {/*<div className="flex items-center gap-3">
+                  <div className="flex items-center flex-1">
+                    <span className="font-semibold whitespace-nowrap text-[10px] print:text-xs">Position:</span>
+                    <span className="flex-1 border-b border-dotted border-gray-600 px-1 mx-1 text-[10px] print:text-xs">
+                      {reportData.classPosition}{getPositionSuffix(reportData.classPosition)}
+                    </span>
+                    <span dir="rtl" className="whitespace-nowrap text-[10px] print:text-xs">الترتيب</span>
+                  </div>
 
-                //   <div className="flex items-center flex-1">
-                //     <span className="font-semibold whitespace-nowrap text-[10px] print:text-xs">No. in Class:</span>
-                //     <span className="flex-1 border-b border-dotted border-gray-600 px-1 mx-1 text-[10px] print:text-xs">
-                //       {reportData.totalStudents}
-                //     </span>
-                //      {/* <span dir="rtl" className="whitespace-nowrap text-[10px] print:text-xs">عدد الطلاب</span> */}
-                //     <span dir="rtl" className="whitespace-nowrap text-[10px] print:text-xs">عدد الطلبة</span>
-                //   </div>
+                  <div className="flex items-center flex-1">
+                    <span className="font-semibold whitespace-nowrap text-[10px] print:text-xs">No. in Class:</span>
+                    <span className="flex-1 border-b border-dotted border-gray-600 px-1 mx-1 text-[10px] print:text-xs">
+                      {reportData.totalStudents}
+                    </span>
+                     
+                    <span dir="rtl" className="whitespace-nowrap text-[10px] print:text-xs">عدد الطلبة</span>
+                  </div>
 
-                //   <div className="flex items-center flex-1">
-                //     <span className="font-semibold whitespace-nowrap text-[10px] print:text-xs">Class:</span>
-                //     <span className="flex-1 border-b border-dotted border-gray-600 px-1 mx-1 text-[10px] print:text-xs">
-                //       {classInfo?.className}
-                //     </span>
-                //     <span dir="rtl" className="whitespace-nowrap text-[10px] print:text-xs">الصف</span>
-                //   </div>
-                // </div>
+                  <div className="flex items-center flex-1">
+                    <span className="font-semibold whitespace-nowrap text-[10px] print:text-xs">Class:</span>
+                    <span className="flex-1 border-b border-dotted border-gray-600 px-1 mx-1 text-[10px] print:text-xs">
+                      {classInfo?.className}
+                    </span>
+                    <span dir="rtl" className="whitespace-nowrap text-[10px] print:text-xs">الصف</span>
+                  </div>
+                </div>*/}
 {/* Position, No. in Class, Class Row */}
 <div className="flex items-center gap-3">
   <div className="flex items-center flex-1">
@@ -2785,30 +2785,7 @@ const handleViewReportCard = (student) => {
 
                 {/* Settings View */}
                 
-                  // {currentView === 'settings' && (
-                  //   <div>
-                  //     <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-6">
-                  //       <h2 className="text-2xl sm:text-3xl font-bold text-white">Settings</h2>
-                  //     </div>
-
-                  //     <div className="space-y-6">
-                  //       <Card>
-                  //         <h3 className="text-xl font-bold text-white mb-4">Report Card Template</h3>
-                  //         <p className="text-gray-300 mb-4">Download the blank report card template for printing or reference.</p>
-                  //         <ReportCardTemplate subjects={subjects} />
-                  //       </Card>
-                        
-                  //       <Card>
-                  //         <h3 className="text-xl font-bold text-white mb-4">System Settings</h3>
-                  //         <EmptyState
-                  //           icon={Settings}
-                  //           title="Additional Settings"
-                  //           description="More system settings coming soon..."
-                  //         />
-                  //       </Card>
-                  //     </div>
-                  //   </div>
-                  // )}
+                  
 {currentView === 'settings' && (
   <div>
     <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-6">
