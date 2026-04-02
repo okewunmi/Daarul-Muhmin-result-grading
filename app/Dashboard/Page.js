@@ -217,10 +217,151 @@ const numberToArabicWords = (num) => {
 };
 
 const ReportCardTemplate = ({subjects = []}) => {
-  const handleDownloadPDF = () => {
-    window.print();
-  };
+  // const handleDownloadPDF = () => {
+  //   window.print();
+  // };
+const printContent = document.getElementById('report-card-print-area');
+  if (!printContent) return;
 
+  const printWindow = window.open('', '_blank', 'width=900,height=700');
+  
+  printWindow.document.write(`
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <title>Report Card - ${student.fullName}</title>
+        <meta charset="utf-8">
+        <style>
+          * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; box-sizing: border-box; margin: 0; padding: 0; }
+          body { font-family: sans-serif; background: white; }
+
+          /* Layout */
+          .p-6 { padding: 1.5rem; }
+          .p-2 { padding: 0.5rem; }
+          .p-1 { padding: 0.25rem; }
+          .p-1\\.5 { padding: 0.375rem; }
+          .px-2 { padding-left: 0.5rem; padding-right: 0.5rem; }
+          .px-1 { padding-left: 0.25rem; padding-right: 0.25rem; }
+          .py-1 { padding-top: 0.25rem; padding-bottom: 0.25rem; }
+          .mb-1 { margin-bottom: 0.25rem; }
+          .mb-2 { margin-bottom: 0.5rem; }
+          .mb-3 { margin-bottom: 0.75rem; }
+          .mb-4 { margin-bottom: 1rem; }
+          .mt-1 { margin-top: 0.25rem; }
+          .mx-1 { margin-left: 0.25rem; margin-right: 0.25rem; }
+          .mx-2 { margin-left: 0.5rem; margin-right: 0.5rem; }
+          .mr-2 { margin-right: 0.5rem; }
+          .mr-20 { margin-right: 5rem; }
+          .ml-20 { margin-left: 5rem; }
+
+          /* Flexbox */
+          .flex { display: flex; }
+          .items-center { align-items: center; }
+          .items-start { align-items: flex-start; }
+          .items-end { align-items: flex-end; }
+          .justify-center { justify-content: center; }
+          .justify-between { justify-content: space-between; }
+          .flex-1 { flex: 1 1 0%; }
+          .flex-shrink-0 { flex-shrink: 0; }
+          .gap-1 { gap: 0.25rem; }
+          .gap-3 { gap: 0.75rem; }
+          .gap-6 { gap: 1.5rem; }
+
+          /* Grid */
+          .grid { display: grid; }
+          .grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+          /* Sizing */
+          .w-full { width: 100%; }
+          .w-6 { width: 1.5rem; }
+          .w-12 { width: 3rem; }
+          .w-14 { width: 3.5rem; }
+          .w-16 { width: 4rem; }
+          .w-20 { width: 5rem; }
+          .h-5 { height: 1.25rem; }
+          .h-16 { height: 4rem; }
+          .min-h-\\[18px\\] { min-height: 18px; }
+          .min-h-\\[20px\\] { min-height: 20px; }
+          .min-h-\\[22px\\] { min-height: 22px; }
+          .min-h-\\[24px\\] { min-height: 24px; }
+
+          /* Position */
+          .relative { position: relative; }
+          .absolute { position: absolute; }
+          .inset-0 { top: 0; right: 0; bottom: 0; left: 0; }
+          .z-0 { z-index: 0; }
+          .z-10 { z-index: 10; }
+          .pointer-events-none { pointer-events: none; }
+          .opacity-5 { opacity: 0.05; }
+
+          /* Typography */
+          .text-center { text-align: center; }
+          .text-left { text-align: left; }
+          .font-bold { font-weight: 700; }
+          .font-semibold { font-weight: 600; }
+          .whitespace-nowrap { white-space: nowrap; }
+          .text-xl { font-size: 1.25rem; line-height: 1.75rem; }
+          .text-sm { font-size: 0.875rem; }
+          .text-xs { font-size: 0.75rem; }
+          .text-base { font-size: 1rem; }
+          .text-\\[11px\\] { font-size: 11px; }
+          .text-\\[10px\\] { font-size: 10px; }
+          .text-\\[9px\\] { font-size: 9px; }
+          .text-\\[8px\\] { font-size: 8px; }
+
+          /* Colors */
+          .bg-white { background-color: #ffffff; }
+          .bg-gray-50 { background-color: #f9fafb; }
+          .text-red-600 { color: #dc2626; }
+          .text-gray-600 { color: #4b5563; }
+
+          /* Images */
+          .object-contain { object-fit: contain; }
+
+          /* BORDERS - carefully separated to avoid dotted on all sides */
+          /* Table borders - solid */
+          table { border-collapse: collapse; width: 100%; border: 1px solid black; }
+          th, td { border-left: 1px solid black; padding: 0.25rem; }
+          tr { border-bottom: 1px solid black; }
+          thead tr { border-bottom: 1px solid black; }
+
+          /* Field underlines - ONLY bottom border, dotted */
+          .border-b.border-dotted {
+            border-top: none !important;
+            border-left: none !important;
+            border-right: none !important;
+            border-bottom: 1px dotted #4b5563 !important;
+          }
+
+          /* Standalone border classes */
+          .border-b { border-bottom: 1px solid; }
+          .border-dotted { border-style: dotted; }
+          .border-gray-600 { border-color: #4b5563; }
+          .border-black { border-color: black; }
+          .border-l { border-left: 1px solid black; }
+          .border-t { border-top: 1px solid black; }
+
+          @page { margin: 0.5cm; size: A4 portrait; }
+          @media print {
+            table { page-break-inside: avoid; }
+            tr { page-break-inside: avoid; }
+          }
+        </style>
+      </head>
+      <body>
+        ${printContent.outerHTML}
+        <script>
+          window.onload = function() {
+            window.print();
+            window.onafterprint = function() { window.close(); };
+          };
+        <\/script>
+      </body>
+    </html>
+  `);
+  
+  printWindow.document.close();
+};
   return (
     <div className="bg-white rounded-lg shadow-lg">
       {/* Download Button */}
