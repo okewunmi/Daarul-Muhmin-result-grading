@@ -997,20 +997,6 @@ const handlePrint = () => {
                 </tbody>
               </table>
 
-              {/* Next Term & Promoted Section */}
- {/*
-              <div className="grid grid-cols-2 gap-3 mb-3 print:mb-4 text-[10px] print:text-xs">
-                <div className="flex items-center">
-                  <span className="font-semibold whitespace-nowrap text-[10px] print:text-xs">Next Term Begins:</span>
-                  <span className="flex-1 border-b border-dotted border-gray-600 mx-2"></span>
-                  <span dir="rtl" className="whitespace-nowrap text-[10px] print:text-xs">بداية الفصل الدراسي الجديد</span>
-                </div>
-                <div className="flex items-center">
-                  <span className="font-semibold whitespace-nowrap text-[10px] print:text-xs">Promoted:</span>
-                  <span className="flex-1 border-b border-dotted border-gray-600 mx-2"></span>
-                  <span dir="rtl" className="whitespace-nowrap text-[10px] print:text-xs">منقول إلى</span>
-                </div>
-              </div>*/}
 {/* Next Term & Promoted Section */}
 <div className="grid grid-cols-2 gap-3 mb-3 print:mb-4 text-[10px] print:text-xs">
   <div className="flex items-center">
@@ -1147,81 +1133,6 @@ const handlePrint = () => {
   );
 };
 
-{/*
-const SessionModal = ({ isOpen, onClose, onSave, editingSession }) => {
-  const [formData, setFormData] = useState({
-    sessionName: '',
-    sessionNameArabic: '',
-    startDate: '',
-    endDate: '',
-    isActive: true
-  });
-
-  useEffect(() => {
-    if (editingSession) {
-      setFormData({
-        sessionName: editingSession.sessionName || '',
-        sessionNameArabic: editingSession.sessionNameArabic || '',
-        startDate: editingSession.startDate || '',
-        endDate: editingSession.endDate || '',
-        isActive: editingSession.isActive ?? true
-      });
-    } else {
-      setFormData({
-        sessionName: '',
-        sessionNameArabic: '',
-        startDate: '',
-        endDate: '',
-        isActive: true
-      });
-    }
-  }, [editingSession, isOpen]);
-
-  const handleSubmit = () => {
-    onSave(formData, editingSession?.$id);
-    setFormData({ sessionName: '', sessionNameArabic: '', startDate: '', endDate: '', isActive: true });
-  };
-
-  return (
-    <Modal isOpen={isOpen} onClose={onClose} title={editingSession ? "Edit Academic Session" : "Add Academic Session"}>
-      <Input
-        label="Session Name"
-        value={formData.sessionName}
-        onChange={(e) => setFormData({ ...formData, sessionName: e.target.value })}
-        placeholder="e.g., 2025/2026"
-        required
-      />
-      <Input
-        label="Session Name (Arabic) - اسم السنة بالعربية"
-        value={formData.sessionNameArabic}
-        onChange={(e) => setFormData({ ...formData, sessionNameArabic: e.target.value })}
-        placeholder="٢٠٢٥/٢٠٢٦"
-        dir="rtl"
-      />
-      <Input
-        label="Start Date"
-        type="date"
-        value={formData.startDate}
-        onChange={(e) => setFormData({ ...formData, startDate: e.target.value })}
-        required
-      />
-      <Input
-        label="End Date"
-        type="date"
-        value={formData.endDate}
-        onChange={(e) => setFormData({ ...formData, endDate: e.target.value })}
-        required
-      />
-      <div className="flex gap-3 mt-6">
-        <Button onClick={handleSubmit} icon={Check}>
-          {editingSession ? 'Update Session' : 'Save Session'}
-        </Button>
-        <Button onClick={onClose} variant="secondary">Cancel</Button>
-      </div>
-    </Modal>
-  );
-};
-*/}
 const SessionModal = ({ isOpen, onClose, onSave, editingSession }) => {
   const [formData, setFormData] = useState({
     sessionName: '',
@@ -1380,8 +1291,7 @@ const ClassModal = ({ isOpen, onClose, onSave, sessionId, editingClass }) => {
 // MODAL COMPONENTS - STUDENT & SUBJECT
 // ============================================
 
-//  Student Modal (Create & Edit)
-// Student Modal (Create & Edit) - Simplified Version
+
 const StudentModal = ({ isOpen, onClose, onSave, classId, sessionId, editingStudent }) => {
   const [formData, setFormData] = useState({
     fullName: '',
@@ -1547,29 +1457,6 @@ const SubjectModal = ({ isOpen, onClose, onSave, editingSubject }) => {
           onChange={(e) => setFormData({ ...formData, passingScore: parseInt(e.target.value) })}
         /> */}
       </div>
-      
-      {/* <div className="mb-4">
-        <label className="block text-gray-300 mb-2 text-sm sm:text-base">Description</label>
-        <textarea
-          value={formData.description}
-          onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-          className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 text-sm sm:text-base"
-          rows="3"
-          placeholder="Subject description..."
-        />
-      </div> */}
-      
-      {/* <div className="mb-4">
-        <label className="block text-gray-300 mb-2 text-sm sm:text-base">Description (Arabic) - الوصف</label>
-        <textarea
-          value={formData.descriptionArabic}
-          onChange={(e) => setFormData({ ...formData, descriptionArabic: e.target.value })}
-          className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 text-sm sm:text-base"
-          rows="3"
-          placeholder="وصف المادة..."
-          dir="rtl"
-        />
-      </div> */}
       
       <div className="flex gap-3 mt-6">
         <Button onClick={handleSubmit} icon={Check}>
