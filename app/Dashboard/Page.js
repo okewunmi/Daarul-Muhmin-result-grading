@@ -216,174 +216,162 @@ const numberToArabicWords = (num) => {
   }
 };
 
-const ReportCardTemplate = ({subjects = []}) => {
-  // const handleDownloadPDF = () => {
-  //   window.print();
-  // };
-const printContent = document.getElementById('report-card-print-area');
-  if (!printContent) return;
-
-  const printWindow = window.open('', '_blank', 'width=900,height=700');
+const ReportCardTemplate = ({ subjects = [] }) => {
   
-  printWindow.document.write(`
-    <!DOCTYPE html>
-    <html>
-      <head>
-        <title>Report Card - ${student.fullName}</title>
-        <meta charset="utf-8">
-        <style>
-          * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; box-sizing: border-box; margin: 0; padding: 0; }
-          body { font-family: sans-serif; background: white; }
+  const handlePrint = () => {
+    const printContent = document.getElementById('report-template');
+    if (!printContent) return;
 
-          /* Layout */
-          .p-6 { padding: 1.5rem; }
-          .p-2 { padding: 0.5rem; }
-          .p-1 { padding: 0.25rem; }
-          .p-1\\.5 { padding: 0.375rem; }
-          .px-2 { padding-left: 0.5rem; padding-right: 0.5rem; }
-          .px-1 { padding-left: 0.25rem; padding-right: 0.25rem; }
-          .py-1 { padding-top: 0.25rem; padding-bottom: 0.25rem; }
-          .mb-1 { margin-bottom: 0.25rem; }
-          .mb-2 { margin-bottom: 0.5rem; }
-          .mb-3 { margin-bottom: 0.75rem; }
-          .mb-4 { margin-bottom: 1rem; }
-          .mt-1 { margin-top: 0.25rem; }
-          .mx-1 { margin-left: 0.25rem; margin-right: 0.25rem; }
-          .mx-2 { margin-left: 0.5rem; margin-right: 0.5rem; }
-          .mr-2 { margin-right: 0.5rem; }
-          .mr-20 { margin-right: 5rem; }
-          .ml-20 { margin-left: 5rem; }
+    const printWindow = window.open('', '_blank', 'width=900,height=700');
 
-          /* Flexbox */
-          .flex { display: flex; }
-          .items-center { align-items: center; }
-          .items-start { align-items: flex-start; }
-          .items-end { align-items: flex-end; }
-          .justify-center { justify-content: center; }
-          .justify-between { justify-content: space-between; }
-          .flex-1 { flex: 1 1 0%; }
-          .flex-shrink-0 { flex-shrink: 0; }
-          .gap-1 { gap: 0.25rem; }
-          .gap-3 { gap: 0.75rem; }
-          .gap-6 { gap: 1.5rem; }
+    printWindow.document.write(`
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <title>Report Card Template</title>
+          <meta charset="utf-8">
+          <style>
+            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; box-sizing: border-box; margin: 0; padding: 0; }
+            body { font-family: sans-serif; background: white; }
 
-          /* Grid */
-          .grid { display: grid; }
-          .grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            .p-6 { padding: 1.5rem; }
+            .p-2 { padding: 0.5rem; }
+            .p-1 { padding: 0.25rem; }
+            .p-1\\.5 { padding: 0.375rem; }
+            .px-2 { padding-left: 0.5rem; padding-right: 0.5rem; }
+            .px-1 { padding-left: 0.25rem; padding-right: 0.25rem; }
+            .py-1 { padding-top: 0.25rem; padding-bottom: 0.25rem; }
+            .mb-1 { margin-bottom: 0.25rem; }
+            .mb-2 { margin-bottom: 0.5rem; }
+            .mb-3 { margin-bottom: 0.75rem; }
+            .mb-4 { margin-bottom: 1rem; }
+            .mt-1 { margin-top: 0.25rem; }
+            .mx-1 { margin-left: 0.25rem; margin-right: 0.25rem; }
+            .mx-2 { margin-left: 0.5rem; margin-right: 0.5rem; }
+            .mr-2 { margin-right: 0.5rem; }
+            .mr-20 { margin-right: 5rem; }
+            .ml-20 { margin-left: 5rem; }
 
-          /* Sizing */
-          .w-full { width: 100%; }
-          .w-6 { width: 1.5rem; }
-          .w-12 { width: 3rem; }
-          .w-14 { width: 3.5rem; }
-          .w-16 { width: 4rem; }
-          .w-20 { width: 5rem; }
-          .h-5 { height: 1.25rem; }
-          .h-16 { height: 4rem; }
-          .min-h-\\[18px\\] { min-height: 18px; }
-          .min-h-\\[20px\\] { min-height: 20px; }
-          .min-h-\\[22px\\] { min-height: 22px; }
-          .min-h-\\[24px\\] { min-height: 24px; }
+            .flex { display: flex; }
+            .items-center { align-items: center; }
+            .items-start { align-items: flex-start; }
+            .items-end { align-items: flex-end; }
+            .justify-center { justify-content: center; }
+            .justify-between { justify-content: space-between; }
+            .flex-1 { flex: 1 1 0%; }
+            .flex-shrink-0 { flex-shrink: 0; }
+            .gap-1 { gap: 0.25rem; }
+            .gap-3 { gap: 0.75rem; }
+            .gap-6 { gap: 1.5rem; }
 
-          /* Position */
-          .relative { position: relative; }
-          .absolute { position: absolute; }
-          .inset-0 { top: 0; right: 0; bottom: 0; left: 0; }
-          .z-0 { z-index: 0; }
-          .z-10 { z-index: 10; }
-          .pointer-events-none { pointer-events: none; }
-          .opacity-5 { opacity: 0.05; }
+            .grid { display: grid; }
+            .grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 
-          /* Typography */
-          .text-center { text-align: center; }
-          .text-left { text-align: left; }
-          .font-bold { font-weight: 700; }
-          .font-semibold { font-weight: 600; }
-          .whitespace-nowrap { white-space: nowrap; }
-          .text-xl { font-size: 1.25rem; line-height: 1.75rem; }
-          .text-sm { font-size: 0.875rem; }
-          .text-xs { font-size: 0.75rem; }
-          .text-base { font-size: 1rem; }
-          .text-\\[11px\\] { font-size: 11px; }
-          .text-\\[10px\\] { font-size: 10px; }
-          .text-\\[9px\\] { font-size: 9px; }
-          .text-\\[8px\\] { font-size: 8px; }
+            .w-full { width: 100%; }
+            .w-6 { width: 1.5rem; }
+            .w-12 { width: 3rem; }
+            .w-14 { width: 3.5rem; }
+            .w-16 { width: 4rem; }
+            .w-20 { width: 5rem; }
+            .h-5 { height: 1.25rem; }
+            .h-16 { height: 4rem; }
+            .min-h-\\[18px\\] { min-height: 18px; }
+            .min-h-\\[20px\\] { min-height: 20px; }
+            .min-h-\\[22px\\] { min-height: 22px; }
+            .min-h-\\[24px\\] { min-height: 24px; }
 
-          /* Colors */
-          .bg-white { background-color: #ffffff; }
-          .bg-gray-50 { background-color: #f9fafb; }
-          .text-red-600 { color: #dc2626; }
-          .text-gray-600 { color: #4b5563; }
+            .relative { position: relative; }
+            .absolute { position: absolute; }
+            .inset-0 { top: 0; right: 0; bottom: 0; left: 0; }
+            .z-0 { z-index: 0; }
+            .z-10 { z-index: 10; }
+            .pointer-events-none { pointer-events: none; }
+            .opacity-5 { opacity: 0.05; }
 
-          /* Images */
-          .object-contain { object-fit: contain; }
+            .text-center { text-align: center; }
+            .text-left { text-align: left; }
+            .font-bold { font-weight: 700; }
+            .font-semibold { font-weight: 600; }
+            .whitespace-nowrap { white-space: nowrap; }
+            .text-xl { font-size: 1.25rem; line-height: 1.75rem; }
+            .text-sm { font-size: 0.875rem; }
+            .text-xs { font-size: 0.75rem; }
+            .text-base { font-size: 1rem; }
+            .text-\\[11px\\] { font-size: 11px; }
+            .text-\\[10px\\] { font-size: 10px; }
+            .text-\\[9px\\] { font-size: 9px; }
+            .text-\\[8px\\] { font-size: 8px; }
 
-          /* BORDERS - carefully separated to avoid dotted on all sides */
-          /* Table borders - solid */
-          table { border-collapse: collapse; width: 100%; border: 1px solid black; }
-          th, td { border-left: 1px solid black; padding: 0.25rem; }
-          tr { border-bottom: 1px solid black; }
-          thead tr { border-bottom: 1px solid black; }
+            .bg-white { background-color: #ffffff; }
+            .bg-gray-50 { background-color: #f9fafb; }
+            .text-red-600 { color: #dc2626; }
+            .text-gray-600 { color: #4b5563; }
 
-          /* Field underlines - ONLY bottom border, dotted */
-          .border-b.border-dotted {
-            border-top: none !important;
-            border-left: none !important;
-            border-right: none !important;
-            border-bottom: 1px dotted #4b5563 !important;
-          }
+            .object-contain { object-fit: contain; }
 
-          /* Standalone border classes */
-          .border-b { border-bottom: 1px solid; }
-          .border-dotted { border-style: dotted; }
-          .border-gray-600 { border-color: #4b5563; }
-          .border-black { border-color: black; }
-          .border-l { border-left: 1px solid black; }
-          .border-t { border-top: 1px solid black; }
+            table { border-collapse: collapse; width: 100%; border: 1px solid black; }
+            th, td { border-left: 1px solid black; padding: 0.25rem; }
+            tr { border-bottom: 1px solid black; }
+            thead tr { border-bottom: 1px solid black; }
 
-          @page { margin: 0.5cm; size: A4 portrait; }
-          @media print {
-            table { page-break-inside: avoid; }
-            tr { page-break-inside: avoid; }
-          }
-        </style>
-      </head>
-      <body>
-        ${printContent.outerHTML}
-        <script>
-          window.onload = function() {
-            window.print();
-            window.onafterprint = function() { window.close(); };
-          };
-        <\/script>
-      </body>
-    </html>
-  `);
-  
-  printWindow.document.close();
-};
+            .border-b.border-dotted {
+              border-top: none !important;
+              border-left: none !important;
+              border-right: none !important;
+              border-bottom: 1px dotted #4b5563 !important;
+            }
+
+            .border-b { border-bottom: 1px solid; }
+            .border-dotted { border-style: dotted; }
+            .border-gray-600 { border-color: #4b5563; }
+            .border-black { border-color: black; }
+            .border-l { border-left: 1px solid black; }
+            .border-t { border-top: 1px solid black; }
+
+            @page { margin: 0.5cm; size: A4 portrait; }
+            @media print {
+              table { page-break-inside: avoid; }
+              tr { page-break-inside: avoid; }
+            }
+          </style>
+        </head>
+        <body>
+          ${printContent.outerHTML}
+          <script>
+            window.onload = function() {
+              window.print();
+              window.onafterprint = function() { window.close(); };
+            };
+          <\/script>
+        </body>
+      </html>
+    `);
+
+    printWindow.document.close();
+  };
+
   return (
     <div className="bg-white rounded-lg shadow-lg">
-      {/* Download Button */}
+      {/* Print Button */}
       <div className="flex justify-between items-center p-4 bg-gray-100 border-b print:hidden">
         <h3 className="text-lg font-bold text-gray-800">Report Card Template</h3>
         <button
-          onClick={handleDownloadPDF}
+          onClick={handlePrint}
           className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
         >
-          <Download size={18} />
-          Download as PDF
+          <Printer size={18} />
+          Print Template
         </button>
       </div>
 
       {/* Template Preview */}
-      <div className="p-6 print:p-6 bg-white relative" id="report-template">
-        {/* Watermark Logo Background */}
+      <div className="p-6 bg-white relative" id="report-template">
+        {/* Watermark */}
         <div className="absolute inset-0 flex items-center justify-center opacity-5 pointer-events-none z-0">
           <div className="w-50 h-50 flex items-center justify-center">
-            <img 
-              src="/school-logo.jpg" 
-              alt="School Logo" 
+            <img
+              src="/school-logo.jpg"
+              alt="School Logo"
               className="w-full h-full object-contain"
             />
           </div>
@@ -391,273 +379,192 @@ const printContent = document.getElementById('report-card-print-area');
 
         {/* Content */}
         <div className="relative z-10">
-          {/* Header Section with Logos */}
-          <div className="flex items-start justify-between mb-3 print:mb-4 bg-gray-50 p-2">
-            {/* Left Logo */}
-            <div className="w-16 h-16 print:w-22 print:h-22 flex items-center justify-center flex-shrink-0 mt-1">
-              <img 
-                src="/school-logo.jpg" 
-                alt="School Logo" 
+
+          {/* Header */}
+          <div className="flex items-start justify-between mb-3 bg-gray-50 p-2">
+            <div className="w-16 h-16 flex items-center justify-center flex-shrink-0 mt-1">
+              <img
+                src="/school-logo.jpg"
+                alt="School Logo"
                 className="w-full h-full object-contain"
               />
             </div>
 
-            {/* Center Header */}
             <div className="flex-1 text-center px-2">
-              <p className="text-[10px] print:text-xs mb-1">بسم الله الرحمن الرحيم</p>
-              <h1 className="text-sm print:text-base font-bold mb-1">معهد دار المؤمن للدراسات العربية والإسلامية</h1>
-              <h2 className="text-xs print:text-sm font-bold mb-1">
+              <p className="text-[10px] mb-1">بسم الله الرحمن الرحيم</p>
+              <h1 className="text-sm font-bold mb-1">معهد دار المؤمن للدراسات العربية والإسلامية</h1>
+              <h2 className="text-xs font-bold mb-1">
                 DAARUL MUHMIN INSTITUTE OF ARABIC AND ISLAMIC STUDIES
               </h2>
-              <div className="text-[10px] print:text-xs font-semibold py-1">
+              <div className="text-[10px] font-semibold py-1">
                 <span>REPORT SHEET كشف الدرجات</span>
-                <span className="mx-3"></span>   
+                <span className="mx-3"></span>
                 <span>EXAMINATION OFFICE إدارة الإمتحانات</span>
               </div>
             </div>
 
-            {/* Right Logo */}
-            <div className="w-16 h-16 print:w-22 print:h-22 flex items-center justify-center flex-shrink-0 mt-1">
-              <img 
-                src="/school-logo.jpg" 
-                alt="School Logo" 
+            <div className="w-16 h-16 flex items-center justify-center flex-shrink-0 mt-1">
+              <img
+                src="/school-logo.jpg"
+                alt="School Logo"
                 className="w-full h-full object-contain"
               />
             </div>
           </div>
 
-          {/* Student Information Section - Empty Template */}
-          <div className="mb-3 print:mb-4 text-[11px] print:text-xs">
+          {/* Student Info - Empty Fields */}
+          <div className="mb-3 text-[11px]">
+
             {/* Name Row */}
             <div className="flex items-center mb-2">
-              <span className="font-semibold w-14 text-[10px] print:text-xs">Name:</span>
-              <span className="flex-1 border-b border-dotted border-gray-600 px-2 text-[10px] print:text-xs min-h-[20px]">
-              </span>
-              <span className="mr-2 text-[10px] print:text-xs" dir="rtl">اسم الطالب</span>
+              <span className="font-semibold w-14 text-[10px]">Name:</span>
+              <span className="flex-1 border-b border-dotted border-gray-600 px-2 text-[10px] min-h-[20px]"></span>
+              <span className="mr-2 text-[10px]" dir="rtl">اسم الطالب</span>
             </div>
 
             {/* Session Row */}
             <div className="flex items-center mb-2">
-              <span className="font-semibold w-14 text-[10px] print:text-xs">Session:</span>
-              <span className="flex-1 border-b border-dotted border-gray-600 px-2 text-[10px] print:text-xs min-h-[20px]">
-              </span>
-              <span className="mr-2 text-[10px] print:text-xs" dir="rtl">العام الدراسي</span>
+              <span className="font-semibold w-14 text-[10px]">Session:</span>
+              <span className="flex-1 border-b border-dotted border-gray-600 px-2 text-[10px] min-h-[20px]"></span>
+              <span className="mr-2 text-[10px]" dir="rtl">العام الدراسي</span>
             </div>
 
-            {/* Position, No. in Class, Class Row */}
+            {/* Position / No. in Class / Class Row */}
             <div className="flex items-center gap-3">
               <div className="flex items-center flex-1">
-                <span className="font-semibold whitespace-nowrap text-[10px] print:text-xs">Position:</span>
-                <span className="flex-1 border-b border-dotted border-gray-600 px-1 mx-1 text-[10px] print:text-xs min-h-[20px]">
-                </span>
-                <span dir="rtl" className="whitespace-nowrap text-[10px] print:text-xs">الترتيب</span>
+                <span className="font-semibold whitespace-nowrap text-[10px]">Position:</span>
+                <span className="flex-1 border-b border-dotted border-gray-600 px-1 mx-1 min-h-[20px]"></span>
+                <span dir="rtl" className="whitespace-nowrap text-[10px]">الترتيب</span>
               </div>
 
               <div className="flex items-center flex-1">
-                <span className="font-semibold whitespace-nowrap text-[10px] print:text-xs">No. in Class:</span>
-                <span className="flex-1 border-b border-dotted border-gray-600 px-1 mx-1 text-[10px] print:text-xs min-h-[20px]">
-                </span>
-                <span dir="rtl" className="whitespace-nowrap text-[10px] print:text-xs">عدد الطلبة</span>
+                <span className="font-semibold whitespace-nowrap text-[10px]">No. in Class:</span>
+                <span className="flex-1 border-b border-dotted border-gray-600 px-1 mx-1 min-h-[20px]"></span>
+                <span dir="rtl" className="whitespace-nowrap text-[10px]">عدد الطلبة</span>
               </div>
 
               <div className="flex items-center flex-1">
-                <span className="font-semibold whitespace-nowrap text-[10px] print:text-xs">Class:</span>
-                <span className="flex-1 border-b border-dotted border-gray-600 px-1 mx-1 text-[10px] print:text-xs min-h-[20px]">
-                </span>
-                <span dir="rtl" className="whitespace-nowrap text-[10px] print:text-xs">الصف</span>
+                <span className="font-semibold whitespace-nowrap text-[10px]">Class:</span>
+                <span className="flex-1 border-b border-dotted border-gray-600 px-1 mx-1 min-h-[20px]"></span>
+                <span dir="rtl" className="whitespace-nowrap text-[10px]">الصف</span>
               </div>
             </div>
           </div>
 
-          {/* Grades Table - Empty Template */}
-          <table className="w-full border border-black text-[9px] print:text-[10px] mb-3 print:mb-4" dir="rtl">
+          {/* Grades Table */}
+          <table className="w-full border border-black text-[9px] mb-3" dir="rtl">
             <thead>
               <tr className="border-b border-black">
-                <th className="border-l border-black p-1 print:p-1.5 w-6 text-center">ت</th>
-                <th className="border-l border-black p-1 print:p-1.5 text-center">
-                  المواد الدراسية SUBJECT
-                </th>
-                <th className="border-l border-black p-1 print:p-1.5 w-12 text-center">الدرجة</th>
-                <th className="border-l border-black p-1 print:p-1.5 w-12 text-center">رقماً</th>
-                <th className="border-l border-black p-1 print:p-1.5 w-20 text-center">كتابة</th>
-                <th className="border-l border-black p-1 print:p-1.5 w-16 text-center">التقدير</th>
-                <th className="p-1 print:p-1.5 w-14 text-center">ملحوظة</th>
+                <th className="border-l border-black p-1 w-6 text-center">ت</th>
+                <th className="border-l border-black p-1 text-center">المواد الدراسية SUBJECT</th>
+                <th className="border-l border-black p-1 w-12 text-center">الدرجة</th>
+                <th className="border-l border-black p-1 w-12 text-center">رقماً</th>
+                <th className="border-l border-black p-1 w-20 text-center">كتابة</th>
+                <th className="border-l border-black p-1 w-16 text-center">التقدير</th>
+                <th className="p-1 w-14 text-center">ملحوظة</th>
               </tr>
             </thead>
             <tbody>
-              {/* Display actual subjects from database - Same format as ReportCardModal */}
               {subjects.map((subject, index) => (
                 <tr key={subject.$id} className="border-b border-black">
-                  <td className="border-l border-black p-1 print:p-1.5 text-center">{index + 1}</td>
-                  <td className="border-l border-black p-1 print:p-1.5">
+                  <td className="border-l border-black p-1 text-center">{index + 1}</td>
+                  <td className="border-l border-black p-1">
                     <div className="flex justify-between items-center gap-1">
-                      <span className="text-[9px] print:text-[10px]">{subject.arabicName}</span>
-                      <span className="text-gray-600 text-left text-[8px] print:text-[9px]">{subject.englishName}</span>
+                      <span className="text-[9px]">{subject.arabicName}</span>
+                      <span className="text-gray-600 text-left text-[8px]">{subject.englishName}</span>
                     </div>
                   </td>
-                  <td className="border-l border-black p-1 print:p-1.5 text-center font-bold">100</td>
-                  <td className="border-l border-black p-1 print:p-1.5 text-center"></td>
-                  <td className="border-l border-black p-1 print:p-1.5 text-center"></td>
-                  <td className="border-l border-black p-1 print:p-1.5 text-center"></td>
-                  <td className="p-1 print:p-1.5 text-center"></td>
+                  <td className="border-l border-black p-1 text-center font-bold">100</td>
+                  <td className="border-l border-black p-1 text-center"></td>
+                  <td className="border-l border-black p-1 text-center"></td>
+                  <td className="border-l border-black p-1 text-center"></td>
+                  <td className="p-1 text-center"></td>
                 </tr>
               ))}
 
               {/* Total Row */}
               <tr className="border-t border-black font-bold">
-                <td className="border-l border-black p-2 text-center text-[9px] print:text-[10px]" colSpan="2">
-                  المجموع الكلي <span className="mr-20"> </span>TOTAL
+                <td className="border-l border-black p-2 text-center text-[9px]" colSpan="2">
+                  المجموع الكلي <span className="mr-20"></span> TOTAL
                 </td>
                 <td className="border-l border-black p-2 text-center">
                   {subjects.length * 100}
                 </td>
-                <td className="p-2 text-center" colSpan="4">
-                </td>
+                <td className="p-2 text-center" colSpan="4"></td>
               </tr>
 
               {/* Percentage Row */}
               <tr className="border-t border-black font-bold">
-                <td className="border-l border-black p-2 text-center text-[9px] print:text-[10px]" colSpan="2">
-                  النسبة المئوية <span className="mr-20"> </span>PERCENTAGE
+                <td className="border-l border-black p-2 text-center text-[9px]" colSpan="2">
+                  النسبة المئوية <span className="mr-20"></span> PERCENTAGE
                 </td>
-                <td className="p-2 text-center" colSpan="5">
-                </td>
+                <td className="p-2 text-center" colSpan="5"></td>
               </tr>
 
               {/* Grade Row */}
               <tr className="border-t border-black font-bold">
-                <td className="border-l border-black p-2 text-center text-[9px] print:text-[10px]" colSpan="2">
-                  التقدير العام <span className="mr-20"> </span>GRADE
+                <td className="border-l border-black p-2 text-center text-[9px]" colSpan="2">
+                  التقدير العام <span className="mr-20"></span> GRADE
                 </td>
-                <td className="p-2 text-center" colSpan="5">
-                </td>
+                <td className="p-2 text-center" colSpan="5"></td>
               </tr>
             </tbody>
           </table>
 
-          {/* Next Term & Promoted Section */}
-          <div className="grid grid-cols-2 gap-3 mb-3 print:mb-4 text-[10px] print:text-xs">
+          {/* Next Term & Promoted */}
+          <div className="grid grid-cols-2 gap-3 mb-3 text-[10px]">
             <div className="flex items-center">
-              <span className="font-semibold whitespace-nowrap text-[10px] print:text-xs">Next Term Begins:</span>
+              <span className="font-semibold whitespace-nowrap text-[10px]">Next Term Begins:</span>
               <span className="flex-1 border-b border-dotted border-gray-600 mx-2 min-h-[20px]"></span>
-              <span dir="rtl" className="whitespace-nowrap text-[10px] print:text-xs">بداية الفصل الدراسي الجديد</span>
+              <span dir="rtl" className="whitespace-nowrap text-[10px]">بداية الفصل الدراسي الجديد</span>
             </div>
             <div className="flex items-center">
-              <span className="font-semibold whitespace-nowrap text-[10px] print:text-xs">Promoted:</span>
+              <span className="font-semibold whitespace-nowrap text-[10px]">Promoted:</span>
               <span className="flex-1 border-b border-dotted border-gray-600 mx-2 min-h-[20px]"></span>
-              <span dir="rtl" className="whitespace-nowrap text-[10px] print:text-xs">منقول إلى</span>
+              <span dir="rtl" className="whitespace-nowrap text-[10px]">منقول إلى</span>
             </div>
           </div>
 
-          {/* Class Teacher's Remark */}
-          <div className="mb-3 print:mb-4 text-[10px] print:text-xs">
+          {/* Teacher's Remark */}
+          <div className="mb-3 text-[10px]">
             <div className="flex items-center mb-2">
-              <span className="font-semibold whitespace-nowrap text-[10px] print:text-xs">Class Teacher's Remark:</span>
-              <span className="flex-1 border-b border-dotted border-gray-600 mx-2 min-h-[20px] print:min-h-[24px]">
-              </span>
-              <span dir="rtl" className="whitespace-nowrap text-[10px] print:text-xs">ملاحظة المدرس</span>
+              <span className="font-semibold whitespace-nowrap text-[10px]">Class Teacher's Remark:</span>
+              <span className="flex-1 border-b border-dotted border-gray-600 mx-2 min-h-[20px]"></span>
+              <span dir="rtl" className="whitespace-nowrap text-[10px]">ملاحظة المدرس</span>
             </div>
           </div>
 
-          {/* Signatures Section */}
-          <div className="grid grid-cols-2 gap-6 text-[10px] print:text-xs">
+          {/* Signatures */}
+          <div className="grid grid-cols-2 gap-6 text-[10px]">
             <div>
-              <div className="flex items-center mb-2 print:mb-3">
-                <span className="font-semibold whitespace-nowrap text-[10px] print:text-xs">Principal's Sign:</span>
-                <span className="flex-1 border-b border-dotted border-gray-600 mx-1 min-h-[24px]">
-                </span>
-                <span dir="rtl" className="whitespace-nowrap text-[10px] print:text-xs">توقيع الوكيل</span>
-              </div>
-              
               <div className="flex items-center mb-2">
-                <span className="font-semibold whitespace-nowrap text-[10px] print:text-xs">Date:</span>
-                <span className="flex-1 border-b border-dotted border-gray-600 mx-2 min-h-[18px] print:min-h-[22px]">
-                </span>
-                <span dir="rtl" className="whitespace-nowrap text-[10px] print:text-xs">التاريخ</span>
+                <span className="font-semibold whitespace-nowrap text-[10px]">Principal's Sign:</span>
+                <span className="flex-1 border-b border-dotted border-gray-600 mx-1 min-h-[24px]"></span>
+                <span dir="rtl" className="whitespace-nowrap text-[10px]">توقيع الوكيل</span>
+              </div>
+              <div className="flex items-center">
+                <span className="font-semibold whitespace-nowrap text-[10px]">Date:</span>
+                <span className="flex-1 border-b border-dotted border-gray-600 mx-2 min-h-[18px]"></span>
+                <span dir="rtl" className="whitespace-nowrap text-[10px]">التاريخ</span>
               </div>
             </div>
 
             <div>
-              <div className="flex items-center mb-2 print:mb-3">
-                <span className="font-semibold whitespace-nowrap text-[10px] print:text-xs">Signature:</span>
-                <span className="flex-1 border-b border-dotted border-gray-600 mx-1 min-h-[24px]">
-                </span>
-                <span dir="rtl" className="whitespace-nowrap text-[10px] print:text-xs">التوقيع</span>
+              <div className="flex items-center mb-2">
+                <span className="font-semibold whitespace-nowrap text-[10px]">Signature:</span>
+                <span className="flex-1 border-b border-dotted border-gray-600 mx-1 min-h-[24px]"></span>
+                <span dir="rtl" className="whitespace-nowrap text-[10px]">التوقيع</span>
               </div>
-              
               <div className="flex items-center">
-                <span className="font-semibold whitespace-nowrap text-[10px] print:text-xs">Stamp:</span>
-                <span className="flex-1 border-b border-dotted border-gray-600 mx-2 min-h-[18px] print:min-h-[22px]"></span>
-                <span dir="rtl" className="whitespace-nowrap text-[10px] print:text-xs">الختم</span>
+                <span className="font-semibold whitespace-nowrap text-[10px]">Stamp:</span>
+                <span className="flex-1 border-b border-dotted border-gray-600 mx-2 min-h-[18px]"></span>
+                <span dir="rtl" className="whitespace-nowrap text-[10px]">الختم</span>
               </div>
             </div>
           </div>
+
         </div>
       </div>
-
-      {/* Print Styles */}
-      
-<style jsx>{`
-  @media print {
-    * {
-      -webkit-print-color-adjust: exact !important;
-      print-color-adjust: exact !important;
-    }
-
-    /* Hide everything on the page */
-    body * {
-      visibility: hidden;
-    }
-
-    /* Show ONLY the report card content — not the backdrop */
-    #report-card-print-area,
-    #report-card-print-area * {
-      visibility: visible;
-    }
-
-    /* Position the report to fill the page cleanly */
-    #report-card-print-area {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      padding: 0.5cm 1.5cm;
-      background: white;
-      overflow: visible;
-    }
-
-    .print\\:hidden {
-      display: none !important;
-    }
-
-    .print\\:p-6 {
-      padding: 1cm 1.5cm !important;
-    }
-
-    .print\\:mb-4 { margin-bottom: 1rem !important; }
-    .print\\:mb-3 { margin-bottom: 0.75rem !important; }
-    .print\\:text-xs { font-size: 12px !important; }
-    .print\\:text-sm { font-size: 14px !important; }
-    .print\\:text-base { font-size: 16px !important; }
-    .print\\:text-\\[10px\\] { font-size: 10px !important; }
-    .print\\:text-\\[9px\\] { font-size: 9px !important; }
-    .print\\:w-20 { width: 5rem !important; }
-    .print\\:h-20 { height: 5rem !important; }
-    .print\\:w-24 { width: 6rem !important; }
-    .print\\:h-6 { height: 1.5rem !important; }
-    .print\\:p-1\\.5 { padding: 0.375rem !important; }
-    .print\\:min-h-\\[24px\\] { min-height: 24px !important; }
-    .print\\:min-h-\\[22px\\] { min-height: 22px !important; }
-
-    @page {
-      margin: 0.5cm;
-      size: A4 portrait;
-    }
-
-    table { page-break-inside: avoid; }
-    tr { page-break-inside: avoid; }
-  }
-`}</style>
     </div>
   );
 };
