@@ -946,7 +946,7 @@ const handlePrint = () => {
 
   <div className="flex items-center flex-1">
     <span className="font-semibold whitespace-nowrap text-[9px] print:text-xs">Class:</span>
-    <span className="flex-1 border-b border-dotted border-gray-600 px-1 mx-1 text-[12px] print:text-[9px] text-center">
+    <span className="flex-1 border-b border-dotted border-gray-600 px-1 mx-1 text-[9px] print:text-[9px] text-center">
       {classInfo?.className}
       {classInfo?.classNameArabic && (
         <>
