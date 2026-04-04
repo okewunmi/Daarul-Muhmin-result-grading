@@ -961,7 +961,7 @@ const handlePrint = () => {
               </div>
 
               {/* Grades Table - Larger for printing */}
-              <table className="w-full border border-black text-[9px] print:text-[10px] mb-3 print:mb-4" dir="rtl">
+              <table className="w-full border border-black text-[l2px] print:text-[12px] mb-3 print:mb-4" dir="rtl">
                 <thead>
                   <tr className="border-b border-black">
                     <th className="border-l border-black p-1 print:p-1.5 w-6 text-center">ت</th>
@@ -986,8 +986,8 @@ const handlePrint = () => {
                         <td className="border-l border-black p-1 print:p-1.5 text-center">{index + 1}</td>
                         <td className="border-l border-black p-1 print:p-1.5">
                           <div className="flex justify-between items-center gap-1">
-                            <span className="text-[9px] print:text-[10px]">{subject.arabicName}</span>
-                            <span className="text-gray-600 text-left text-[8px] print:text-[9px]">{subject.englishName}</span>
+                            <span className="text-[11px] print:text-[12px]">{subject.arabicName}</span>
+                            <span className="text-gray-600 text-left text-[12px] print:text-[12px]">{subject.englishName}</span>
                           </div>
                         </td>
                         <td className="border-l border-black p-1 print:p-1.5 text-center font-bold">100</td>
@@ -1101,7 +1101,11 @@ const handlePrint = () => {
                   <div className="flex items-center mb-2">
                     <span className="font-semibold whitespace-nowrap text-[10px] print:text-xs">Date:</span>
                     <span className="flex-1 border-b border-dotted border-gray-600 mx-2 min-h-[18px] print:min-h-[22px] text-center text-[10px] print:text-xs">
-                      {new Date().toLocaleDateString()}
+                      {new Date().toLocaleDateString('en-GB', {
+  day: '2-digit',
+  month: 'long',
+  year: 'numeric'
+})}
                     </span>
                     <span dir="rtl" className="whitespace-nowrap text-[10px] print:text-xs">التاريخ</span>
                   </div>
