@@ -986,7 +986,7 @@ const handlePrint = () => {
                         <td className="border-l border-black p-1 print:p-1.5 text-center">{index + 1}</td>
                         <td className="border-l border-black p-1 print:p-1.5">
                           <div className="flex justify-between items-center gap-1">
-                            <span className="text-[12px] print:text-[13px]">{subject.arabicName}</span>
+                            <span className="text-[14px] print:text-[14px]">{subject.arabicName}</span>
                             <span className="text-gray-600 text-left text-[13px] print:text-[13px]">{subject.englishName}</span>
                           </div>
                         </td>
