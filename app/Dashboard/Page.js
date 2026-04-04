@@ -900,53 +900,53 @@ const handlePrint = () => {
               </div>
 
               {/* Student Information Section */}
-              <div className="mb-3 print:mb-4 text-[11px] print:text-xs">
+              <div className="mb-3 print:mb-4 text-[13px] print:text-xs">
                 {/* Name Row */}
                 <div className="flex items-center mb-2">
-                  <span className="font-semibold w-14 text-[10px] print:text-xs">Name:</span>
+                  <span className="font-semibold w-14 text-[13px] print:text-[13px]">Name:</span>
                  
-                <span className="flex-1 border-b border-dotted border-gray-600 px-2 text-[10px] print:text-xs flex justify-between items-center">
+                <span className="flex-1 border-b border-dotted border-gray-600 px-2 text-[13px] print:text-xs flex justify-between items-center">
   <span>{student.fullName}</span>
   <span className="text-xl font-bold">{student.arabicName && `${student.arabicName}`}</span>
 </span>
-                  <span className="mr-2 text-[10px] print:text-xs" dir="rtl">اسم الطالب</span>
+                  <span className="mr-2 text-[13px] print:text-xs" dir="rtl">اسم الطالب</span>
                 </div>
 
                 {/* Session Row */}
                 <div className="flex items-center mb-2">
-                  <span className="font-semibold w-14 text-[10px] print:text-xs">Session:</span>
+                  <span className="font-semibold w-14 text-[12px] print:text-xs">Session:</span>
                   
-                  <span className="flex-1 border-b border-dotted border-gray-600 px-2 text-[10px] print:text-xs flex justify-between items-center">
+                  <span className="flex-1 border-b border-dotted border-gray-600 px-2 text-[12px] print:text-[12px] flex justify-between items-center">
   <span>{session?.sessionName}</span>
   <span>{session?.sessionNameArabic && `/ ${session.sessionNameArabic}`}</span>
 </span>
-                  <span className="mr-2 text-[10px] print:text-xs" dir="rtl">العام الدراسي</span>
+                  <span className="mr-2 text-[12px] print:text-xs" dir="rtl">العام الدراسي</span>
                 </div>
 {/* Position, No. in Class, Class Row */}
 <div className="flex items-center gap-3">
   <div className="flex items-center flex-1">
-    <span className="font-semibold whitespace-nowrap text-[10px] print:text-xs">Position:</span>
-    <span className="flex-1 border-b border-dotted border-gray-600 px-1 mx-1 text-[10px] print:text-xs text-center">
+    <span className="font-semibold whitespace-nowrap text-[13px] print:text[12px]">Position:</span>
+    <span className="flex-1 border-b border-dotted border-gray-600 px-1 mx-1 text-[13px] print:text-[12px] text-center">
       {reportData.classPosition}{getPositionSuffix(reportData.classPosition)}
       <span className="mx-1 text-gray-400">|</span>
       <span dir="rtl">{toArabicNumerals(reportData.classPosition)}</span>
     </span>
-    <span dir="rtl" className="whitespace-nowrap text-[10px] print:text-xs">الترتيب</span>
+    <span dir="rtl" className="whitespace-nowrap text-[12px] print:text-xs">الترتيب</span>
   </div>
 
   <div className="flex items-center flex-1">
-    <span className="font-semibold whitespace-nowrap text-[10px] print:text-xs">No. in Class:</span>
-    <span className="flex-1 border-b border-dotted border-gray-600 px-1 mx-1 text-[10px] print:text-xs text-center">
+    <span className="font-semibold whitespace-nowrap text-[12px] print:text-xs">No. in Class:</span>
+    <span className="flex-1 border-b border-dotted border-gray-600 px-1 mx-1 text-[12px] print:text-[12px] text-center">
       {reportData.totalStudents}
       <span className="mx-1 text-gray-400">|</span>
       <span dir="rtl">{toArabicNumerals(reportData.totalStudents)}</span>
     </span>
-    <span dir="rtl" className="whitespace-nowrap text-[10px] print:text-xs">عدد الطلبة</span>
+    <span dir="rtl" className="whitespace-nowrap text-[12px] print:text-[12px]">عدد الطلبة</span>
   </div>
 
   <div className="flex items-center flex-1">
     <span className="font-semibold whitespace-nowrap text-[10px] print:text-xs">Class:</span>
-    <span className="flex-1 border-b border-dotted border-gray-600 px-1 mx-1 text-[10px] print:text-xs text-center">
+    <span className="flex-1 border-b border-dotted border-gray-600 px-1 mx-1 text-[12px] print:text-[12px] text-center">
       {classInfo?.className}
       {classInfo?.classNameArabic && (
         <>
@@ -995,7 +995,7 @@ const handlePrint = () => {
                           {result ? result.score : ''}
                         </td>
                         <td className="border-l border-black p-1 print:p-1.5 text-center">
-                          <span className="text-[8px] print:text-[9px]">{scoreInWords}</span>
+                          <span className="text-[8px] print:text-[13px]">{scoreInWords}</span>
                         </td>
                         <td className="border-l border-black p-1 print:p-1.5 text-center">
                           {gradeInfo?.arabic || ''}
@@ -1011,7 +1011,7 @@ const handlePrint = () => {
 
                   {/* Total Row */}
                   <tr className="border-t border-black font-bold">
-                    <td className="border-l border-black p-2 text-center text-[9px] print:text-[10px]" colSpan="2">
+                    <td className="border-l border-black p-2 text-center text-[9px] print:text-[13px]" colSpan="2">
                       المجموع الكلي <span className="mr-20"> </span>TOTAL
                     </td>
                     <td className="border-l border-black p-2 text-center">
@@ -1024,7 +1024,7 @@ const handlePrint = () => {
 
                   {/* Percentage Row */}
                   <tr className="border-t border-black font-bold">
-                    <td className="border-l border-black p-2 text-center text-[9px] print:text-[10px]" colSpan="2">
+                    <td className="border-l border-black p-2 text-center text-[9px] print:text-[12px]" colSpan="2">
                       النسبة المئوية <span className="mr-20"> </span>PERCENTAGE
                     </td>
                     <td className="p-2 text-center" colSpan="5">
@@ -1037,7 +1037,7 @@ const handlePrint = () => {
 
                   {/* Grade Row */}
                   <tr className="border-t border-black font-bold">
-                    <td className="border-l border-black p-2 text-center text-[9px] print:text-[10px]" colSpan="2">
+                    <td className="border-l border-black p-2 text-center text-[9px] print:text-[12px]" colSpan="2">
                       التقدير العام <span className="mr-20"> </span>GRADE
                     </td>
                     <td className="p-2 text-center" colSpan="5">
@@ -1050,10 +1050,10 @@ const handlePrint = () => {
               </table>
 
 {/* Next Term & Promoted Section */}
-<div className="grid grid-cols-2 gap-3 mb-3 print:mb-4 text-[10px] print:text-xs">
+<div className="grid grid-cols-2 gap-3 mb-3 print:mb-4 text-[10px] print:text-[13px]">
   <div className="flex items-center">
-    <span className="font-semibold whitespace-nowrap text-[10px] print:text-xs">Next Term Begins:</span>
-    <span className="flex-1 border-b border-dotted border-gray-600 mx-2 text-center text-[10px] print:text-xs">
+    <span className="font-semibold whitespace-nowrap text-[10px] print:text-[13px]">Next Term Begins:</span>
+    <span className="flex-1 border-b border-dotted border-gray-600 mx-2 text-center text-[10px] print:text-[13px]">
       {/* ✅ Show date if set, otherwise blank line */}
       {session?.nextTermBegins
         ? new Date(session.nextTermBegins).toLocaleDateString('en-GB', {
@@ -1063,31 +1063,31 @@ const handlePrint = () => {
           })
         : ''}
     </span>
-    <span dir="rtl" className="whitespace-nowrap text-[10px] print:text-xs">بداية الفصل الدراسي الجديد</span>
+    <span dir="rtl" className="whitespace-nowrap text-[10px] print:text-[13px]">بداية الفصل الدراسي الجديد</span>
   </div>
 
   <div className="flex items-center">
-    <span className="font-semibold whitespace-nowrap text-[10px] print:text-xs">Promoted:</span>
+    <span className="font-semibold whitespace-nowrap text-[10px] print:text-[13px]">Promoted:</span>
     <span className="flex-1 border-b border-dotted border-gray-600 mx-2"></span>
-    <span dir="rtl" className="whitespace-nowrap text-[10px] print:text-xs">منقول إلى</span>
+    <span dir="rtl" className="whitespace-nowrap text-[10px] print:text-[13px]">منقول إلى</span>
   </div>
 </div>
               {/* Class Teacher's Remark - Display teacherRemarkArabic */}
-              <div className="mb-3 print:mb-4 text-[10px] print:text-xs">
+              <div className="mb-3 print:mb-4 text-[10px] print:text-[13px]">
                 <div className="flex items-center mb-2">
-                  <span className="font-semibold whitespace-nowrap text-[10px] print:text-xs">Class Teacher's Remark:</span>
+                  <span className="font-semibold whitespace-nowrap text-[10px] print:text-[13px]">Class Teacher's Remark:</span>
                   <span className="flex-1 border-b border-dotted border-gray-600 mx-2 min-h-[20px] print:min-h-[24px] text-center font-bold" dir="rtl">
                     {reportData.overallGrade.teacherRemarkArabic}
                   </span>
-                  <span dir="rtl" className="whitespace-nowrap text-[10px] print:text-xs">ملاحظة المدرس</span>
+                  <span dir="rtl" className="whitespace-nowrap text-[10px] print:text-[13px]">ملاحظة المدرس</span>
                 </div>
               </div>
 
               {/* Signatures Section */}
-              <div className="grid grid-cols-2 gap-6 text-[10px] print:text-xs">
+              <div className="grid grid-cols-2 gap-6 text-[10px] print:text-[13px]">
                 <div>
                   <div className="flex items-center mb-2 print:mb-3">
-                    <span className="font-semibold whitespace-nowrap text-[10px] print:text-xs">Principal's Sign:</span>
+                    <span className="font-semibold whitespace-nowrap text-[10px] print:text-[13px]">Principal's Sign:</span>
                     <span className="flex-1 border-b border-dotted border-gray-600 flex items-end justify-center mx-1">
                       <img 
                         src="/sign2.png" 
@@ -1095,11 +1095,11 @@ const handlePrint = () => {
                         className="w-20 h-5 print:w-24 print:h-6 object-contain"
                       />
                     </span>
-                    <span dir="rtl" className="whitespace-nowrap text-[10px] print:text-xs">توقيع الوكيل</span>
+                    <span dir="rtl" className="whitespace-nowrap text-[10px] print:text-[12px]">توقيع الوكيل</span>
                   </div>
                   
                   <div className="flex items-center mb-2">
-                    <span className="font-semibold whitespace-nowrap text-[10px] print:text-xs">Date:</span>
+                    <span className="font-semibold whitespace-nowrap text-[10px] print:text-[12px]">Date:</span>
                     <span className="flex-1 border-b border-dotted border-gray-600 mx-2 min-h-[18px] print:min-h-[22px] text-center text-[10px] print:text-xs">
                       {new Date().toLocaleDateString('en-GB', {
   day: '2-digit',
@@ -1107,13 +1107,13 @@ const handlePrint = () => {
   year: 'numeric'
 })}
                     </span>
-                    <span dir="rtl" className="whitespace-nowrap text-[10px] print:text-xs">التاريخ</span>
+                    <span dir="rtl" className="whitespace-nowrap text-[10px] print:text-[12px]">التاريخ</span>
                   </div>
                 </div>
 
                 <div>
                   <div className="flex items-center mb-2 print:mb-3">
-                    <span className="font-semibold whitespace-nowrap text-[10px] print:text-xs">Signature:</span>
+                    <span className="font-semibold whitespace-nowrap text-[10px] print:text-[12px]">Signature:</span>
                     <span className="flex-1 border-b border-dotted border-gray-600 flex items-end justify-center mx-1">
                       <img 
                         src="/sign.png" 
@@ -1121,13 +1121,13 @@ const handlePrint = () => {
                         className="w-20 h-5 print:w-24 print:h-6 object-contain"
                       />
                     </span>
-                    <span dir="rtl" className="whitespace-nowrap text-[10px] print:text-xs">التوقيع</span>
+                    <span dir="rtl" className="whitespace-nowrap text-[10px] print:text-[12px]">التوقيع</span>
                   </div>
                   
                   <div className="flex items-center">
-                    <span className="font-semibold whitespace-nowrap text-[10px] print:text-xs">Stamp:</span>
+                    <span className="font-semibold whitespace-nowrap text-[10px] print:text-[12px]">Stamp:</span>
                     <span className="flex-1 border-b border-dotted border-gray-600 mx-2 min-h-[18px] print:min-h-[22px]"></span>
-                    <span dir="rtl" className="whitespace-nowrap text-[10px] print:text-xs">الختم</span>
+                    <span dir="rtl" className="whitespace-nowrap text-[10px] print:text-[12px]">الختم</span>
                   </div>
                 </div>
               </div>
