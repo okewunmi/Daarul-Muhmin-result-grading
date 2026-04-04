@@ -925,8 +925,8 @@ const handlePrint = () => {
 {/* Position, No. in Class, Class Row */}
 <div className="flex items-center gap-3">
   <div className="flex items-center flex-1">
-    <span className="font-semibold whitespace-nowrap text-[13px] print:text[12px]">Position:</span>
-    <span className="flex-1 border-b border-dotted border-gray-600 px-1 mx-1 text-[13px] print:text-[12px] text-center">
+    <span className="font-semibold whitespace-nowrap text-[13px] print:text[11px]">Position:</span>
+    <span className="flex-1 border-b border-dotted border-gray-600 px-1 mx-1 text-[10px] print:text-[10px] text-center">
       {reportData.classPosition}{getPositionSuffix(reportData.classPosition)}
       <span className="mx-1 text-gray-400">  |  </span>
       <span dir="rtl">{toArabicNumerals(reportData.classPosition)}</span>
@@ -936,7 +936,7 @@ const handlePrint = () => {
 
   <div className="flex items-center flex-1">
     <span className="font-semibold whitespace-nowrap text-[12px] print:text-xs">No. in Class:</span>
-    <span className="flex-1 border-b border-dotted border-gray-600 px-1 mx-1 text-[12px] print:text-[12px] text-center">
+    <span className="flex-1 border-b border-dotted border-gray-600 px-1 mx-1 text-[12px] print:text-[10px] text-center">
       {reportData.totalStudents}
       <span className="mx-1 text-gray-400">  | </span>
       <span dir="rtl">{toArabicNumerals(reportData.totalStudents)}</span>
