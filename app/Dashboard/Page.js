@@ -438,15 +438,15 @@ const ReportCardTemplate = ({ subjects = [] }) => {
               </div>
 
               <div className="flex items-center flex-1">
-                <span className="font-semibold whitespace-nowrap text-[10px]">No. in Class:</span>
+                <span className="font-semibold whitespace-nowrap text-[9px]">No. in Class:</span>
                 <span className="flex-1 border-b border-dotted border-gray-600 px-1 mx-1 min-h-[20px]"></span>
-                <span dir="rtl" className="whitespace-nowrap text-[10px]">عدد الطلبة</span>
+                <span dir="rtl" className="whitespace-nowrap text-[9px]">عدد الطلبة</span>
               </div>
 
               <div className="flex items-center flex-1">
-                <span className="font-semibold whitespace-nowrap text-[10px]">Class:</span>
+                <span className="font-semibold whitespace-nowrap text-[9px]">Class:</span>
                 <span className="flex-1 border-b border-dotted border-gray-600 px-1 mx-1 min-h-[20px]"></span>
-                <span dir="rtl" className="whitespace-nowrap text-[10px]">الصف</span>
+                <span dir="rtl" className="whitespace-nowrap text-[9px]">الصف</span>
               </div>
             </div>
           </div>
@@ -903,9 +903,9 @@ const handlePrint = () => {
               <div className="mb-3 print:mb-4 text-[13px] print:text-xs">
                 {/* Name Row */}
                 <div className="flex items-center mb-2">
-                  <span className="font-semibold w-14 text-[13px] print:text-[13px]">Name:</span>
+                  <span className="font-semibold w-14 text-[12px] print:text-[12px]">Name:</span>
                  
-                <span className="flex-1 border-b border-dotted border-gray-600 px-2 text-[13px] print:text-xs flex justify-between items-center">
+                <span className="flex-1 border-b border-dotted border-gray-600 px-2 text-[12px] print:text-xs flex justify-between items-center">
   <span>{student.fullName}</span>
   <span className="text-xl font-bold">{student.arabicName && `${student.arabicName}`}</span>
 </span>
@@ -916,9 +916,9 @@ const handlePrint = () => {
                 <div className="flex items-center mb-2">
                   <span className="font-semibold w-14 text-[12px] print:text-xs">Session:</span>
                   
-                  <span className="flex-1 border-b border-dotted border-gray-600 px-2 text-[12px] print:text-[12px] flex justify-between items-center">
-  <span>{session?.sessionName}</span>
-  <span>{session?.sessionNameArabic && `/ ${session.sessionNameArabic}`}</span>
+                  <span className="flex-1 border-b border-dotted border-gray-600 px-2 text-[12px] print:text-[11px] flex justify-between items-center">
+  <span> {session?.sessionName}</span>
+  <span>{session?.sessionNameArabic && ` /  ${session.sessionNameArabic}`}</span>
 </span>
                   <span className="mr-2 text-[12px] print:text-xs" dir="rtl">العام الدراسي</span>
                 </div>
@@ -928,7 +928,7 @@ const handlePrint = () => {
     <span className="font-semibold whitespace-nowrap text-[13px] print:text[12px]">Position:</span>
     <span className="flex-1 border-b border-dotted border-gray-600 px-1 mx-1 text-[13px] print:text-[12px] text-center">
       {reportData.classPosition}{getPositionSuffix(reportData.classPosition)}
-      <span className="mx-1 text-gray-400">|</span>
+      <span className="mx-1 text-gray-400">  |  </span>
       <span dir="rtl">{toArabicNumerals(reportData.classPosition)}</span>
     </span>
     <span dir="rtl" className="whitespace-nowrap text-[12px] print:text-xs">الترتيب</span>
@@ -938,19 +938,19 @@ const handlePrint = () => {
     <span className="font-semibold whitespace-nowrap text-[12px] print:text-xs">No. in Class:</span>
     <span className="flex-1 border-b border-dotted border-gray-600 px-1 mx-1 text-[12px] print:text-[12px] text-center">
       {reportData.totalStudents}
-      <span className="mx-1 text-gray-400">|</span>
+      <span className="mx-1 text-gray-400">  | </span>
       <span dir="rtl">{toArabicNumerals(reportData.totalStudents)}</span>
     </span>
-    <span dir="rtl" className="whitespace-nowrap text-[12px] print:text-[12px]">عدد الطلبة</span>
+    <span dir="rtl" className="whitespace-nowrap text-[12px] print:text-[10px]">عدد الطلبة</span>
   </div>
 
   <div className="flex items-center flex-1">
-    <span className="font-semibold whitespace-nowrap text-[10px] print:text-xs">Class:</span>
-    <span className="flex-1 border-b border-dotted border-gray-600 px-1 mx-1 text-[12px] print:text-[12px] text-center">
+    <span className="font-semibold whitespace-nowrap text-[9px] print:text-xs">Class:</span>
+    <span className="flex-1 border-b border-dotted border-gray-600 px-1 mx-1 text-[12px] print:text-[9px] text-center">
       {classInfo?.className}
       {classInfo?.classNameArabic && (
         <>
-          <span className="mx-1 text-gray-400">|</span>
+          <span className="mx-1 text-gray-400"> | </span>
           <span dir="rtl">{classInfo.classNameArabic}</span>
         </>
       )}
