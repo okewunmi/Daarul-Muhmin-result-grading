@@ -1012,7 +1012,7 @@ const handlePrint = () => {
                   {/* Total Row */}
                   <tr className="border-t border-black font-bold">
                     <td className="border-l border-black p-2 text-center text-[13px] print:text-[13px] font-bold" colSpan="2">
-                      المجموع الكلي <span className="pr-10">TOTAL </span>
+                      المجموع الكلي <span className="pr-10 print:pr-10">TOTAL </span>
                     </td>
                     <td className="border-l border-black p-2 text-center font-bold">
                       {reportData.totalMax}
@@ -1025,7 +1025,7 @@ const handlePrint = () => {
                   {/* Percentage Row */}
                   <tr className="border-t border-black font-bold">
                     <td className="border-l border-black p-2 text-center text-[13px] print:text-[13px] font-bold" colSpan="2">
-                      النسبة المئوية <span className="pr-10">PERCENTAGE </span>
+                      النسبة المئوية <span className="pr-10 print:pr-10">PERCENTAGE </span>
                     </td>
                     <td className="p-2 text-center font-bold" colSpan="5">
                    {toArabicNumerals(reportData.percentage)}٪
@@ -1038,7 +1038,7 @@ const handlePrint = () => {
                   {/* Grade Row */}
                   <tr className="border-t border-black font-bold">
                     <td className="border-l border-black p-2 text-center text-[13px] print:text-[13px]" colSpan="2">
-                      التقدير العام <span className="pr-10">GRADE </span>
+                      التقدير العام <span className="pr-10 print:pr-10">GRADE </span>
                     </td>
                     <td className="p-2 text-center" colSpan="5">
                       {reportData.overallGrade.arabic} 
