@@ -1012,7 +1012,7 @@ const handlePrint = () => {
                   {/* Total Row */}
                   <tr className="border-t border-black font-bold">
                     <td className="border-l border-black p-2 text-center text-[13px] print:text-[13px] font-bold" colSpan="2">
-                      المجموع الكلي <span className="ml-10"> </span>TOTAL
+                      المجموع الكلي <span className="ml-10">TOTAL </span>
                     </td>
                     <td className="border-l border-black p-2 text-center font-bold">
                       {reportData.totalMax}
@@ -1025,7 +1025,7 @@ const handlePrint = () => {
                   {/* Percentage Row */}
                   <tr className="border-t border-black font-bold">
                     <td className="border-l border-black p-2 text-center text-[13px] print:text-[13px] font-bold" colSpan="2">
-                      النسبة المئوية <span className="ml-20"> </span>PERCENTAGE
+                      النسبة المئوية <span className="ml-10">PERCENTAGE </span>
                     </td>
                     <td className="p-2 text-center font-bold" colSpan="5">
                    {toArabicNumerals(reportData.percentage)}٪
@@ -1038,7 +1038,7 @@ const handlePrint = () => {
                   {/* Grade Row */}
                   <tr className="border-t border-black font-bold">
                     <td className="border-l border-black p-2 text-center text-[13px] print:text-[13px]" colSpan="2">
-                      التقدير العام <span className="ml-20"> </span>GRADE
+                      التقدير العام <span className="ml-10">GRADE </span>
                     </td>
                     <td className="p-2 text-center" colSpan="5">
                       {reportData.overallGrade.arabic} 
@@ -1050,10 +1050,10 @@ const handlePrint = () => {
               </table>
 
 {/* Next Term & Promoted Section */}
-<div className="grid grid-cols-2 gap-3 mb-3 print:mb-4 text-[12px] print:text-[13px]">
+<div className="grid grid-cols-2 gap-3 mb-3 print:mb-4 text-[11px] print:text-[13px]">
   <div className="flex items-center">
-    <span className="font-semibold whitespace-nowrap text-[12px] print:text-[13px]">Next Term Begins:</span>
-    <span className="flex-1 border-b border-dotted border-gray-600 mx-2 text-center text-[12px] print:text-[13px] ">
+    <span className="font-semibold whitespace-nowrap text-[11px] print:text-[12px]">Next Term Begins:</span>
+    <span className="flex-1 border-b border-dotted border-gray-600 mx-2 text-center text-[11px] print:text-[13px] ">
       {/* ✅ Show date if set, otherwise blank line */}
       {session?.nextTermBegins
         ? new Date(session.nextTermBegins).toLocaleDateString('en-GB', {
@@ -1063,31 +1063,31 @@ const handlePrint = () => {
           })
         : ''}
     </span>
-    <span dir="rtl" className="whitespace-nowrap text-[12px] print:text-[13px]">بداية الفصل الدراسي الجديد</span>
+    <span dir="rtl" className="whitespace-nowrap text-[11px] print:text-[13px]">بداية الفصل الدراسي الجديد</span>
   </div>
 
   <div className="flex items-center">
-    <span className="font-semibold whitespace-nowrap text-[12px] print:text-[13px]">Promoted:</span>
+    <span className="font-semibold whitespace-nowrap text-[11px] print:text-[13px]">Promoted:</span>
     <span className="flex-1 border-b border-dotted border-gray-600 mx-2"></span>
-    <span dir="rtl" className="whitespace-nowrap text-[12px] print:text-[13px]">منقول إلى</span>
+    <span dir="rtl" className="whitespace-nowrap text-[11px] print:text-[13px]">منقول إلى</span>
   </div>
 </div>
               {/* Class Teacher's Remark - Display teacherRemarkArabic */}
-              <div className="mb-3 print:mb-4 text-[12px] print:text-[13px]">
+              <div className="mb-3 print:mb-4 text-[11px] print:text-[13px]">
                 <div className="flex items-center mb-2">
-                  <span className="font-semibold whitespace-nowrap text-[12px] print:text-[13px]">Class Teacher's Remark:</span>
+                  <span className="font-semibold whitespace-nowrap text-[11px] print:text-[13px]">Class Teacher's Remark:</span>
                   <span className="flex-1 border-b border-dotted border-gray-600 mx-2 min-h-[20px] print:min-h-[24px] text-center font-bold" dir="rtl">
                     {reportData.overallGrade.teacherRemarkArabic}
                   </span>
-                  <span dir="rtl" className="whitespace-nowrap text-[12px] print:text-[13px]">ملاحظة المدرس</span>
+                  <span dir="rtl" className="whitespace-nowrap text-[11px] print:text-[13px]">ملاحظة المدرس</span>
                 </div>
               </div>
 
               {/* Signatures Section */}
-              <div className="grid grid-cols-2 gap-6 text-[10px] print:text-[13px]">
+              <div className="grid grid-cols-2 gap-6 text-[11px] print:text-[13px]">
                 <div>
                   <div className="flex items-center mb-2 print:mb-3">
-                    <span className="font-semibold whitespace-nowrap text-[12px] print:text-[13px]">Principal's Sign:</span>
+                    <span className="font-semibold whitespace-nowrap text-[11px] print:text-[13px]">Principal's Sign:</span>
                     <span className="flex-1 border-b border-dotted border-gray-600 flex items-end justify-center mx-1">
                       <img 
                         src="/sign2.png" 
@@ -1095,11 +1095,11 @@ const handlePrint = () => {
                         className="w-20 h-5 print:w-24 print:h-6 object-contain"
                       />
                     </span>
-                    <span dir="rtl" className="whitespace-nowrap text-[12px] print:text-[12px]">توقيع الوكيل</span>
+                    <span dir="rtl" className="whitespace-nowrap text-[11px] print:text-[12px]">توقيع الوكيل</span>
                   </div>
                   
                   <div className="flex items-center mb-2">
-                    <span className="font-semibold whitespace-nowrap text-[10px] print:text-[12px]">Date:</span>
+                    <span className="font-semibold whitespace-nowrap text-[11px] print:text-[12px]">Date:</span>
                     <span className="flex-1 border-b border-dotted border-gray-600 mx-2 min-h-[18px] print:min-h-[22px] text-center text-[12px] print:text-xs">
                       {new Date().toLocaleDateString('en-GB', {
   day: '2-digit',
@@ -1107,13 +1107,13 @@ const handlePrint = () => {
   year: 'numeric'
 })}
                     </span>
-                    <span dir="rtl" className="whitespace-nowrap text-[12px] print:text-[12px]">التاريخ</span>
+                    <span dir="rtl" className="whitespace-nowrap text-[11px] print:text-[12px]">التاريخ</span>
                   </div>
                 </div>
 
                 <div>
                   <div className="flex items-center mb-2 print:mb-3">
-                    <span className="font-semibold whitespace-nowrap text-[12px] print:text-[12px]">Signature:</span>
+                    <span className="font-semibold whitespace-nowrap text-[11px] print:text-[12px]">Signature:</span>
                     <span className="flex-1 border-b border-dotted border-gray-600 flex items-end justify-center mx-1">
                       <img 
                         src="/sign.png" 
@@ -1121,13 +1121,13 @@ const handlePrint = () => {
                         className="w-20 h-5 print:w-24 print:h-6 object-contain"
                       />
                     </span>
-                    <span dir="rtl" className="whitespace-nowrap text-[12px] print:text-[12px]">التوقيع</span>
+                    <span dir="rtl" className="whitespace-nowrap text-[11px] print:text-[12px]">التوقيع</span>
                   </div>
                   
                   <div className="flex items-center">
-                    <span className="font-semibold whitespace-nowrap text-[12px] print:text-[12px]">Stamp:</span>
+                    <span className="font-semibold whitespace-nowrap text-[11px] print:text-[12px]">Stamp:</span>
                     <span className="flex-1 border-b border-dotted border-gray-600 mx-2 min-h-[18px] print:min-h-[22px]"></span>
-                    <span dir="rtl" className="whitespace-nowrap text-[12px] print:text-[12px]">الختم</span>
+                    <span dir="rtl" className="whitespace-nowrap text-[11px] print:text-[12px]">الختم</span>
                   </div>
                 </div>
               </div>
