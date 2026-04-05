@@ -1027,7 +1027,7 @@ const handlePrint = () => {
                     <td className="border-l border-black p-2 text-center text-[13px] print:text-[13px] font-bold" colSpan="2">
                       النسبة المئوية <span className="mr-20">PERCENTAGE </span>
                     </td>
-                    <td className="p-2 text-center font-bold" colSpan="5">
+                    <td className="p-2 text-center font-bold text-[12px] print:text-[12px]" colSpan="5">
                    {toArabicNumerals(reportData.percentage)}٪
                    <span className="mr-20"> </span>
                       {reportData.percentage}%  
@@ -1040,7 +1040,7 @@ const handlePrint = () => {
                     <td className="border-l border-black p-2 text-center text-[13px] print:text-[13px]" colSpan="2">
                       التقدير العام <span className="mr-20">GRADE </span>
                     </td>
-                    <td className="p-2 text-center" colSpan="5">
+                    <td className="p-2 text-center text-[12px] print:text-[12px]" colSpan="5">
                       {reportData.overallGrade.arabic} 
                       <span className="mr-20">
                         </span> {reportData.overallGrade.english}
