@@ -707,6 +707,7 @@ const handlePrint = () => {
           .gap-8 { gap: 0.75rem; }
 .gap-2 { gap: 0.5rem; }
 .w-48 { width: 12rem; }
+.w-56 { width: 224px; }
 
           /* Grid */
           .grid { display: grid; }
@@ -968,7 +969,7 @@ const handlePrint = () => {
                 <thead>
                   <tr className="border-b border-black">
                     <th className="border-l border-black p-1 print:p-1.5 w-6 text-center">ت</th>
-                    <th className="border-l border-black p-1 print:p-1.5 text-center w-48">
+                    <th className="border-l border-black p-1 print:p-1.5 text-center w-56">
                       المواد الدراسية SUBJECT
                     </th>
                     <th className="border-l border-black p-1 print:p-1.5 w-12 text-center">الدرجة</th>
