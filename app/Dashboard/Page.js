@@ -2015,6 +2015,9 @@ const tdStyle = {
   textAlign: 'center',
   fontSize: '11px',
 };
+  const page1Subjects = subjects.slice(0, Math.ceil(subjects.length / 2));
+const page2Subjects = subjects.slice(Math.ceil(subjects.length / 2));
+  
   return (
     <div>
       {/* Controls */}
@@ -2104,7 +2107,7 @@ const tdStyle = {
             <tr>
               <th style={thStyle} className="w-5">S/N</th>
               <th style={{ ...thStyle, textAlign: 'left', minWidth: '110px' }}>Student Name / اسم الطالب</th>
-              {subjects.slice(0, 15).map(subject => (
+              {page1Subjects.map(subject => (
                 <th key={subject.$id} style={thStyle}>
                   <div>{subject.arabicName}</div>
                   <div style={{ fontSize: '9px', color: '#555' }}>{subject.englishName}</div>
@@ -2123,7 +2126,7 @@ const tdStyle = {
                     <div style={{ fontSize: '9px', color: '#555' }} dir="rtl">{student.arabicName}</div>
                   )}
                 </td>
-                {subjects.slice(0, 15).map(subject => {
+                {page1Subjects.map(subject => {
                   const score = student.subjectScores[subject.$id];
                   const subFail = score !== null && score < 50;
                   return (
@@ -2137,7 +2140,7 @@ const tdStyle = {
             {/* Page 1 subject averages */}
             <tr style={{ backgroundColor: '#f3f4f6', fontWeight: 'bold' }}>
               <td style={tdStyle} colSpan="2">Class Average / معدل الصف</td>
-              {subjects.slice(0, 15).map(subject => {
+              {page1Subjects.map(subject => {
                 const scores = broadsheetData.map(s => s.subjectScores[subject.$id]).filter(s => s !== null);
                 const avg = scores.length > 0 ? (scores.reduce((a, b) => a + b, 0) / scores.length).toFixed(1) : '-';
                 return <td key={subject.$id} style={tdStyle}>{avg}</td>;
@@ -2171,7 +2174,7 @@ const tdStyle = {
             <tr>
               <th style={thStyle} className="w-5">S/N</th>
               <th style={{ ...thStyle, textAlign: 'left', minWidth: '110px' }}>Student Name / اسم الطالب</th>
-              {subjects.slice(15).map(subject => (
+              {page2Subjects.map(subject => (
                 <th key={subject.$id} style={thStyle}>
                   <div>{subject.arabicName}</div>
                   <div style={{ fontSize: '9px', color: '#555' }}>{subject.englishName}</div>
@@ -2203,7 +2206,7 @@ const tdStyle = {
                       <div style={{ fontSize: '9px', color: '#555' }} dir="rtl">{student.arabicName}</div>
                     )}
                   </td>
-                  {subjects.slice(15).map(subject => {
+                  {page2Subjects.map(subject => {
                     const score = student.subjectScores[subject.$id];
                     const subFail = score !== null && score < 50;
                     return (
@@ -2231,7 +2234,7 @@ const tdStyle = {
             {/* Summary row */}
             <tr style={{ backgroundColor: '#f3f4f6', fontWeight: 'bold' }}>
               <td style={tdStyle} colSpan="2">Class Average / معدل الصف</td>
-              {subjects.slice(15).map(subject => {
+              {page2Subjects.map(subject => {
                 const scores = broadsheetData.map(s => s.subjectScores[subject.$id]).filter(s => s !== null);
                 const avg = scores.length > 0 ? (scores.reduce((a, b) => a + b, 0) / scores.length).toFixed(1) : '-';
                 return <td key={subject.$id} style={tdStyle}>{avg}</td>;
