@@ -1952,22 +1952,17 @@ const BroadsheetView = ({ sessions, subjects }) => {
           <meta charset="utf-8">
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; -webkit-print-color-adjust: exact !important; }
-  body { font-family: sans-serif; font-size: 11px; background: white; }
+  body { font-family: sans-serif; background: white; }
   table { border-collapse: collapse; width: 100%; }
-  th, td { border: 1px solid black; padding: 5px 6px; text-align: center; font-size: 11px; }
-  th { background-color: #f0f0f0; font-weight: bold; font-size: 10px; }
-  .text-left { text-align: left; }
-  .font-bold { font-weight: bold; }
-  .fail { color: red; }
-  .bg-gray-50 { background-color: #f9fafb; }
-  .bg-gray-100 { background-color: #f3f4f6; }
-  .text-red-600 { color: #dc2626; }
-  .text-green-700 { color: #15803d; }
-  /* Allow table to break across pages */
-  table { page-break-inside: auto; }
-  tr { page-break-inside: avoid; page-break-after: auto; }
-  thead { display: table-header-group; } /* repeat header on each page */
-  @page { margin: 1cm; size: A4 landscape; }
+  th, td { border: 1px solid black; padding: 5px 4px; text-align: center; font-size: 11px; }
+  th { background-color: #f0f0f0 !important; font-weight: bold; font-size: 10px; }
+  .text-left, [style*="text-align: left"] { text-align: left !important; }
+  .font-bold, [style*="font-weight: bold"] { font-weight: bold !important; }
+  .page-break { page-break-after: always !important; display: block; }
+  .page-2 { page-break-before: always; }
+  thead { display: table-header-group; }
+  tr { page-break-inside: avoid; }
+  @page { margin: 0.8cm; size: A4 landscape; }
 </style>
           
         </head>
@@ -2003,7 +1998,23 @@ const BroadsheetView = ({ sessions, subjects }) => {
 
   const selectedClass = availableClasses.find(c => c.$id === selectedClassId);
   const selectedSession = sessions.find(s => s.$id === selectedSessionId);
+  
+const thStyle = {
+  border: '1px solid black',
+  padding: '5px 4px',
+  textAlign: 'center',
+  backgroundColor: '#f0f0f0',
+  fontWeight: 'bold',
+  fontSize: '10px',
+  minWidth: '45px',
+};
 
+const tdStyle = {
+  border: '1px solid black',
+  padding: '5px 4px',
+  textAlign: 'center',
+  fontSize: '11px',
+};
   return (
     <div>
       {/* Controls */}
@@ -2065,147 +2076,193 @@ const BroadsheetView = ({ sessions, subjects }) => {
         </div>
       )}
 
-      {/* Broadsheet Table */}
-      {!loading && broadsheetData && (
-        <div className="overflow-x-auto">
-          <div id="broadsheet-print-area" className="bg-white text-black p-4 rounded-lg">
-            {/* Header */}
-            <div className="text-center mb-4">
-              <p className="text-[10px]">بسم الله الرحمن الرحيم</p>
-              <h1 className="font-bold text-sm">معهد دار المؤمن للدراسات العربية والإسلامية</h1>
-              <h2 className="font-bold text-xs">DAARUL MUHMIN INSTITUTE OF ARABIC AND ISLAMIC STUDIES</h2>
-              <p className="text-xs font-semibold mt-1">CLASS BROADSHEET — كشف درجات الصف</p>
-              <div className="flex justify-center gap-8 mt-1 text-[10px]">
-                <span>Session: <strong>{selectedSession?.sessionName}</strong></span>
-                <span>Class: <strong>{selectedClass?.className}</strong>
-                  {selectedClass?.classNameArabic && <span dir="rtl"> | {selectedClass.classNameArabic}</span>}
-                </span>
-                <span>Total Students: <strong>{broadsheetData.length}</strong></span>
-              </div>
-            </div>
+        {/* Broadsheet Table */}
+{!loading && broadsheetData && (
+  <div className="overflow-x-auto">
+    <div id="broadsheet-print-area" className="bg-white text-black p-4 rounded-lg">
+      
+      {/* Shared Header - renders once on screen, repeats via CSS on print */}
+      <div className="text-center mb-4">
+        <p className="text-[10px]">بسم الله الرحمن الرحيم</p>
+        <h1 className="font-bold text-sm">معهد دار المؤمن للدراسات العربية والإسلامية</h1>
+        <h2 className="font-bold text-xs">DAARUL MUHMIN INSTITUTE OF ARABIC AND ISLAMIC STUDIES</h2>
+        <p className="text-xs font-semibold mt-1">CLASS BROADSHEET — كشف درجات الصف</p>
+        <div className="flex justify-center gap-8 mt-1 text-[10px]">
+          <span>Session: <strong>{selectedSession?.sessionName}</strong></span>
+          <span>Class: <strong>{selectedClass?.className}</strong>
+            {selectedClass?.classNameArabic && <span dir="rtl"> | {selectedClass.classNameArabic}</span>}
+          </span>
+          <span>Total Students: <strong>{broadsheetData.length}</strong></span>
+        </div>
+      </div>
 
-            {/* Table */}
-            <table className="w-full border border-black text-[11px]" style={{ fontSize: '11px' }}>
-              <thead>
-                <tr>
-                  <th className="border border-black p-1 w-5">S/N</th>
-                  <th className="border border-black p-1 text-left min-w-[100px]">Student Name / اسم الطالب</th>
-                  {subjects.map(subject => (
-                    <th key={subject.$id} className="border border-black p-1 min-w-[50px]">
-                      <div>{subject.arabicName}</div>
-                      <div className="text-[9px] text-gray-600">{subject.englishName}</div>
-                    <div className="text-[9px]">/100</div>
-                    </th>
-                  ))}
-                  <th className="border border-black p-1 min-w-[45px]">Total<br/>المجموع</th>
-                  <th className="border border-black p-1 min-w-[40px]">Max<br/>الكلي</th>
-                  <th className="border border-black p-1 min-w-[40px]">%<br/>النسبة</th>
-                  <th className="border border-black p-1 min-w-[35px]">Grade<br/>التقدير</th>
-                  <th className="border border-black p-1 min-w-[40px]">Position<br/>الترتيب</th>
-                </tr>
-              </thead>
-              <tbody>
-                {broadsheetData.map((student, index) => {
-                  const grade = student.percentage >= 90 ? 'Excellent / ممتاز'
-                    : student.percentage >= 80 ? 'Very Good / جيد جداً'
-                    : student.percentage >= 60 ? 'Good / جيد'
-                    : student.percentage >= 50 ? 'Pass / مقبول'
-                    : 'Fail / راسب';
-                  const isFail = student.percentage < 50;
-
+      {/* ── PAGE 1 TABLE ── */}
+      <div className="page-1">
+        <p className="font-bold text-[10px] mb-1 text-gray-600">Page 1 of 2</p>
+        <table className="w-full border border-black" style={{ fontSize: '11px', borderCollapse: 'collapse' }}>
+          <thead>
+            <tr>
+              <th style={thStyle} className="w-5">S/N</th>
+              <th style={{ ...thStyle, textAlign: 'left', minWidth: '110px' }}>Student Name / اسم الطالب</th>
+              {subjects.slice(0, 15).map(subject => (
+                <th key={subject.$id} style={thStyle}>
+                  <div>{subject.arabicName}</div>
+                  <div style={{ fontSize: '9px', color: '#555' }}>{subject.englishName}</div>
+                  <div style={{ fontSize: '9px' }}>/100</div>
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {broadsheetData.map((student, index) => (
+              <tr key={student.$id} style={{ backgroundColor: index % 2 === 0 ? '#f9fafb' : '#ffffff' }}>
+                <td style={tdStyle}>{index + 1}</td>
+                <td style={{ ...tdStyle, textAlign: 'left' }}>
+                  <div style={{ fontWeight: 'bold' }}>{student.fullName}</div>
+                  {student.arabicName && (
+                    <div style={{ fontSize: '9px', color: '#555' }} dir="rtl">{student.arabicName}</div>
+                  )}
+                </td>
+                {subjects.slice(0, 15).map(subject => {
+                  const score = student.subjectScores[subject.$id];
+                  const subFail = score !== null && score < 50;
                   return (
-                    <tr key={student.$id} className={index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}>
-                      <td className="border border-black p-1 text-center">{index + 1}</td>
-                      <td className="border border-black p-1 text-left">
-                        <div className="font-bold">{student.fullName}</div>
-                        {student.arabicName && (
-                          <div className="text-[9px] text-gray-600" dir="rtl">{student.arabicName}</div>
-                        )}
-                      </td>
-                      {subjects.map(subject => {
-                        const score = student.subjectScores[subject.$id];
-                        const subFail = score !== null && score < 50;
-                        return (
-                          <td
-                            key={subject.$id}
-                            className={`border border-black p-1 text-center font-bold ${subFail ? 'text-red-600' : ''}`}
-                          >
-                            {score !== null ? score : '-'}
-                          </td>
-                        );
-                      })}
-                      <td className="border border-black p-1 text-center font-bold">{student.totalScore}</td>
-                      <td className="border border-black p-1 text-center">{student.totalMax}</td>
-                      <td className={`border border-black p-1 text-center font-bold ${isFail ? 'text-red-600' : 'text-green-700'}`}>
-                        {student.percentage}%
-                      </td>
-                      <td className={`border border-black p-1 text-center text-[7px] ${isFail ? 'text-red-600' : ''}`}>
-                        {grade}
-                      </td>
-                      <td className="border border-black p-1 text-center font-bold">
-                        {student.position}{getPositionSuffix(student.position)}
-                        <div className="text-[9px]" dir="rtl">{toArabicNumerals(student.position)}</div>
-                      </td>
-                    </tr>
+                    <td key={subject.$id} style={{ ...tdStyle, color: subFail ? '#dc2626' : 'inherit', fontWeight: 'bold' }}>
+                      {score !== null ? score : '-'}
+                    </td>
                   );
                 })}
+              </tr>
+            ))}
+            {/* Page 1 subject averages */}
+            <tr style={{ backgroundColor: '#f3f4f6', fontWeight: 'bold' }}>
+              <td style={tdStyle} colSpan="2">Class Average / معدل الصف</td>
+              {subjects.slice(0, 15).map(subject => {
+                const scores = broadsheetData.map(s => s.subjectScores[subject.$id]).filter(s => s !== null);
+                const avg = scores.length > 0 ? (scores.reduce((a, b) => a + b, 0) / scores.length).toFixed(1) : '-';
+                return <td key={subject.$id} style={tdStyle}>{avg}</td>;
+              })}
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
-                {/* Summary Row */}
-                <tr className="font-bold bg-gray-100">
-                  <td className="border border-black p-1 text-center" colSpan="2">
-                    Class Average / معدل الصف
+      {/* Page break between the two tables */}
+      <div className="page-break" style={{ pageBreakAfter: 'always', marginTop: '2rem' }} />
+
+      {/* ── PAGE 2 TABLE ── */}
+      <div className="page-2" style={{ marginTop: '1rem' }}>
+        {/* Repeat header on page 2 */}
+        <div className="text-center mb-3">
+          <p className="text-[10px]">بسم الله الرحمن الرحيم</p>
+          <h1 className="font-bold text-sm">معهد دار المؤمن للدراسات العربية والإسلامية</h1>
+          <h2 className="font-bold text-xs">DAARUL MUHMIN INSTITUTE OF ARABIC AND ISLAMIC STUDIES</h2>
+          <p className="text-xs font-semibold mt-1">CLASS BROADSHEET (Cont'd) — كشف درجات الصف (تابع)</p>
+          <div className="flex justify-center gap-8 mt-1 text-[10px]">
+            <span>Session: <strong>{selectedSession?.sessionName}</strong></span>
+            <span>Class: <strong>{selectedClass?.className}</strong></span>
+            <span>Total Students: <strong>{broadsheetData.length}</strong></span>
+          </div>
+        </div>
+        <p className="font-bold text-[10px] mb-1 text-gray-600">Page 2 of 2</p>
+
+        <table className="w-full border border-black" style={{ fontSize: '11px', borderCollapse: 'collapse' }}>
+          <thead>
+            <tr>
+              <th style={thStyle} className="w-5">S/N</th>
+              <th style={{ ...thStyle, textAlign: 'left', minWidth: '110px' }}>Student Name / اسم الطالب</th>
+              {subjects.slice(15).map(subject => (
+                <th key={subject.$id} style={thStyle}>
+                  <div>{subject.arabicName}</div>
+                  <div style={{ fontSize: '9px', color: '#555' }}>{subject.englishName}</div>
+                  <div style={{ fontSize: '9px' }}>/100</div>
+                </th>
+              ))}
+              <th style={thStyle}>Total<br />المجموع</th>
+              <th style={thStyle}>Max<br />الكلي</th>
+              <th style={thStyle}>%<br />النسبة</th>
+              <th style={thStyle}>Grade<br />التقدير</th>
+              <th style={thStyle}>Position<br />الترتيب</th>
+            </tr>
+          </thead>
+          <tbody>
+            {broadsheetData.map((student, index) => {
+              const grade = student.percentage >= 90 ? 'Excellent / ممتاز'
+                : student.percentage >= 80 ? 'Very Good / جيد جداً'
+                : student.percentage >= 60 ? 'Good / جيد'
+                : student.percentage >= 50 ? 'Pass / مقبول'
+                : 'Fail / راسب';
+              const isFail = student.percentage < 50;
+
+              return (
+                <tr key={student.$id} style={{ backgroundColor: index % 2 === 0 ? '#f9fafb' : '#ffffff' }}>
+                  <td style={tdStyle}>{index + 1}</td>
+                  <td style={{ ...tdStyle, textAlign: 'left' }}>
+                    <div style={{ fontWeight: 'bold' }}>{student.fullName}</div>
+                    {student.arabicName && (
+                      <div style={{ fontSize: '9px', color: '#555' }} dir="rtl">{student.arabicName}</div>
+                    )}
                   </td>
-                  {subjects.map(subject => {
-                    const scores = broadsheetData
-                      .map(s => s.subjectScores[subject.$id])
-                      .filter(s => s !== null);
-                    const avg = scores.length > 0
-                      ? (scores.reduce((a, b) => a + b, 0) / scores.length).toFixed(1)
-                      : '-';
+                  {subjects.slice(15).map(subject => {
+                    const score = student.subjectScores[subject.$id];
+                    const subFail = score !== null && score < 50;
                     return (
-                      <td key={subject.$id} className="border border-black p-1 text-center">
-                        {avg}
+                      <td key={subject.$id} style={{ ...tdStyle, color: subFail ? '#dc2626' : 'inherit', fontWeight: 'bold' }}>
+                        {score !== null ? score : '-'}
                       </td>
                     );
                   })}
-                  <td className="border border-black p-1 text-center" colSpan="5">
-                    Class Avg %:{' '}
-                    {(broadsheetData.reduce((sum, s) => sum + s.percentage, 0) / broadsheetData.length).toFixed(1)}%
+                  <td style={{ ...tdStyle, fontWeight: 'bold' }}>{student.totalScore}</td>
+                  <td style={tdStyle}>{student.totalMax}</td>
+                  <td style={{ ...tdStyle, fontWeight: 'bold', color: isFail ? '#dc2626' : '#15803d' }}>
+                    {student.percentage}%
+                  </td>
+                  <td style={{ ...tdStyle, fontSize: '9px', color: isFail ? '#dc2626' : 'inherit' }}>
+                    {grade}
+                  </td>
+                  <td style={{ ...tdStyle, fontWeight: 'bold' }}>
+                    {student.position}{getPositionSuffix(student.position)}
+                    <div style={{ fontSize: '9px' }} dir="rtl">{toArabicNumerals(student.position)}</div>
                   </td>
                 </tr>
-              </tbody>
-            </table>
+              );
+            })}
 
-            {/* Footer */}
-            <div className="flex justify-between mt-4 text-[9px]">
-              <div>
-                <span className="font-semibold">Prepared by:</span>
-                <span className="border-b border-dotted border-gray-500 inline-block w-32 ml-2"></span>
-              </div>
-              <div>
-                <span className="font-semibold">Date:</span>
-                <span className="ml-2">{new Date().toLocaleDateString()}</span>
-              </div>
-              <div>
-                <span className="font-semibold">Principal's Sign:</span>
-                <span className="border-b border-dotted border-gray-500 inline-block w-32 ml-2"></span>
-              </div>
-            </div>
+            {/* Summary row */}
+            <tr style={{ backgroundColor: '#f3f4f6', fontWeight: 'bold' }}>
+              <td style={tdStyle} colSpan="2">Class Average / معدل الصف</td>
+              {subjects.slice(15).map(subject => {
+                const scores = broadsheetData.map(s => s.subjectScores[subject.$id]).filter(s => s !== null);
+                const avg = scores.length > 0 ? (scores.reduce((a, b) => a + b, 0) / scores.length).toFixed(1) : '-';
+                return <td key={subject.$id} style={tdStyle}>{avg}</td>;
+              })}
+              <td style={tdStyle} colSpan="5">
+                Class Avg %: {(broadsheetData.reduce((sum, s) => sum + s.percentage, 0) / broadsheetData.length).toFixed(1)}%
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        {/* Footer */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '1rem', fontSize: '9px' }}>
+          <div>
+            <span style={{ fontWeight: 'bold' }}>Prepared by:</span>
+            <span style={{ borderBottom: '1px dotted #888', display: 'inline-block', width: '8rem', marginLeft: '0.5rem' }}></span>
+          </div>
+          <div>
+            <span style={{ fontWeight: 'bold' }}>Date:</span>
+            <span style={{ marginLeft: '0.5rem' }}>{new Date().toLocaleDateString()}</span>
+          </div>
+          <div>
+            <span style={{ fontWeight: 'bold' }}>Principal's Sign:</span>
+            <span style={{ borderBottom: '1px dotted #888', display: 'inline-block', width: '8rem', marginLeft: '0.5rem' }}></span>
           </div>
         </div>
-      )}
+      </div>
 
-      {/* Empty state */}
-      {!loading && !broadsheetData && (
-        <div className="text-center py-12 text-gray-400">
-          <FileText size={48} className="mx-auto mb-4 opacity-30" />
-          <p>Select a session and class, then click Generate Broadsheet</p>
-          <p className="text-xs mt-1" dir="rtl">اختر السنة الدراسية والصف ثم انقر على إنشاء الكشف</p>
-        </div>
-      )}
     </div>
-  );
-};
+  </div>
+)}
 
 // ============================================
 // MAIN ADMIN DASHBOARD COMPONENT
