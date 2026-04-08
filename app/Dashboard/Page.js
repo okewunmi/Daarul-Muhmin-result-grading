@@ -704,6 +704,9 @@ const handlePrint = () => {
           .gap-1 { gap: 0.25rem; }
           .gap-3 { gap: 0.75rem; }
           .gap-6 { gap: 1.5rem; }
+          .gap-8 { gap: 0.75rem; }
+.gap-2 { gap: 0.5rem; }
+.w-48 { width: 12rem; }
 
           /* Grid */
           .grid { display: grid; }
@@ -965,7 +968,7 @@ const handlePrint = () => {
                 <thead>
                   <tr className="border-b border-black">
                     <th className="border-l border-black p-1 print:p-1.5 w-6 text-center">ت</th>
-                    <th className="border-l border-black p-1 print:p-1.5 text-center">
+                    <th className="border-l border-black p-1 print:p-1.5 text-center w-48">
                       المواد الدراسية SUBJECT
                     </th>
                     <th className="border-l border-black p-1 print:p-1.5 w-12 text-center">الدرجة</th>
@@ -991,7 +994,7 @@ const handlePrint = () => {
                             <span className="text-gray-600 text-left text-[13px] print:text-[13px]">{subject.englishName}</span>
                           </div>
                           */}
-                <div className="flex items-center gap-8">
+                <div className="flex justify-between items-center gap-8">
   <span className="text-[13px] print:text-[13px]">{subject.arabicName}</span>
   <span className="text-gray-600 text-[13px] print:text-[13px]">{subject.englishName}</span>
 </div>
