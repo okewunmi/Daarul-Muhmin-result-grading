@@ -2266,7 +2266,9 @@ const page2Subjects = subjects.slice(Math.ceil(subjects.length / 2));
 
     </div>
   </div>
-)}
+);
+};
+
 
 // ============================================
 // MAIN ADMIN DASHBOARD COMPONENT
