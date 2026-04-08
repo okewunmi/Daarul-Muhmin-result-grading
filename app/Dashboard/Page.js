@@ -1947,8 +1947,6 @@ const BroadsheetView = ({ sessions, subjects }) => {
         <head>
           <title>Broadsheet - ${selectedClass?.className}</title>
           <meta charset="utf-8">
-          
-          // In handlePrintBroadsheet, replace the <style> block with:
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; -webkit-print-color-adjust: exact !important; }
   body { font-family: sans-serif; font-size: 11px; background: white; }
