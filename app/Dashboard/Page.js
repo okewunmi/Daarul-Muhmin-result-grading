@@ -113,7 +113,7 @@ const numberToArabicWords = (num) => {
   switch(n) {
     case 0: return 'صفر';
     case 1: return 'واحد';
-    case 2: return 'اثنان';
+   case 2: return 'اثنتان';
     case 3: return 'ثلاثة';
     case 4: return 'أربعة';
     case 5: return 'خمسة';
@@ -133,7 +133,7 @@ const numberToArabicWords = (num) => {
     case 19: return 'تسعة عشر';
     case 20: return 'عشرون';
     case 21: return 'واحد وعشرون';
-    case 22: return 'اثنان وعشرون';
+    case 22: return 'اثنتان وعشرون';
     case 23: return 'ثلاثة وعشرون';
     case 24: return 'أربعة وعشرون';
     case 25: return 'خمسة وعشرون';
@@ -143,7 +143,7 @@ const numberToArabicWords = (num) => {
     case 29: return 'تسعة وعشرون';
     case 30: return 'ثلاثون';
     case 31: return 'واحد وثلاثون';
-    case 32: return 'اثنان وثلاثون';
+    case 32: return 'اثنتان وثلاثون';
     case 33: return 'ثلاثة وثلاثون';
     case 34: return 'أربعة وثلاثون';
     case 35: return 'خمسة وثلاثون';
@@ -153,7 +153,7 @@ const numberToArabicWords = (num) => {
     case 39: return 'تسعة وثلاثون';
     case 40: return 'أربعون';
     case 41: return 'واحد وأربعون';
-    case 42: return 'اثنان وأربعون';
+  case 42: return 'اثنتان وأربعون';
     case 43: return 'ثلاثة وأربعون';
     case 44: return 'أربعة وأربعون';
     case 45: return 'خمسة وأربعون';
@@ -163,7 +163,7 @@ const numberToArabicWords = (num) => {
     case 49: return 'تسعة وأربعون';
     case 50: return 'خمسون';
     case 51: return 'واحد وخمسون';
-    case 52: return 'اثنان وخمسون';
+    case 52: return 'اثنتان وخمسون';
     case 53: return 'ثلاثة وخمسون';
     case 54: return 'أربعة وخمسون';
     case 55: return 'خمسة وخمسون';
@@ -173,7 +173,7 @@ const numberToArabicWords = (num) => {
     case 59: return 'تسعة وخمسون';
     case 60: return 'ستون';
     case 61: return 'واحد وستون';
-    case 62: return 'اثنان وستون';
+    case 62: return 'اثنتان وستون';
     case 63: return 'ثلاثة وستون';
     case 64: return 'أربعة وستون';
     case 65: return 'خمسة وستون';
@@ -183,7 +183,7 @@ const numberToArabicWords = (num) => {
     case 69: return 'تسعة وستون';
     case 70: return 'سبعون';
     case 71: return 'واحد وسبعون';
-    case 72: return 'اثنان وسبعون';
+     case 72: return 'اثنتان وسبعون';
     case 73: return 'ثلاثة وسبعون';
     case 74: return 'أربعة وسبعون';
     case 75: return 'خمسة وسبعون';
@@ -193,7 +193,7 @@ const numberToArabicWords = (num) => {
     case 79: return 'تسعة وسبعون';
     case 80: return 'ثمانون';
     case 81: return 'واحد وثمانون';
-    case 82: return 'اثنان وثمانون';
+    case 82: return 'اثنتان وثمانون';
     case 83: return 'ثلاثة وثمانون';
     case 84: return 'أربعة وثمانون';
     case 85: return 'خمسة وثمانون';
@@ -203,7 +203,7 @@ const numberToArabicWords = (num) => {
     case 89: return 'تسعة وثمانون';
     case 90: return 'تسعون';
     case 91: return 'واحد وتسعون';
-    case 92: return 'اثنان وتسعون';
+    case 92: return 'اثنتان وتسعون';
     case 93: return 'ثلاثة وتسعون';
     case 94: return 'أربعة وتسعون';
     case 95: return 'خمسة وتسعون';
@@ -985,10 +985,16 @@ const handlePrint = () => {
                       <tr key={subject.$id} className="border-b border-black">
                         <td className="border-l border-black p-1 print:p-1.5 text-center">{index + 1}</td>
                         <td className="border-l border-black p-1 print:p-1.5">
-                          <div className="flex justify-between items-center gap-1">
+                 {/*          
+                <div className="flex justify-between items-center gap-1">
                             <span className="text-[14px] print:text-[14px]">{subject.arabicName}</span>
                             <span className="text-gray-600 text-left text-[13px] print:text-[13px]">{subject.englishName}</span>
                           </div>
+                          */}
+                <div className="flex items-center gap-2">
+  <span className="text-[14px] print:text-[14px]">{subject.arabicName}</span>
+  <span className="text-gray-600 text-[13px] print:text-[13px]">{subject.englishName}</span>
+</div>
                         </td>
                         <td className="border-l border-black p-1 print:p-1.5 text-center font-bold">100</td>
                         <td className="border-l border-black p-1 print:p-1.5 text-center font-bold">
@@ -1941,21 +1947,28 @@ const BroadsheetView = ({ sessions, subjects }) => {
         <head>
           <title>Broadsheet - ${selectedClass?.className}</title>
           <meta charset="utf-8">
-          <style>
-            * { box-sizing: border-box; margin: 0; padding: 0; -webkit-print-color-adjust: exact !important; }
-            body { font-family: sans-serif; font-size: 9px; background: white; }
-            table { border-collapse: collapse; width: 100%; }
-            th, td { border: 1px solid black; padding: 3px 4px; text-align: center; }
-            th { background-color: #f0f0f0; font-weight: bold; }
-            .text-left { text-align: left; }
-            .font-bold { font-weight: bold; }
-            .header { text-align: center; margin-bottom: 8px; }
-            .header h1 { font-size: 13px; }
-            .header h2 { font-size: 11px; }
-            .header p { font-size: 9px; }
-            .fail { color: red; }
-            @page { margin: 0.5cm; size: A4 landscape; }
-          </style>
+          
+          // In handlePrintBroadsheet, replace the <style> block with:
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-print-color-adjust: exact !important; }
+  body { font-family: sans-serif; font-size: 11px; background: white; }
+  table { border-collapse: collapse; width: 100%; }
+  th, td { border: 1px solid black; padding: 5px 6px; text-align: center; font-size: 11px; }
+  th { background-color: #f0f0f0; font-weight: bold; font-size: 10px; }
+  .text-left { text-align: left; }
+  .font-bold { font-weight: bold; }
+  .fail { color: red; }
+  .bg-gray-50 { background-color: #f9fafb; }
+  .bg-gray-100 { background-color: #f3f4f6; }
+  .text-red-600 { color: #dc2626; }
+  .text-green-700 { color: #15803d; }
+  /* Allow table to break across pages */
+  table { page-break-inside: auto; }
+  tr { page-break-inside: avoid; page-break-after: auto; }
+  thead { display: table-header-group; } /* repeat header on each page */
+  @page { margin: 1cm; size: A4 landscape; }
+</style>
+          
         </head>
         <body>
           ${printContent.innerHTML}
@@ -2071,7 +2084,7 @@ const BroadsheetView = ({ sessions, subjects }) => {
             </div>
 
             {/* Table */}
-            <table className="w-full border border-black text-[8px]" style={{ fontSize: '8px' }}>
+            <table className="w-full border border-black text-[11px]" style={{ fontSize: '11px' }}>
               <thead>
                 <tr>
                   <th className="border border-black p-1 w-5">S/N</th>
@@ -2079,8 +2092,8 @@ const BroadsheetView = ({ sessions, subjects }) => {
                   {subjects.map(subject => (
                     <th key={subject.$id} className="border border-black p-1 min-w-[50px]">
                       <div>{subject.arabicName}</div>
-                      <div className="text-[7px] text-gray-600">{subject.englishName}</div>
-                      <div className="text-[7px]">/100</div>
+                      <div className="text-[9px] text-gray-600">{subject.englishName}</div>
+                    <div className="text-[9px]">/100</div>
                     </th>
                   ))}
                   <th className="border border-black p-1 min-w-[45px]">Total<br/>المجموع</th>
@@ -2105,7 +2118,7 @@ const BroadsheetView = ({ sessions, subjects }) => {
                       <td className="border border-black p-1 text-left">
                         <div className="font-bold">{student.fullName}</div>
                         {student.arabicName && (
-                          <div className="text-[7px] text-gray-600" dir="rtl">{student.arabicName}</div>
+                          <div className="text-[9px] text-gray-600" dir="rtl">{student.arabicName}</div>
                         )}
                       </td>
                       {subjects.map(subject => {
@@ -2130,7 +2143,7 @@ const BroadsheetView = ({ sessions, subjects }) => {
                       </td>
                       <td className="border border-black p-1 text-center font-bold">
                         {student.position}{getPositionSuffix(student.position)}
-                        <div className="text-[7px]" dir="rtl">{toArabicNumerals(student.position)}</div>
+                        <div className="text-[9px]" dir="rtl">{toArabicNumerals(student.position)}</div>
                       </td>
                     </tr>
                   );
