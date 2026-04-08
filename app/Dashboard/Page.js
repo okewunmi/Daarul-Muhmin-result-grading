@@ -961,7 +961,7 @@ const handlePrint = () => {
               </div>
 
               {/* Grades Table - Larger for printing */}
-              <table className="w-full border border-black text-[l4px] print:text-[14px] mb-3 print:mb-4" dir="rtl">
+              <table className="w-full border border-black text-[l3px] print:text-[13px] mb-3 print:mb-4" dir="rtl">
                 <thead>
                   <tr className="border-b border-black">
                     <th className="border-l border-black p-1 print:p-1.5 w-6 text-center">ت</th>
@@ -992,7 +992,7 @@ const handlePrint = () => {
                           </div>
                           */}
                 <div className="flex items-center gap-2">
-  <span className="text-[14px] print:text-[14px]">{subject.arabicName}</span>
+  <span className="text-[13px] print:text-[13px]">{subject.arabicName}</span>
   <span className="text-gray-600 text-[13px] print:text-[13px]">{subject.englishName}</span>
 </div>
                         </td>
@@ -1001,12 +1001,12 @@ const handlePrint = () => {
                           {result ? result.score : ''}
                         </td>
                         <td className="border-l border-black p-1 print:p-1.5 text-center">
-                          <span className="text-[14px] print:text-[14px]">{scoreInWords}</span>
+                          <span className="text-[13px] print:text-[13px]">{scoreInWords}</span>
                         </td>
-                        <td className="border-l border-black p-1 print:p-1.5 text-center text-[14px] print:text-[14px]">
+                        <td className="border-l border-black p-1 print:p-1.5 text-center text-[13px] print:text-[13px]">
                           {gradeInfo?.arabic || ''}
                         </td>
-                        <td className="p-1 print:p-1.5 text-center text-[14px] print:text-[14px]">
+                        <td className="p-1 print:p-1.5 text-center text-[13px] print:text-[13px]">
                           <span className={result && result.score >= 50 ? '' : 'text-red-600'}>
                             {gradeInfo?.remarkArabic || ''}
                           </span>
@@ -1018,7 +1018,7 @@ const handlePrint = () => {
                   {/* Total Row */}
                   <tr className="border-t border-black font-bold">
                     <td className="border-l border-black p-2 text-center text-[13px] print:text-[13px] font-bold" colSpan="2">
-                      المجموع الكلي <span className="mr-20">TOTAL </span>
+                      المجموع الكلي <span className="mr-10">TOTAL </span>
                     </td>
                     <td className="border-l border-black p-2 text-center font-bold">
                       {reportData.totalMax}
@@ -1031,11 +1031,11 @@ const handlePrint = () => {
                   {/* Percentage Row */}
                   <tr className="border-t border-black font-bold">
                     <td className="border-l border-black p-2 text-center text-[13px] print:text-[13px] font-bold" colSpan="2">
-                      النسبة المئوية <span className="mr-20">PERCENTAGE </span>
+                      النسبة المئوية <span className="mr-10">PERCENTAGE </span>
                     </td>
                     <td className="p-2 text-center font-bold text-[12px] print:text-[12px]" colSpan="5">
                    {toArabicNumerals(reportData.percentage)}٪
-                   <span className="mr-20"> </span>
+                   <span className="mr-10"> </span>
                       {reportData.percentage}%  
                       
                     </td>
@@ -1044,11 +1044,11 @@ const handlePrint = () => {
                   {/* Grade Row */}
                   <tr className="border-t border-black font-bold">
                     <td className="border-l border-black p-2 text-center text-[13px] print:text-[13px]" colSpan="2">
-                      التقدير العام <span className="mr-20">GRADE </span>
+                      التقدير العام <span className="mr-10">GRADE </span>
                     </td>
                     <td className="p-2 text-center text-[12px] print:text-[12px]" colSpan="5">
                       {reportData.overallGrade.arabic} 
-                      <span className="mr-20">
+                      <span className="mr-10">
                         </span> {reportData.overallGrade.english}
                     </td>
                   </tr>
