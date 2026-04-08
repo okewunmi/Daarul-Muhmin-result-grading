@@ -991,7 +991,7 @@ const handlePrint = () => {
                             <span className="text-gray-600 text-left text-[13px] print:text-[13px]">{subject.englishName}</span>
                           </div>
                           */}
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-8">
   <span className="text-[13px] print:text-[13px]">{subject.arabicName}</span>
   <span className="text-gray-600 text-[13px] print:text-[13px]">{subject.englishName}</span>
 </div>
@@ -1031,11 +1031,11 @@ const handlePrint = () => {
                   {/* Percentage Row */}
                   <tr className="border-t border-black font-bold">
                     <td className="border-l border-black p-2 text-center text-[13px] print:text-[13px] font-bold" colSpan="2">
-                      النسبة المئوية <span className="mr-10">PERCENTAGE </span>
+                      النسبة المئوية <span className="mr-8">PERCENTAGE </span>
                     </td>
                     <td className="p-2 text-center font-bold text-[12px] print:text-[12px]" colSpan="5">
                    {toArabicNumerals(reportData.percentage)}٪
-                   <span className="mr-10"> </span>
+                   <span className="mr-8"> </span>
                       {reportData.percentage}%  
                       
                     </td>
@@ -1044,11 +1044,11 @@ const handlePrint = () => {
                   {/* Grade Row */}
                   <tr className="border-t border-black font-bold">
                     <td className="border-l border-black p-2 text-center text-[13px] print:text-[13px]" colSpan="2">
-                      التقدير العام <span className="mr-10">GRADE </span>
+                      التقدير العام <span className="mr-8">GRADE </span>
                     </td>
                     <td className="p-2 text-center text-[12px] print:text-[12px]" colSpan="5">
                       {reportData.overallGrade.arabic} 
-                      <span className="mr-10">
+                      <span className="mr-8">
                         </span> {reportData.overallGrade.english}
                     </td>
                   </tr>
