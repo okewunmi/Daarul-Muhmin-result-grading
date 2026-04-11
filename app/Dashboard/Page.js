@@ -1863,7 +1863,7 @@ const BroadsheetView = ({ sessions, subjects }) => {
   const [broadsheetData, setBroadsheetData] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  // Load classes when session changes
+  
   useEffect(() => {
     if (selectedSessionId) {
       loadClasses(selectedSessionId);
@@ -2185,13 +2185,7 @@ const page2Subjects = subjects.slice(Math.ceil(subjects.length / 2));
                   <div style={{ fontSize: '9px' }}>/100</div>
                 </th>
               ))}
-              //<th style={thStyle}>Total<br />المجموع</th>
-              //<th style={thStyle}>Max<br />الكلي</th>
-              //<th style={thStyle}>%<br />النسبة</th>
-              //<th style={thStyle}>Grade<br />التقدير</th>
-              //<th style={thStyle}>Position<br />الترتيب</th>
-
-                // REPLACE these five th elements at the end of page 2 thead:
+            
 <th style={{ ...thStyle, minWidth: '30px' }}>Total<br />المجموع</th>
 <th style={{ ...thStyle, minWidth: '30px' }}>Max<br />الكلي</th>
 <th style={{ ...thStyle, minWidth: '28px' }}>%<br />النسبة</th>
@@ -2226,19 +2220,7 @@ const page2Subjects = subjects.slice(Math.ceil(subjects.length / 2));
                       </td>
                     );
                   })}
-                  //<td style={{ ...tdStyle, fontWeight: 'bold' }}>{student.totalScore}</td>
-                  //<td style={tdStyle}>{student.totalMax}</td>
-                  //<td style={{ ...tdStyle, fontWeight: 'bold', color: isFail ? '#dc2626' : '#15803d' }}>
-                  //  {student.percentage}%
-                  //</td>
-                  //<td style={{ ...tdStyle, fontSize: '9px', color: isFail ? '#dc2626' : 'inherit' }}>
-                  //  {grade}
-                  //</td>
-                  //<td style={{ ...tdStyle, fontWeight: 'bold' }}>
-                   // {student.position}{getPositionSuffix(student.position)}
-                    //<div style={{ fontSize: '9px' }} dir="rtl">{toArabicNumerals(student.position)}</div>
-                  //</td>
-
+                 
                       <td style={{ ...tdStyle, fontWeight: 'bold', minWidth: '30px' }}>{student.totalScore}</td>
 <td style={{ ...tdStyle, minWidth: '30px' }}>{student.totalMax}</td>
 <td style={{ ...tdStyle, fontWeight: 'bold', color: isFail ? '#dc2626' : '#15803d', minWidth: '28px' }}>
