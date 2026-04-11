@@ -2016,14 +2016,14 @@ const thStyle = {
   backgroundColor: '#f0f0f0',
   fontWeight: 'bold',
   fontSize: '7px',
-  minWidth: '24px',
+  minWidth: '20px',
 };
 
 const tdStyle = {
   border: '1px solid black',
   padding: '2px 0px',
   textAlign: 'center',
-  fontSize: '8px',
+  fontSize: '11px',
 };
   const page1Subjects = subjects.slice(0, Math.ceil(subjects.length / 2));
 const page2Subjects = subjects.slice(Math.ceil(subjects.length / 2));
@@ -2116,7 +2116,7 @@ const page2Subjects = subjects.slice(Math.ceil(subjects.length / 2));
           <thead>
             <tr>
               <th style={thStyle} className="w-5">S/N</th>
-        <th style={{ ...thStyle, textAlign: 'left', minWidth: '80px', maxWidth: '90px' }}>Student Name / اسم الطالب</th>
+        <th style={{ ...thStyle, textAlign: 'left', minWidth: '70px', maxWidth: '80px' }}>Student Name / اسم الطالب</th>
               
               {page1Subjects.map(subject => (
                 <th key={subject.$id} style={thStyle}>
@@ -2185,7 +2185,7 @@ const page2Subjects = subjects.slice(Math.ceil(subjects.length / 2));
           <thead>
             <tr>
               <th style={thStyle} className="w-5">S/N</th>
-              <th style={{ ...thStyle, textAlign: 'left', minWidth: '80px', maxWidth: '90px' }}>Student Name / اسم الطالب</th>
+              <th style={{ ...thStyle, textAlign: 'left', minWidth: '70px', maxWidth: '80px' }}>Student Name / اسم الطالب</th>
               {page2Subjects.map(subject => (
                 <th key={subject.$id} style={thStyle}>
                   <div>{subject.arabicName}</div>
