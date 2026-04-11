@@ -1972,7 +1972,7 @@ const totalMax = subjects.reduce((sum, subject) => {
   .flex { display: flex; }
   .justify-center { justify-content: center; }
   .gap-8 { gap: 16px; }
-  @page { margin: 0.3cm 1cm; size: A4 landscape; }
+  @page { margin: 0.3cm 2cm; size: A4 landscape; }
 </style>
           
         </head>
