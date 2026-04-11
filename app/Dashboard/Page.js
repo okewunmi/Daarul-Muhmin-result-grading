@@ -1901,7 +1901,8 @@ const BroadsheetView = ({ sessions, subjects }) => {
 
           const scores = Object.values(subjectScores).filter(s => s !== null);
           const totalScore = scores.reduce((sum, s) => sum + s, 0);
-          const totalMax = subjects.length * 100;
+          
+          const totalMax = subjects.reduce((sum, subject) => sum + (subject.maxScore || 100), 0);
           const percentage = scores.length > 0
             ? ((totalScore / totalMax) * 100).toFixed(1)
             : '0.0';
@@ -1963,7 +1964,9 @@ const BroadsheetView = ({ sessions, subjects }) => {
   .page-2 { page-break-before: always; }
   thead { display: table-header-group; }
   tr { page-break-inside: avoid; }
-  @page { margin: 0.8cm; size: A4 landscape; }
+ @page { margin: 0.5cm 0.4cm; size: A4 landscape; }
+ body { overflow: hidden; }
+table { table-layout: fixed; }
 </style>
           
         </head>
@@ -2006,15 +2009,15 @@ const thStyle = {
   textAlign: 'center',
   backgroundColor: '#f0f0f0',
   fontWeight: 'bold',
-  fontSize: '10px',
-  minWidth: '45px',
+  fontSize: '9px',
+  minWidth: '35px',
 };
 
 const tdStyle = {
   border: '1px solid black',
-  padding: '5px 4px',
+  padding: '3px 2px',
   textAlign: 'center',
-  fontSize: '11px',
+  fontSize: '9px',
 };
   const page1Subjects = subjects.slice(0, Math.ceil(subjects.length / 2));
 const page2Subjects = subjects.slice(Math.ceil(subjects.length / 2));
@@ -2110,9 +2113,9 @@ const page2Subjects = subjects.slice(Math.ceil(subjects.length / 2));
               <th style={{ ...thStyle, textAlign: 'left', minWidth: '110px' }}>Student Name / اسم الطالب</th>
               {page1Subjects.map(subject => (
                 <th key={subject.$id} style={thStyle}>
-                  <div>{subject.arabicName}</div>
-                  <div style={{ fontSize: '9px', color: '#555' }}>{subject.englishName}</div>
-                  <div style={{ fontSize: '9px' }}>/100</div>
+                  <div style={{ fontSize: '8px' }}>{subject.arabicName}</div>
+<div style={{ fontSize: '7px', color: '#555' }}>{subject.englishName}</div>
+<div style={{ fontSize: '7px' }}>/100</div>
                 </th>
               ))}
             </tr>
@@ -2182,11 +2185,18 @@ const page2Subjects = subjects.slice(Math.ceil(subjects.length / 2));
                   <div style={{ fontSize: '9px' }}>/100</div>
                 </th>
               ))}
-              <th style={thStyle}>Total<br />المجموع</th>
-              <th style={thStyle}>Max<br />الكلي</th>
-              <th style={thStyle}>%<br />النسبة</th>
-              <th style={thStyle}>Grade<br />التقدير</th>
-              <th style={thStyle}>Position<br />الترتيب</th>
+              //<th style={thStyle}>Total<br />المجموع</th>
+              //<th style={thStyle}>Max<br />الكلي</th>
+              //<th style={thStyle}>%<br />النسبة</th>
+              //<th style={thStyle}>Grade<br />التقدير</th>
+              //<th style={thStyle}>Position<br />الترتيب</th>
+
+                // REPLACE these five th elements at the end of page 2 thead:
+<th style={{ ...thStyle, minWidth: '30px' }}>Total<br />المجموع</th>
+<th style={{ ...thStyle, minWidth: '30px' }}>Max<br />الكلي</th>
+<th style={{ ...thStyle, minWidth: '28px' }}>%<br />النسبة</th>
+<th style={{ ...thStyle, minWidth: '45px', fontSize: '7px' }}>Grade<br />التقدير</th>
+<th style={{ ...thStyle, minWidth: '30px' }}>Pos<br />الترتيب</th>
             </tr>
           </thead>
           <tbody>
@@ -2216,18 +2226,31 @@ const page2Subjects = subjects.slice(Math.ceil(subjects.length / 2));
                       </td>
                     );
                   })}
-                  <td style={{ ...tdStyle, fontWeight: 'bold' }}>{student.totalScore}</td>
-                  <td style={tdStyle}>{student.totalMax}</td>
-                  <td style={{ ...tdStyle, fontWeight: 'bold', color: isFail ? '#dc2626' : '#15803d' }}>
-                    {student.percentage}%
-                  </td>
-                  <td style={{ ...tdStyle, fontSize: '9px', color: isFail ? '#dc2626' : 'inherit' }}>
-                    {grade}
-                  </td>
-                  <td style={{ ...tdStyle, fontWeight: 'bold' }}>
-                    {student.position}{getPositionSuffix(student.position)}
-                    <div style={{ fontSize: '9px' }} dir="rtl">{toArabicNumerals(student.position)}</div>
-                  </td>
+                  //<td style={{ ...tdStyle, fontWeight: 'bold' }}>{student.totalScore}</td>
+                  //<td style={tdStyle}>{student.totalMax}</td>
+                  //<td style={{ ...tdStyle, fontWeight: 'bold', color: isFail ? '#dc2626' : '#15803d' }}>
+                  //  {student.percentage}%
+                  //</td>
+                  //<td style={{ ...tdStyle, fontSize: '9px', color: isFail ? '#dc2626' : 'inherit' }}>
+                  //  {grade}
+                  //</td>
+                  //<td style={{ ...tdStyle, fontWeight: 'bold' }}>
+                   // {student.position}{getPositionSuffix(student.position)}
+                    //<div style={{ fontSize: '9px' }} dir="rtl">{toArabicNumerals(student.position)}</div>
+                  //</td>
+
+                      <td style={{ ...tdStyle, fontWeight: 'bold', minWidth: '30px' }}>{student.totalScore}</td>
+<td style={{ ...tdStyle, minWidth: '30px' }}>{student.totalMax}</td>
+<td style={{ ...tdStyle, fontWeight: 'bold', color: isFail ? '#dc2626' : '#15803d', minWidth: '28px' }}>
+  {student.percentage}%
+</td>
+<td style={{ ...tdStyle, fontSize: '7px', color: isFail ? '#dc2626' : 'inherit', minWidth: '45px' }}>
+  {grade}
+</td>
+<td style={{ ...tdStyle, fontWeight: 'bold', minWidth: '30px' }}>
+  {student.position}{getPositionSuffix(student.position)}
+  <div style={{ fontSize: '7px' }} dir="rtl">{toArabicNumerals(student.position)}</div>
+</td>
                 </tr>
               );
             })}
