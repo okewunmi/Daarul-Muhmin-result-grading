@@ -1296,9 +1296,7 @@ const ClassModal = ({ isOpen, onClose, onSave, sessionId, editingClass }) => {
   const [formData, setFormData] = useState({
     className: '',
     classNameArabic: '',
-    // classTeacher: '',
-    // classTeacherArabic: '',
-    // capacity: 30
+   
   });
 
   useEffect(() => {
@@ -1306,17 +1304,13 @@ const ClassModal = ({ isOpen, onClose, onSave, sessionId, editingClass }) => {
       setFormData({
         className: editingClass.className || '',
         classNameArabic: editingClass.classNameArabic || '',
-        // classTeacher: editingClass.classTeacher || '',
-        // classTeacherArabic: editingClass.classTeacherArabic || '',
-        // capacity: editingClass.capacity || 30
+      
       });
     } else {
       setFormData({
         className: '',
         classNameArabic: '',
-        // classTeacher: '',
-        // classTeacherArabic: '',
-        // capacity: 30
+        
       });
     }
   }, [editingClass, isOpen]);
@@ -1324,7 +1318,7 @@ const ClassModal = ({ isOpen, onClose, onSave, sessionId, editingClass }) => {
   const handleSubmit = () => {
     onSave({ ...formData, academicSessionId: sessionId }, editingClass?.$id);
     setFormData({ className: '', classNameArabic: ''});
-    // setFormData({ className: '', classNameArabic: '', classTeacher: '', classTeacherArabic: '', capacity: 30 });
+    
   };
 
   return (
@@ -1900,9 +1894,13 @@ const BroadsheetView = ({ sessions, subjects }) => {
           });
 
           const scores = Object.values(subjectScores).filter(s => s !== null);
-          const totalScore = scores.reduce((sum, s) => sum + s, 0);
-          
-          const totalMax = subjects.reduce((sum, subject) => sum + (subject.maxScore || 100), 0);
+const totalScore = scores.reduce((sum, s) => sum + s, 0);
+
+const totalMax = subjects.reduce((sum, subject) => {
+  return subjectScores[subject.$id] !== null 
+    ? sum + (subject.maxScore || 100) 
+    : sum;
+}, 0);
           const percentage = scores.length > 0
             ? ((totalScore / totalMax) * 100).toFixed(1)
             : '0.0';
@@ -1954,19 +1952,27 @@ const BroadsheetView = ({ sessions, subjects }) => {
           <meta charset="utf-8">
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; -webkit-print-color-adjust: exact !important; }
-  body { font-family: sans-serif; background: white; }
-  table { border-collapse: collapse; width: 100%; }
-  th, td { border: 1px solid black; padding: 5px 4px; text-align: center; font-size: 11px; }
-  th { background-color: #f0f0f0 !important; font-weight: bold; font-size: 10px; }
-  .text-left, [style*="text-align: left"] { text-align: left !important; }
-  .font-bold, [style*="font-weight: bold"] { font-weight: bold !important; }
+  body { font-family: sans-serif; background: white; font-size: 8px; }
+  table { border-collapse: collapse; width: 100%; table-layout: auto; }
+  th, td { border: 1px solid black; padding: 2px 2px; text-align: center; font-size: 8px; word-break: break-word; }
+  th { background-color: #f0f0f0 !important; font-weight: bold; font-size: 7px; }
+  .text-left { text-align: left !important; }
   .page-break { page-break-after: always !important; display: block; }
   .page-2 { page-break-before: always; }
   thead { display: table-header-group; }
   tr { page-break-inside: avoid; }
- @page { margin: 0.5cm 0.4cm; size: A4 landscape; }
- body { overflow: hidden; }
-table { table-layout: fixed; }
+  .text-center { text-align: center; }
+  .font-bold { font-weight: bold; }
+  .text-sm { font-size: 10px; }
+  .text-xs { font-size: 8px; }
+  .font-semibold { font-weight: 600; }
+  .mb-4 { margin-bottom: 8px; }
+  .mb-3 { margin-bottom: 6px; }
+  .mt-1 { margin-top: 4px; }
+  .flex { display: flex; }
+  .justify-center { justify-content: center; }
+  .gap-8 { gap: 16px; }
+  @page { margin: 0.3cm 0.3cm; size: A4 landscape; }
 </style>
           
         </head>
@@ -2005,19 +2011,19 @@ table { table-layout: fixed; }
   
 const thStyle = {
   border: '1px solid black',
-  padding: '5px 4px',
+  padding: '2px 1px',
   textAlign: 'center',
   backgroundColor: '#f0f0f0',
   fontWeight: 'bold',
-  fontSize: '9px',
-  minWidth: '35px',
+  fontSize: '7px',
+  minWidth: '28px',
 };
 
 const tdStyle = {
   border: '1px solid black',
-  padding: '3px 2px',
+  padding: '2px 1px',
   textAlign: 'center',
-  fontSize: '9px',
+  fontSize: '8px',
 };
   const page1Subjects = subjects.slice(0, Math.ceil(subjects.length / 2));
 const page2Subjects = subjects.slice(Math.ceil(subjects.length / 2));
@@ -2110,7 +2116,8 @@ const page2Subjects = subjects.slice(Math.ceil(subjects.length / 2));
           <thead>
             <tr>
               <th style={thStyle} className="w-5">S/N</th>
-              <th style={{ ...thStyle, textAlign: 'left', minWidth: '110px' }}>Student Name / اسم الطالب</th>
+        <th style={{ ...thStyle, textAlign: 'left', minWidth: '80px', maxWidth: '90px' }}>Student Name / اسم الطالب</th>
+              
               {page1Subjects.map(subject => (
                 <th key={subject.$id} style={thStyle}>
                   <div style={{ fontSize: '8px' }}>{subject.arabicName}</div>
@@ -2124,7 +2131,8 @@ const page2Subjects = subjects.slice(Math.ceil(subjects.length / 2));
             {broadsheetData.map((student, index) => (
               <tr key={student.$id} style={{ backgroundColor: index % 2 === 0 ? '#f9fafb' : '#ffffff' }}>
                 <td style={tdStyle}>{index + 1}</td>
-                <td style={{ ...tdStyle, textAlign: 'left' }}>
+                
+                                <td style={{ ...tdStyle, textAlign: 'left', maxWidth: '90px', wordBreak: 'break-word' }}>
                   <div style={{ fontWeight: 'bold' }}>{student.fullName}</div>
                   {student.arabicName && (
                     <div style={{ fontSize: '9px', color: '#555' }} dir="rtl">{student.arabicName}</div>
