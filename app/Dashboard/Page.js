@@ -1972,7 +1972,7 @@ const totalMax = subjects.reduce((sum, subject) => {
   .flex { display: flex; }
   .justify-center { justify-content: center; }
   .gap-8 { gap: 16px; }
-  @page { margin: 0.3cm 0.3cm; size: A4 landscape; }
+  @page { margin: 0.3cm 1cm; size: A4 landscape; }
 </style>
           
         </head>
@@ -2011,17 +2011,17 @@ const totalMax = subjects.reduce((sum, subject) => {
   
 const thStyle = {
   border: '1px solid black',
-  padding: '2px 1px',
+  padding: '2px 0px',
   textAlign: 'center',
   backgroundColor: '#f0f0f0',
   fontWeight: 'bold',
   fontSize: '7px',
-  minWidth: '28px',
+  minWidth: '24px',
 };
 
 const tdStyle = {
   border: '1px solid black',
-  padding: '2px 1px',
+  padding: '2px 0px',
   textAlign: 'center',
   fontSize: '8px',
 };
@@ -2092,8 +2092,8 @@ const page2Subjects = subjects.slice(Math.ceil(subjects.length / 2));
         {/* Broadsheet Table */}
 {!loading && broadsheetData && (
   <div className="overflow-x-auto">
-    <div id="broadsheet-print-area" className="bg-white text-black p-4 rounded-lg">
-      
+
+      <div id="broadsheet-print-area" className="bg-white text-black rounded-lg" style={{ padding: '4px 0px' }}>
       {/* Shared Header - renders once on screen, repeats via CSS on print */}
       <div className="text-center mb-4">
         <p className="text-[10px]">بسم الله الرحمن الرحيم</p>
@@ -2185,7 +2185,7 @@ const page2Subjects = subjects.slice(Math.ceil(subjects.length / 2));
           <thead>
             <tr>
               <th style={thStyle} className="w-5">S/N</th>
-              <th style={{ ...thStyle, textAlign: 'left', minWidth: '110px' }}>Student Name / اسم الطالب</th>
+              <th style={{ ...thStyle, textAlign: 'left', minWidth: '80px', maxWidth: '90px' }}>Student Name / اسم الطالب</th>
               {page2Subjects.map(subject => (
                 <th key={subject.$id} style={thStyle}>
                   <div>{subject.arabicName}</div>
@@ -2213,7 +2213,7 @@ const page2Subjects = subjects.slice(Math.ceil(subjects.length / 2));
               return (
                 <tr key={student.$id} style={{ backgroundColor: index % 2 === 0 ? '#f9fafb' : '#ffffff' }}>
                   <td style={tdStyle}>{index + 1}</td>
-                  <td style={{ ...tdStyle, textAlign: 'left' }}>
+                  <td style={{ ...tdStyle, textAlign: 'left', maxWidth: '90px', wordBreak: 'break-word' }}>
                     <div style={{ fontWeight: 'bold' }}>{student.fullName}</div>
                     {student.arabicName && (
                       <div style={{ fontSize: '9px', color: '#555' }} dir="rtl">{student.arabicName}</div>
