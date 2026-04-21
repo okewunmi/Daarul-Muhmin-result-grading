@@ -1,10 +1,10 @@
 'use client'
 import { useState, useEffect } from 'react';
-import { 
-  Sun, Moon, BookOpen, Calendar, GraduationCap, Users, Settings, 
+import {
+  Sun, Moon, BookOpen, Calendar, GraduationCap, Users, Settings,
   Plus, LogOut, Edit2, Trash2, Eye, X, Check, BookA, FileText, Printer, Download
 } from 'lucide-react';
-import { 
+import {
   academicSessionsManager,
   classesManager,
   studentsManager,
@@ -108,12 +108,12 @@ const toArabicNumerals = (num) => {
 const numberToArabicWords = (num) => {
   // Convert to integer
   const n = parseInt(num);
-  
+
   // Explicit mapping for all numbers 0-100
-  switch(n) {
+  switch (n) {
     case 0: return 'صفر';
     case 1: return 'واحد';
-   case 2: return 'اثنتان';
+    case 2: return 'اثنان';
     case 3: return 'ثلاثة';
     case 4: return 'أربعة';
     case 5: return 'خمسة';
@@ -133,7 +133,7 @@ const numberToArabicWords = (num) => {
     case 19: return 'تسعة عشر';
     case 20: return 'عشرون';
     case 21: return 'واحد وعشرون';
-    case 22: return 'اثنتان وعشرون';
+   case 22: return 'اثنان وعشرون';
     case 23: return 'ثلاثة وعشرون';
     case 24: return 'أربعة وعشرون';
     case 25: return 'خمسة وعشرون';
@@ -144,7 +144,7 @@ const numberToArabicWords = (num) => {
     case 30: return 'ثلاثون';
     case 31: return 'واحد وثلاثون';
     case 32: return 'اثنتان وثلاثون';
-    case 33: return 'ثلاثة وثلاثون';
+    case 32: return 'اثنان وثلاثون';
     case 34: return 'أربعة وثلاثون';
     case 35: return 'خمسة وثلاثون';
     case 36: return 'ستة وثلاثون';
@@ -153,7 +153,7 @@ const numberToArabicWords = (num) => {
     case 39: return 'تسعة وثلاثون';
     case 40: return 'أربعون';
     case 41: return 'واحد وأربعون';
-  case 42: return 'اثنتان وأربعون';
+   case 42: return 'اثنان وأربعون';
     case 43: return 'ثلاثة وأربعون';
     case 44: return 'أربعة وأربعون';
     case 45: return 'خمسة وأربعون';
@@ -163,7 +163,7 @@ const numberToArabicWords = (num) => {
     case 49: return 'تسعة وأربعون';
     case 50: return 'خمسون';
     case 51: return 'واحد وخمسون';
-    case 52: return 'اثنتان وخمسون';
+    case 52: return 'اثنان وخمسون';
     case 53: return 'ثلاثة وخمسون';
     case 54: return 'أربعة وخمسون';
     case 55: return 'خمسة وخمسون';
@@ -173,7 +173,7 @@ const numberToArabicWords = (num) => {
     case 59: return 'تسعة وخمسون';
     case 60: return 'ستون';
     case 61: return 'واحد وستون';
-    case 62: return 'اثنتان وستون';
+    case 62: return 'اثنان وستون';
     case 63: return 'ثلاثة وستون';
     case 64: return 'أربعة وستون';
     case 65: return 'خمسة وستون';
@@ -183,7 +183,7 @@ const numberToArabicWords = (num) => {
     case 69: return 'تسعة وستون';
     case 70: return 'سبعون';
     case 71: return 'واحد وسبعون';
-     case 72: return 'اثنتان وسبعون';
+    case 72: return 'اثنان وسبعون';
     case 73: return 'ثلاثة وسبعون';
     case 74: return 'أربعة وسبعون';
     case 75: return 'خمسة وسبعون';
@@ -193,7 +193,7 @@ const numberToArabicWords = (num) => {
     case 79: return 'تسعة وسبعون';
     case 80: return 'ثمانون';
     case 81: return 'واحد وثمانون';
-    case 82: return 'اثنتان وثمانون';
+    case 82: return 'اثنان وثمانون';
     case 83: return 'ثلاثة وثمانون';
     case 84: return 'أربعة وثمانون';
     case 85: return 'خمسة وثمانون';
@@ -203,7 +203,7 @@ const numberToArabicWords = (num) => {
     case 89: return 'تسعة وثمانون';
     case 90: return 'تسعون';
     case 91: return 'واحد وتسعون';
-    case 92: return 'اثنتان وتسعون';
+    case 92: return 'اثنان وتسعون';
     case 93: return 'ثلاثة وتسعون';
     case 94: return 'أربعة وتسعون';
     case 95: return 'خمسة وتسعون';
@@ -217,7 +217,7 @@ const numberToArabicWords = (num) => {
 };
 
 const ReportCardTemplate = ({ subjects = [] }) => {
-  
+
   const handlePrint = () => {
     const printContent = document.getElementById('report-template');
     if (!printContent) return;
@@ -580,68 +580,68 @@ const ReportCardModal = ({ isOpen, onClose, student, session, classInfo, subject
     }
   }, [student, isOpen]);
 
-  
-const loadReportCardData = async () => {
-  setLoading(true);
-  try {
-    if (!student?.classId) {
-      throw new Error('Student has no classId');
+
+  const loadReportCardData = async () => {
+    setLoading(true);
+    try {
+      if (!student?.classId) {
+        throw new Error('Student has no classId');
+      }
+
+      // ✅ Use already-imported managers directly
+      const [resultsResponse, classStudentsResponse] = await Promise.all([
+        resultsManager.getByStudent(student.$id),
+        studentsManager.getByClass(student.classId)
+      ]);
+
+      if (resultsResponse.success && classStudentsResponse.success) {
+        const results = resultsResponse.results;
+        const totalScore = results.reduce((sum, r) => sum + r.score, 0);
+        const totalMax = results.length * 100;
+        const percentage = results.length > 0
+          ? ((totalScore / totalMax) * 100).toFixed(2)
+          : 0;
+
+        const classPosition = await calculateClassPosition(
+          student.$id,
+          classStudentsResponse.students
+        );
+
+        const overallGrade = calculateGrade(parseFloat(percentage));
+
+        setReportData({
+          results,
+          totalScore,
+          totalMax,
+          percentage,
+          overallGrade,
+          classPosition,
+          totalStudents: classStudentsResponse.students.length
+        });
+      } else {
+        // Log what actually failed
+        console.error('Results response:', resultsResponse);
+        console.error('Class students response:', classStudentsResponse);
+        throw new Error(
+          resultsResponse.message ||
+          classStudentsResponse.message ||
+          'Failed to fetch data'
+        );
+      }
+    } catch (error) {
+      console.error('Error loading report card:', error);
+      alert('Failed to load report card data: ' + error.message);
+    } finally {
+      setLoading(false);
     }
+  };
 
-    // ✅ Use already-imported managers directly
-    const [resultsResponse, classStudentsResponse] = await Promise.all([
-      resultsManager.getByStudent(student.$id),
-      studentsManager.getByClass(student.classId)
-    ]);
 
-    if (resultsResponse.success && classStudentsResponse.success) {
-      const results = resultsResponse.results;
-      const totalScore = results.reduce((sum, r) => sum + r.score, 0);
-      const totalMax = results.length * 100;
-      const percentage = results.length > 0 
-        ? ((totalScore / totalMax) * 100).toFixed(2) 
-        : 0;
-
-      const classPosition = await calculateClassPosition(
-        student.$id,
-        classStudentsResponse.students
-      );
-
-      const overallGrade = calculateGrade(parseFloat(percentage));
-
-      setReportData({
-        results,
-        totalScore,
-        totalMax,
-        percentage,
-        overallGrade,
-        classPosition,
-        totalStudents: classStudentsResponse.students.length
-      });
-    } else {
-      // Log what actually failed
-      console.error('Results response:', resultsResponse);
-      console.error('Class students response:', classStudentsResponse);
-      throw new Error(
-        resultsResponse.message || 
-        classStudentsResponse.message || 
-        'Failed to fetch data'
-      );
-    }
-  } catch (error) {
-    console.error('Error loading report card:', error);
-    alert('Failed to load report card data: ' + error.message);
-  } finally {
-    setLoading(false);
-  }
-};
-  
-  
-const calculateClassPosition = async (studentId, classStudents) => {
+  const calculateClassPosition = async (studentId, classStudents) => {
   try {
     const studentsWithScores = await Promise.all(
       classStudents.map(async (s) => {
-        const res = await resultsManager.getByStudent(s.$id); // use imported directly
+        const res = await resultsManager.getByStudent(s.$id);
         const total = res.success
           ? res.results.reduce((sum, r) => sum + r.score, 0)
           : 0;
@@ -650,20 +650,31 @@ const calculateClassPosition = async (studentId, classStudents) => {
     );
 
     studentsWithScores.sort((a, b) => b.totalScore - a.totalScore);
-    return studentsWithScores.findIndex(s => s.studentId === studentId) + 1;
+
+    // Standard competition ranking
+    let position = 1;
+    for (let i = 0; i < studentsWithScores.length; i++) {
+      if (i > 0 && studentsWithScores[i].totalScore < studentsWithScores[i - 1].totalScore) {
+        position = i + 1;
+      }
+      studentsWithScores[i].position = position;
+    }
+
+    const found = studentsWithScores.find(s => s.studentId === studentId);
+    return found?.position || 0;
   } catch (error) {
     console.error('Error calculating position:', error);
     return 0;
   }
 };
 
-const handlePrint = () => {
-  const printContent = document.getElementById('report-card-print-area');
-  if (!printContent) return;
+  const handlePrint = () => {
+    const printContent = document.getElementById('report-card-print-area');
+    if (!printContent) return;
 
-  const printWindow = window.open('', '_blank', 'width=900,height=700');
-  
-  printWindow.document.write(`
+    const printWindow = window.open('', '_blank', 'width=900,height=700');
+
+    printWindow.document.write(`
     <!DOCTYPE html>
     <html>
       <head>
@@ -691,6 +702,11 @@ const handlePrint = () => {
           .mr-2 { margin-right: 0.5rem; }
           .mr-20 { margin-right: 5rem; }
           .ml-20 { margin-left: 5rem; }
+          .mr-20 { margin-right: 5rem; }
+          .ml-20 { margin-left: 5rem; }
+          .px-3 { padding-left: 0.75rem; padding-right: 0.75rem; }
+          .py-0\\.5 { padding-top: 0.125rem; padding-bottom: 0.125rem; }
+          .py-1 { padding-top: 0.25rem; padding-bottom: 0.25rem; }
 
           /* Flexbox */
           .flex { display: flex; }
@@ -705,9 +721,10 @@ const handlePrint = () => {
           .gap-3 { gap: 0.75rem; }
           .gap-6 { gap: 1.5rem; }
           .gap-8 { gap: 0.75rem; }
-.gap-2 { gap: 0.5rem; }
-.w-48 { width: 12rem; }
-.w-56 { width: 224px; }
+          .gap-2 { gap: 0.5rem; }
+          .w-48 { width: 12rem; }
+          .w-56 { width: 224px; }
+          .w-60 { width: 240px; }
 
           /* Grid */
           .grid { display: grid; }
@@ -719,6 +736,7 @@ const handlePrint = () => {
           .w-12 { width: 3rem; }
           .w-14 { width: 3.5rem; }
           .w-16 { width: 4rem; }
+          .w-18 { width: 4.5rem; }
           .w-20 { width: 5rem; }
           .h-5 { height: 1.25rem; }
           .h-16 { height: 4rem; }
@@ -745,11 +763,14 @@ const handlePrint = () => {
           .text-xl { font-size: 1.25rem; line-height: 1.75rem; }
           .text-sm { font-size: 0.875rem; }
           .text-xs { font-size: 0.75rem; }
-          .text-base { font-size: 1rem; }
           .text-\\[11px\\] { font-size: 11px; }
           .text-\\[10px\\] { font-size: 10px; }
           .text-\\[9px\\] { font-size: 9px; }
           .text-\\[8px\\] { font-size: 8px; }
+          .text-lg { font-size: 1.225rem; line-height: 1.75rem; }
+          .text-base { font-size: 1.125rem; line-height: 1.5rem; }
+          .text-sm { font-size: 0.9rem; line-height: 1.25rem; }
+          .text-\\[12px\\] { font-size: 12px; }
 
           /* Colors */
           .bg-white { background-color: #ffffff; }
@@ -801,18 +822,19 @@ const handlePrint = () => {
       </body>
     </html>
   `);
-  
-  printWindow.document.close();
-};
 
-  
-  
-  const getPositionSuffix = (position) => {
-    if (position === 1) return 'st';
-    if (position === 2) return 'nd';
-    if (position === 3) return 'rd';
-    return 'th';
+    printWindow.document.close();
   };
+
+  const getPositionSuffix = (n) => {
+  const lastTwo = n % 100;
+  const lastOne = n % 10;
+  if (lastTwo >= 11 && lastTwo <= 13) return 'th';
+  if (lastOne === 1) return 'st';
+  if (lastOne === 2) return 'nd';
+  if (lastOne === 3) return 'rd';
+  return 'th';
+};
 
   const calculateGrade = (score) => {
     if (score >= 90) return { english: 'Excellent', arabic: 'ممتاز', remarkArabic: 'ناجح', teacherRemarkArabic: 'امتياز' };
@@ -851,15 +873,15 @@ const handlePrint = () => {
           </div>
         )}
 
-  {!loading && reportData && (
-  <div id="report-card-print-area" className="p-6 print:p-6 bg-white relative">
+        {!loading && reportData && (
+          <div id="report-card-print-area" className="p-6 print:p-6 bg-white relative">
             {/* Watermark Logo Background */}
             <div className="absolute inset-0 flex items-center justify-center opacity-5 pointer-events-none z-0">
               <div className="w-50 h-50 flex items-center justify-center">
-                <img 
-                  
-                  src="/school-logo.jpg" 
-                  alt="School Logo" 
+                <img
+
+                  src="/school-logo.jpg"
+                  alt="School Logo"
                   className="w-full h-full object-contain"
                 />
               </div>
@@ -872,32 +894,33 @@ const handlePrint = () => {
               <div className="flex items-start justify-between mb-3 print:mb-4 bg-gray-50 p-2">
                 {/* Left Logo */}
                 <div className="w-16 h-16 print:w-22 print:h-22 flex items-center justify-center flex-shrink-0 mt-1">
-                  <img 
-                    src="/school-logo.jpg" 
-                    alt="School Logo" 
+                  <img
+                    src="/school-logo.jpg"
+                    alt="School Logo"
                     className="w-full h-full object-contain"
                   />
                 </div>
 
-                {/* Center Header */}
-                <div className="flex-1 text-center px-2">
-                  <p className="text-[10px] print:text-xs mb-1">بسم الله الرحمن الرحيم</p>
-                  <h1 className="text-sm print:text-base font-bold mb-1">معهد دار المؤمن للدراسات العربية والإسلامية</h1>
-                  <h2 className="text-xs print:text-sm font-bold mb-1">
-                    DAARUL MUHMIN INSTITUTE OF ARABIC AND ISLAMIC STUDIES
-                  </h2>
-                  <div className="text-[10px] print:text-xs font-semibold py-1 ">
-                    <span>REPORT SHEET كشف الدرجات</span>
-                    <span className="mx-3"></span>   
-                    <span>EXAMINATION OFFICE إدارة الإمتحانات</span>
-                  </div>
-                </div>
+               
+{/* Center Header */}
+<div className="flex-1 text-center px-2">
+  <p className="text-[12px] print:text-sm mb-1">بسم الله الرحمن الرحيم</p>
+  <h1 className="text-base print:text-lg font-bold mb-1">معهد دار المؤمن للدراسات العربية والإسلامية</h1>
+  <h2 className="text-sm print:text-base font-bold mb-1">
+    DAARUL MUHMIN INSTITUTE OF ARABIC AND ISLAMIC STUDIES
+  </h2>
+  <div className="text-[11px] print:text-sm font-semibold py-1">
+    <span>REPORT SHEET كشف الدرجات</span>
+    <span className="mx-2"></span>
+    <span>EXAMINATION OFFICE إدارة الإمتحانات</span>
+  </div>
+</div>
 
                 {/* Right Logo */}
                 <div className="w-16 h-16 print:w-22 print:h-22 flex items-center justify-center flex-shrink-0 mt-1 ">
-                  <img 
-                    src="/school-logo.jpg" 
-                    alt="School Logo" 
+                  <img
+                    src="/school-logo.jpg"
+                    alt="School Logo"
                     className="w-full h-full object-contain"
                   />
                 </div>
@@ -906,62 +929,62 @@ const handlePrint = () => {
               {/* Student Information Section */}
               <div className="mb-3 print:mb-4 text-[12px] print:text-xs">
                 {/* Name Row */}
-                <div className="flex items-center mb-2">
-                  <span className="font-semibold w-14 text-[12px] print:text-[12px]">Name:</span>
-                 
-                <span className="flex-1 border-b border-dotted border-gray-600 px-4 text-[12px] print:text-xs flex justify-between items-center">
-  <span>{student.fullName}</span>
-  <span className="text-xl font-bold">{student.arabicName && `${student.arabicName}`}</span>
-</span>
-                  <span className="mr-4 text-[13px] print:text-xs" dir="rtl">اسم الطالب</span>
+                <div className="flex items-center mb-2 ">
+                  <span className="font-semibold w-14 text-[12px] print:text-[12px] ">Name:</span>
+
+                  <span className="flex-1 border-b border-dotted border-gray-600  text-[12px] print:text-xs flex justify-between items-center px-3 py-0.5">
+                    <span >{student.fullName}</span>
+                    <span className="text-xl font-bold">{student.arabicName && `${student.arabicName}`}</span>
+                  </span>
+                  <span className=" text-[13px] print:text-xs" dir="rtl">اسم الطالب</span>
                 </div>
 
                 {/* Session Row */}
                 <div className="flex items-center mb-2">
                   <span className="font-semibold w-14 text-[12px] print:text-xs">Session:</span>
-                  
-                  <span className="flex-1 border-b border-dotted border-gray-600 px-2 text-[12px] print:text-[10px] flex justify-between items-center px-4">
-  <span >   {session?.sessionName}</span>
-  <span >   {session?.sessionNameArabic && ` /  ${session.sessionNameArabic}`}</span>
-</span>
-                  <span className="mr-4 text-[12px] print:text-xs" dir="rtl">العام الدراسي</span>
+
+                  <span className="flex-1 border-b border-dotted border-gray-600 text-[12px] print:text-[10px] flex justify-between items-center px-3 py-0.5">
+                    <span >   {session?.sessionName}</span>
+                    <span >   {session?.sessionNameArabic && ` /  ${session.sessionNameArabic}`}</span>
+                  </span>
+                  <span className=" text-[12px] print:text-xs" dir="rtl">العام الدراسي</span>
                 </div>
-{/* Position, No. in Class, Class Row */}
-<div className="flex items-center gap-3">
-  <div className="flex items-center flex-1">
-    <span className="font-semibold whitespace-nowrap text-[12px] print:text-xs">Position:</span>
-    <span className="flex-1 border-b border-dotted border-gray-600 px-1 mx-1 text-[11px] print:text-xs text-center">
-      {reportData.classPosition}{getPositionSuffix(reportData.classPosition)}
-      <span className="mx-1 text-gray-400">  |  </span>
-      <span dir="rtl">{toArabicNumerals(reportData.classPosition)}</span>
-    </span>
-    <span dir="rtl" className="whitespace-nowrap text-[12px] print:text-xs">الترتيب</span>
-  </div>
+                {/* Position, No. in Class, Class Row */}
+                <div className="flex items-center gap-3">
+                  <div className="flex items-center flex-1">
+                    <span className="font-semibold whitespace-nowrap text-[12px] print:text-xs">Position:</span>
+                    <span className="flex-1 border-b border-dotted border-gray-600 px-1 mx-1 text-[11px] print:text-xs text-center">
+                      {reportData.classPosition}{getPositionSuffix(reportData.classPosition)}
+                      <span className="mx-1 text-gray-400">  |  </span>
+                      <span dir="rtl">{toArabicNumerals(reportData.classPosition)}</span>
+                    </span>
+                    <span dir="rtl" className="whitespace-nowrap text-[12px] print:text-xs">الترتيب</span>
+                  </div>
 
-  <div className="flex items-center flex-1">
-    <span className="font-semibold whitespace-nowrap text-[12px] print:text-xs">No. in Class:</span>
-    <span className="flex-1 border-b border-dotted border-gray-600 px-1 mx-1 text-[11px] print:text-xs text-center">
-      {reportData.totalStudents}
-      <span className="mx-1 text-gray-400">  | </span>
-      <span dir="rtl">{toArabicNumerals(reportData.totalStudents)}</span>
-    </span>
-    <span dir="rtl" className="whitespace-nowrap text-[12px] print:text-xs">عدد الطلبة</span>
-  </div>
+                  <div className="flex items-center flex-1">
+                    <span className="font-semibold whitespace-nowrap text-[12px] print:text-xs">No. in Class:</span>
+                    <span className="flex-1 border-b border-dotted border-gray-600 px-1 mx-1 text-[11px] print:text-xs text-center">
+                      {reportData.totalStudents}
+                      <span className="mx-1 text-gray-400">  | </span>
+                      <span dir="rtl">{toArabicNumerals(reportData.totalStudents)}</span>
+                    </span>
+                    <span dir="rtl" className="whitespace-nowrap text-[12px] print:text-xs">عدد الطلبة</span>
+                  </div>
 
-  <div className="flex items-center flex-1">
-    <span className="font-semibold whitespace-nowrap text-[12px] print:text-xs">Class:</span>
-    <span className="flex-1 border-b border-dotted border-gray-600 px-1 mx-1 text-[11px] print:text-xs text-center">
-      {classInfo?.className}
-      {classInfo?.classNameArabic && (
-        <>
-          <span className="mx-1 text-gray-400"> | </span>
-          <span dir="rtl">{classInfo.classNameArabic}</span>
-        </>
-      )}
-    </span>
-    <span dir="rtl" className="whitespace-nowrap text-[10px] print:text-xs">الصف</span>
-  </div>
-</div>
+                  <div className="flex items-center flex-1">
+                    <span className="font-semibold whitespace-nowrap text-[12px] print:text-xs">Class:</span>
+                    <span className="flex-1 border-b border-dotted border-gray-600 px-1 mx-1 text-[11px] print:text-xs text-center">
+                      {classInfo?.className}
+                      {classInfo?.classNameArabic && (
+                        <>
+                          <span className="mx-1 text-gray-400"> | </span>
+                          <span dir="rtl">{classInfo.classNameArabic}</span>
+                        </>
+                      )}
+                    </span>
+                    <span dir="rtl" className="whitespace-nowrap text-[10px] print:text-xs">الصف</span>
+                  </div>
+                </div>
               </div>
 
               {/* Grades Table - Larger for printing */}
@@ -969,12 +992,12 @@ const handlePrint = () => {
                 <thead>
                   <tr className="border-b border-black">
                     <th className="border-l border-black p-1 print:p-1.5 w-6 text-center">ت</th>
-                    <th className="border-l border-black p-1 print:p-1.5 text-center w-56">
+                    <th className="border-l border-black p-1 print:p-1.5 text-center w-60">
                       المواد الدراسية SUBJECT
                     </th>
                     <th className="border-l border-black p-1 print:p-1.5 w-12 text-center">الدرجة</th>
                     <th className="border-l border-black p-1 print:p-1.5 w-12 text-center">رقماً</th>
-                    <th className="border-l border-black p-1 print:p-1.5 w-20 text-center">كتابة</th>
+                    <th className="border-l border-black p-1 print:p-1.5 w-18 text-center">كتابة</th>
                     <th className="border-l border-black p-1 print:p-1.5 w-16 text-center">التقدير</th>
                     <th className="p-1 print:p-1.5 w-14 text-center">ملحوظة</th>
                   </tr>
@@ -984,21 +1007,16 @@ const handlePrint = () => {
                     const result = reportData.results.find(r => r.subjectId === subject.$id);
                     const gradeInfo = result ? calculateGrade(result.score) : null;
                     const scoreInWords = result ? numberToArabicWords(result.score) : '';
-                    
+
                     return (
                       <tr key={subject.$id} className="border-b border-black">
                         <td className="border-l border-black p-1 print:p-1.5 text-center">{index + 1}</td>
                         <td className="border-l border-black p-1 print:p-1.5">
-                 {/*          
-                <div className="flex justify-between items-center gap-1">
-                            <span className="text-[14px] print:text-[14px]">{subject.arabicName}</span>
-                            <span className="text-gray-600 text-left text-[13px] print:text-[13px]">{subject.englishName}</span>
+                          
+                          <div className="flex items-center justify-between gap-4 px-2">
+                            <span className="text-[13px] print:text-[13px] ">{subject.arabicName}</span>
+                            <span className="text-gray-600 text-[12px] print:text-[12px]">{subject.englishName}</span>
                           </div>
-                          */}
-                <div className="flex items-center gap-3">
-  <span className="text-[13px] print:text-[13px]">{subject.arabicName}</span>
-  <span className="text-gray-600 text-[12px] print:text-[12px]">{subject.englishName}</span>
-</div>
                         </td>
                         <td className="border-l border-black p-1 print:p-1.5 text-center font-bold">100</td>
                         <td className="border-l border-black p-1 print:p-1.5 text-center font-bold">
@@ -1021,7 +1039,7 @@ const handlePrint = () => {
 
                   {/* Total Row */}
                   <tr className="border-t border-black font-bold">
-                    <td className="border-l border-black p-2 text-center text-[13px] print:text-[13px] font-bold" colSpan="2">
+                    <td className="border-l border-black p-2 text-center text-[12px] print:text-[12px] font-bold" colSpan="2">
                       المجموع الكلي <span className="mr-20">TOTAL </span>
                     </td>
                     <td className="border-l border-black p-2 text-center font-bold">
@@ -1034,110 +1052,110 @@ const handlePrint = () => {
 
                   {/* Percentage Row */}
                   <tr className="border-t border-black font-bold">
-                    <td className="border-l border-black p-2 text-center text-[13px] print:text-[13px] font-bold" colSpan="2">
+                    <td className="border-l border-black p-2 text-center text-[12px] print:text-[12px] font-bold" colSpan="2">
                       النسبة المئوية <span className="mr-20">PERCENTAGE </span>
                     </td>
                     <td className="p-2 text-center font-bold text-[12px] print:text-[12px]" colSpan="5">
-                   {toArabicNumerals(reportData.percentage)}٪
-                   <span className="mr-20"> </span>
-                      {reportData.percentage}%  
-                      
+                      {toArabicNumerals(reportData.percentage)}٪
+                      <span className="mr-20"> </span>
+                      {reportData.percentage}%
+
                     </td>
                   </tr>
 
                   {/* Grade Row */}
                   <tr className="border-t border-black font-bold">
-                    <td className="border-l border-black p-2 text-center text-[13px] print:text-[13px]" colSpan="2">
+                    <td className="border-l border-black p-2 text-center text-[12px] print:text-[12px]" colSpan="2">
                       التقدير العام <span className="mr-20">GRADE </span>
                     </td>
                     <td className="p-2 text-center text-[12px] print:text-[12px]" colSpan="5">
-                      {reportData.overallGrade.arabic} 
+                      {reportData.overallGrade.arabic}
                       <span className="mr-20">
-                        </span> {reportData.overallGrade.english}
+                      </span> {reportData.overallGrade.english}
                     </td>
                   </tr>
                 </tbody>
               </table>
 
-{/* Next Term & Promoted Section */}
-<div className="grid grid-cols-2 gap-3 mb-3 print:mb-4 text-[11px] print:text-[13px]">
-  <div className="flex items-center">
-    <span className="font-semibold whitespace-nowrap text-[11px] print:text-[12px]">Next Term Begins:</span>
-    <span className="flex-1 border-b border-dotted border-gray-600 mx-2 text-center text-[11px] print:text-[13px] ">
-      {/* ✅ Show date if set, otherwise blank line */}
-      {session?.nextTermBegins
-        ? new Date(session.nextTermBegins).toLocaleDateString('en-GB', {
-            day: '2-digit',
-            month: 'long',
-            year: 'numeric'
-          })
-        : ''}
-    </span>
-    <span dir="rtl" className="whitespace-nowrap text-[11px] print:text-[13px]">بداية الفصل الدراسي الجديد</span>
-  </div>
+              {/* Next Term & Promoted Section */}
+              <div className="grid grid-cols-2 gap-3 mb-3 print:mb-4 text-[12px] print:text-[12px]">
+                <div className="flex items-center">
+                  <span className="font-semibold whitespace-nowrap text-[12px] print:text-[12px]">Next Term Begins:</span>
+                  <span className="flex-1 border-b border-dotted border-gray-600 mx-2 text-center text-[12px] print:text-[12px] ">
+                    {/* ✅ Show date if set, otherwise blank line */}
+                    {session?.nextTermBegins
+                      ? new Date(session.nextTermBegins).toLocaleDateString('en-GB', {
+                        day: '2-digit',
+                        month: 'long',
+                        year: 'numeric'
+                      })
+                      : ''}
+                  </span>
+                  <span dir="rtl" className="whitespace-nowrap text-[12px] print:text-[12px]">بداية الفصل الدراسي الجديد</span>
+                </div>
 
-  <div className="flex items-center">
-    <span className="font-semibold whitespace-nowrap text-[11px] print:text-[13px]">Promoted:</span>
-    <span className="flex-1 border-b border-dotted border-gray-600 mx-2"></span>
-    <span dir="rtl" className="whitespace-nowrap text-[11px] print:text-[13px]">منقول إلى</span>
-  </div>
-</div>
+                <div className="flex items-center">
+                  <span className="font-semibold whitespace-nowrap text-[12px] print:text-[12px]">Promoted:</span>
+                  <span className="flex-1 border-b border-dotted border-gray-600 mx-2"></span>
+                  <span dir="rtl" className="whitespace-nowrap text-[12px] print:text-[12px]">منقول إلى</span>
+                </div>
+              </div>
               {/* Class Teacher's Remark - Display teacherRemarkArabic */}
-              <div className="mb-3 print:mb-4 text-[11px] print:text-[13px]">
+              <div className="mb-3 print:mb-4 text-[12px] print:text-[12px]">
                 <div className="flex items-center mb-2">
-                  <span className="font-semibold whitespace-nowrap text-[11px] print:text-[13px]">Class Teacher's Remark:</span>
+                  <span className="font-semibold whitespace-nowrap text-[12px] print:text-[12px]">Class Teacher's Remark:</span>
                   <span className="flex-1 border-b border-dotted border-gray-600 mx-2 min-h-[20px] print:min-h-[24px] text-center font-bold" dir="rtl">
                     {reportData.overallGrade.teacherRemarkArabic}
                   </span>
-                  <span dir="rtl" className="whitespace-nowrap text-[11px] print:text-[13px]">ملاحظة المدرس</span>
+                  <span dir="rtl" className="whitespace-nowrap text-[12px] print:text-[12px]">ملاحظة المدرس</span>
                 </div>
               </div>
 
               {/* Signatures Section */}
-              <div className="grid grid-cols-2 gap-6 text-[11px] print:text-[13px]">
+              <div className="grid grid-cols-2 gap-6 text-[12px] print:text-[12px]">
                 <div>
                   <div className="flex items-center mb-2 print:mb-3">
-                    <span className="font-semibold whitespace-nowrap text-[11px] print:text-[13px]">Principal's Sign:</span>
+                    <span className="font-semibold whitespace-nowrap text-[12px] print:text-[12px]">Principal's Sign:</span>
                     <span className="flex-1 border-b border-dotted border-gray-600 flex items-end justify-center mx-1">
-                      <img 
-                        src="/sign2.png" 
-                        alt="Principal Signature" 
+                      <img
+                        src="/sign2.png"
+                        alt="Principal Signature"
                         className="w-20 h-5 print:w-24 print:h-6 object-contain"
                       />
                     </span>
-                    <span dir="rtl" className="whitespace-nowrap text-[11px] print:text-[12px]">توقيع الوكيل</span>
+                    <span dir="rtl" className="whitespace-nowrap text-[12px] print:text-[12px]">توقيع الوكيل</span>
                   </div>
-                  
+
                   <div className="flex items-center mb-2">
-                    <span className="font-semibold whitespace-nowrap text-[11px] print:text-[12px]">Date:</span>
+                    <span className="font-semibold whitespace-nowrap text-[12px] print:text-[12px]">Date:</span>
                     <span className="flex-1 border-b border-dotted border-gray-600 mx-2 min-h-[18px] print:min-h-[22px] text-center text-[12px] print:text-xs">
                       {new Date().toLocaleDateString('en-GB', {
-  day: '2-digit',
-  month: 'long',
-  year: 'numeric'
-})}
+                        day: '2-digit',
+                        month: 'long',
+                        year: 'numeric'
+                      })}
                     </span>
-                    <span dir="rtl" className="whitespace-nowrap text-[11px] print:text-[12px]">التاريخ</span>
+                    <span dir="rtl" className="whitespace-nowrap text-[12px] print:text-[12px]">التاريخ</span>
                   </div>
                 </div>
 
                 <div>
                   <div className="flex items-center mb-2 print:mb-3">
-                    <span className="font-semibold whitespace-nowrap text-[11px] print:text-[12px]">Signature:</span>
+                    <span className="font-semibold whitespace-nowrap text-[12px] print:text-[12px]">Signature:</span>
                     <span className="flex-1 border-b border-dotted border-gray-600 flex items-end justify-center mx-1">
-                      <img 
-                        src="/sign.png" 
-                        alt="Principal Signature" 
+                      <img
+                        src="/sign.png"
+                        alt="Principal Signature"
                         className="w-20 h-5 print:w-24 print:h-6 object-contain"
                       />
                     </span>
-                    <span dir="rtl" className="whitespace-nowrap text-[11px] print:text-[12px]">التوقيع</span>
+                    <span dir="rtl" className="whitespace-nowrap text-[12px] print:text-[12px]">التوقيع</span>
                   </div>
-                  
+
                   <div className="flex items-center">
-                    <span className="font-semibold whitespace-nowrap text-[11px] print:text-[12px]">Stamp:</span>
+                    <span className="font-semibold whitespace-nowrap text-[12px] print:text-[12px]">Stamp:</span>
                     <span className="flex-1 border-b border-dotted border-gray-600 mx-2 min-h-[18px] print:min-h-[22px]"></span>
-                    <span dir="rtl" className="whitespace-nowrap text-[11px] print:text-[12px]">الختم</span>
+                    <span dir="rtl" className="whitespace-nowrap text-[12px] print:text-[12px]">الختم</span>
                   </div>
                 </div>
               </div>
@@ -1148,7 +1166,7 @@ const handlePrint = () => {
 
       {/* Enhanced Print Styles */}
       {/* Enhanced Print Styles */}
-<style jsx>{`
+      <style jsx>{`
   @media print {
     * {
       -webkit-print-color-adjust: exact !important;
@@ -1187,7 +1205,7 @@ const handlePrint = () => {
     .print\\:min-h-\\[22px\\] { min-height: 22px !important; }
 
     @page {
-      margin: 0.5cm;
+      margin: 0.3cm;
       size: A4 portrait;
     }
 
@@ -1233,13 +1251,13 @@ const SessionModal = ({ isOpen, onClose, onSave, editingSession }) => {
 
   const handleSubmit = () => {
     onSave(formData, editingSession?.$id);
-    setFormData({ 
-      sessionName: '', 
-      sessionNameArabic: '', 
-      startDate: '', 
-      endDate: '', 
+    setFormData({
+      sessionName: '',
+      sessionNameArabic: '',
+      startDate: '',
+      endDate: '',
       nextTermBegins: '', // ✅ NEW
-      isActive: true 
+      isActive: true
     });
   };
 
@@ -1296,7 +1314,7 @@ const ClassModal = ({ isOpen, onClose, onSave, sessionId, editingClass }) => {
   const [formData, setFormData] = useState({
     className: '',
     classNameArabic: '',
-   
+
   });
 
   useEffect(() => {
@@ -1304,21 +1322,21 @@ const ClassModal = ({ isOpen, onClose, onSave, sessionId, editingClass }) => {
       setFormData({
         className: editingClass.className || '',
         classNameArabic: editingClass.classNameArabic || '',
-      
+
       });
     } else {
       setFormData({
         className: '',
         classNameArabic: '',
-        
+
       });
     }
   }, [editingClass, isOpen]);
 
   const handleSubmit = () => {
     onSave({ ...formData, academicSessionId: sessionId }, editingClass?.$id);
-    setFormData({ className: '', classNameArabic: ''});
-    
+    setFormData({ className: '', classNameArabic: '' });
+
   };
 
   return (
@@ -1376,16 +1394,16 @@ const StudentModal = ({ isOpen, onClose, onSave, classId, sessionId, editingStud
   }, [editingStudent, isOpen]);
 
   const handleSubmit = () => {
-    onSave({ 
-      ...formData, 
-      classId, 
+    onSave({
+      ...formData,
+      classId,
       academicSessionId: sessionId,
-      isActive: true 
+      isActive: true
     }, editingStudent?.$id);
-    
+
     setFormData({
-      fullName: '', 
-      arabicName: '', 
+      fullName: '',
+      arabicName: '',
       gender: 'Male'
     });
   };
@@ -1399,7 +1417,7 @@ const StudentModal = ({ isOpen, onClose, onSave, classId, sessionId, editingStud
         placeholder="Enter full name"
         required
       />
-      
+
       <Input
         label="Arabic Name - الاسم بالعربية"
         value={formData.arabicName}
@@ -1407,7 +1425,7 @@ const StudentModal = ({ isOpen, onClose, onSave, classId, sessionId, editingStud
         placeholder="أدخل الاسم بالعربية"
         dir="rtl"
       />
-      
+
       <div className="mb-4">
         <label className="block text-gray-300 mb-2 text-sm sm:text-base">Gender</label>
         <select
@@ -1517,7 +1535,7 @@ const SubjectModal = ({ isOpen, onClose, onSave, editingSubject }) => {
           onChange={(e) => setFormData({ ...formData, passingScore: parseInt(e.target.value) })}
         /> */}
       </div>
-      
+
       <div className="flex gap-3 mt-6">
         <Button onClick={handleSubmit} icon={Check}>
           {editingSubject ? 'Update Subject' : 'Save Subject'}
@@ -1548,17 +1566,17 @@ const StudentGradesModal = ({ isOpen, onClose, student, subjects, onSave }) => {
     try {
       // Load existing scores for this student
       const result = await resultsManager.getByStudent(student.$id);
-      
+
       if (result.success) {
         // Convert results array to object for easy access
         const scoresObj = {};
         const commentsObj = {};
-        
+
         result.results.forEach(r => {
           scoresObj[r.subjectId] = r.score;
           commentsObj[r.subjectId] = r.teacherComment || '';
         });
-        
+
         setScores(scoresObj);
         setComments(commentsObj);
       }
@@ -1588,11 +1606,11 @@ const StudentGradesModal = ({ isOpen, onClose, student, subjects, onSave }) => {
 
   const handleSaveAll = async () => {
     setLoading(true);
-    
+
     try {
       const promises = subjects.map(async (subject) => {
         const score = scores[subject.$id];
-        
+
         // Only save if score is entered
         if (score !== undefined && score !== '') {
           return await resultsManager.saveResult({
@@ -1761,8 +1779,8 @@ const ClassCard = ({ classItem, onView, onEdit, onDelete, studentCount }) => (
           {classItem.classTeacherArabic && <span dir="rtl"> ({classItem.classTeacherArabic})</span>}
         </p>
         {/* <p className="text-sm text-gray-400"> */}
-          {/* Use the dynamically passed studentCount instead of stored currentEnrollment */}
-          {/* Students: {studentCount || 0}/{classItem.capacity} */}
+        {/* Use the dynamically passed studentCount instead of stored currentEnrollment */}
+        {/* Students: {studentCount || 0}/{classItem.capacity} */}
         {/* </p> */}
       </div>
       <div className="flex gap-2">
@@ -1794,15 +1812,15 @@ const StudentRow = ({ student, onEdit, onDelete, onViewGrades, onViewReportCard 
       )}
     </div>
     <div className="flex gap-2">
-      <button 
-        onClick={onViewReportCard} 
+      <button
+        onClick={onViewReportCard}
         className="p-2 bg-green-600 hover:bg-green-700 rounded-lg transition-colors"
         title="View Report Card"
       >
         <FileText size={16} />
       </button>
-      <button 
-        onClick={onViewGrades} 
+      <button
+        onClick={onViewGrades}
         className="p-2 bg-purple-600 hover:bg-purple-700 rounded-lg transition-colors"
         title="Edit Grades"
       >
@@ -1846,7 +1864,7 @@ const SubjectCard = ({ subject, onEdit, onDelete }) => (
   </Card>
 );
 
-           // ============================================
+// ============================================
 // BROADSHEET COMPONENT
 // ============================================
 
@@ -1857,7 +1875,7 @@ const BroadsheetView = ({ sessions, subjects }) => {
   const [broadsheetData, setBroadsheetData] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  
+
   useEffect(() => {
     if (selectedSessionId) {
       loadClasses(selectedSessionId);
@@ -1894,13 +1912,13 @@ const BroadsheetView = ({ sessions, subjects }) => {
           });
 
           const scores = Object.values(subjectScores).filter(s => s !== null);
-const totalScore = scores.reduce((sum, s) => sum + s, 0);
+          const totalScore = scores.reduce((sum, s) => sum + s, 0);
 
-const totalMax = subjects.reduce((sum, subject) => {
-  return subjectScores[subject.$id] !== null 
-    ? sum + (subject.maxScore || 100) 
-    : sum;
-}, 0);
+          const totalMax = subjects.reduce((sum, subject) => {
+            return subjectScores[subject.$id] !== null
+              ? sum + (subject.maxScore || 100)
+              : sum;
+          }, 0);
           const percentage = scores.length > 0
             ? ((totalScore / totalMax) * 100).toFixed(1)
             : '0.0';
@@ -1915,17 +1933,34 @@ const totalMax = subjects.reduce((sum, subject) => {
         })
       );
 
-      // Sort by total score descending and assign positions
-      const sorted = [...studentsWithResults].sort((a, b) => b.totalScore - a.totalScore);
-      sorted.forEach((student, index) => {
-        student.position = index + 1;
-      });
+      // // Sort by total score descending and assign positions
+      // const sorted = [...studentsWithResults].sort((a, b) => b.totalScore - a.totalScore);
+      // sorted.forEach((student, index) => {
+      //   student.position = index + 1;
+      // });
+
+      // Sort by total score descending
+const sorted = [...studentsWithResults].sort((a, b) => b.totalScore - a.totalScore);
+
+// Standard competition ranking: ties share the same position,
+// next position skips (e.g. two 5ths → next is 7th)
+sorted.forEach((student, index) => {
+  if (index === 0) {
+    student.position = 1;
+  } else {
+    const prev = sorted[index - 1];
+    if (student.totalScore === prev.totalScore) {
+      // Same score → same position as previous
+      student.position = prev.position;
+    } else {
+      // Skip positions equal to how many students ranked above
+      student.position = index + 1;
+    }
+  }
+});
 
       // Restore original order (by name) but keep position
-      const finalData = studentsWithResults.map(s => ({
-        ...s,
-        position: sorted.find(ss => ss.$id === s.$id)?.position || 0
-      }));
+      const finalData = sorted;
 
       setBroadsheetData(finalData);
     } catch (error) {
@@ -1991,11 +2026,14 @@ const totalMax = subjects.reduce((sum, subject) => {
   };
 
   const getPositionSuffix = (n) => {
-    if (n === 1) return 'st';
-    if (n === 2) return 'nd';
-    if (n === 3) return 'rd';
-    return 'th';
-  };
+  const lastTwo = n % 100;
+  const lastOne = n % 10;
+  if (lastTwo >= 11 && lastTwo <= 13) return 'th';
+  if (lastOne === 1) return 'st';
+  if (lastOne === 2) return 'nd';
+  if (lastOne === 3) return 'rd';
+  return 'th';
+};
 
   const getGradeLabel = (score) => {
     if (score === null) return '-';
@@ -2008,26 +2046,26 @@ const totalMax = subjects.reduce((sum, subject) => {
 
   const selectedClass = availableClasses.find(c => c.$id === selectedClassId);
   const selectedSession = sessions.find(s => s.$id === selectedSessionId);
-  
-const thStyle = {
-  border: '1px solid black',
-  padding: '2px 0px',
-  textAlign: 'center',
-  backgroundColor: '#f0f0f0',
-  fontWeight: 'bold',
-  fontSize: '7px',
-  minWidth: '20px',
-};
 
-const tdStyle = {
-  border: '1px solid black',
-  padding: '2px 0px',
-  textAlign: 'center',
-  fontSize: '11px',
-};
+  const thStyle = {
+    border: '1px solid black',
+    padding: '2px 0px',
+    textAlign: 'center',
+    backgroundColor: '#f0f0f0',
+    fontWeight: 'bold',
+    fontSize: '7px',
+    minWidth: '20px',
+  };
+
+  const tdStyle = {
+    border: '1px solid black',
+    padding: '2px 0px',
+    textAlign: 'center',
+    fontSize: '11px',
+  };
   const page1Subjects = subjects.slice(0, Math.ceil(subjects.length / 2));
-const page2Subjects = subjects.slice(Math.ceil(subjects.length / 2));
-  
+  const page2Subjects = subjects.slice(Math.ceil(subjects.length / 2));
+
   return (
     <div>
       {/* Controls */}
@@ -2089,201 +2127,201 @@ const page2Subjects = subjects.slice(Math.ceil(subjects.length / 2));
         </div>
       )}
 
-        {/* Broadsheet Table */}
-{!loading && broadsheetData && (
-  <div className="overflow-x-auto">
+      {/* Broadsheet Table */}
+      {!loading && broadsheetData && (
+        <div className="overflow-x-auto">
 
-      <div id="broadsheet-print-area" className="bg-white text-black rounded-lg" style={{ padding: '4px 0px' }}>
-      {/* Shared Header - renders once on screen, repeats via CSS on print */}
-      <div className="text-center mb-4">
-        <p className="text-[10px]">بسم الله الرحمن الرحيم</p>
-        <h1 className="font-bold text-sm">معهد دار المؤمن للدراسات العربية والإسلامية</h1>
-        <h2 className="font-bold text-xs">DAARUL MUHMIN INSTITUTE OF ARABIC AND ISLAMIC STUDIES</h2>
-        <p className="text-xs font-semibold mt-1">CLASS BROADSHEET — كشف درجات الصف</p>
-        <div className="flex justify-center gap-8 mt-1 text-[10px]">
-          <span>Session: <strong>{selectedSession?.sessionName}</strong></span>
-          <span>Class: <strong>{selectedClass?.className}</strong>
-            {selectedClass?.classNameArabic && <span dir="rtl"> | {selectedClass.classNameArabic}</span>}
-          </span>
-          <span>Total Students: <strong>{broadsheetData.length}</strong></span>
-        </div>
-      </div>
+          <div id="broadsheet-print-area" className="bg-white text-black rounded-lg" style={{ padding: '4px 0px' }}>
+            {/* Shared Header - renders once on screen, repeats via CSS on print */}
+            <div className="text-center mb-4">
+              <p className="text-[10px]">بسم الله الرحمن الرحيم</p>
+              <h1 className="font-bold text-sm">معهد دار المؤمن للدراسات العربية والإسلامية</h1>
+              <h2 className="font-bold text-xs">DAARUL MUHMIN INSTITUTE OF ARABIC AND ISLAMIC STUDIES</h2>
+              <p className="text-xs font-semibold mt-1">CLASS BROADSHEET — كشف درجات الصف</p>
+              <div className="flex justify-center gap-8 mt-1 text-[10px]">
+                <span>Session: <strong>{selectedSession?.sessionName}</strong></span>
+                <span>Class: <strong>{selectedClass?.className}</strong>
+                  {selectedClass?.classNameArabic && <span dir="rtl"> | {selectedClass.classNameArabic}</span>}
+                </span>
+                <span>Total Students: <strong>{broadsheetData.length}</strong></span>
+              </div>
+            </div>
 
-      {/* ── PAGE 1 TABLE ── */}
-      <div className="page-1">
-        <p className="font-bold text-[10px] mb-1 text-gray-600">Page 1 of 2</p>
-        <table className="w-full border border-black" style={{ fontSize: '11px', borderCollapse: 'collapse' }}>
-          <thead>
-            <tr>
-              <th style={thStyle} className="w-5">S/N</th>
-        <th style={{ ...thStyle, textAlign: 'left', minWidth: '70px', maxWidth: '80px' }}>Student Name / اسم الطالب</th>
-              
-              {page1Subjects.map(subject => (
-                <th key={subject.$id} style={thStyle}>
-                  <div style={{ fontSize: '8px' }}>{subject.arabicName}</div>
-<div style={{ fontSize: '7px', color: '#555' }}>{subject.englishName}</div>
-<div style={{ fontSize: '7px' }}>/100</div>
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {broadsheetData.map((student, index) => (
-              <tr key={student.$id} style={{ backgroundColor: index % 2 === 0 ? '#f9fafb' : '#ffffff' }}>
-                <td style={tdStyle}>{index + 1}</td>
-                
-                                <td style={{ ...tdStyle, textAlign: 'left', maxWidth: '90px', wordBreak: 'break-word' }}>
-                  <div style={{ fontWeight: 'bold' }}>{student.fullName}</div>
-                  {student.arabicName && (
-                    <div style={{ fontSize: '9px', color: '#555' }} dir="rtl">{student.arabicName}</div>
-                  )}
-                </td>
-                {page1Subjects.map(subject => {
-                  const score = student.subjectScores[subject.$id];
-                  const subFail = score !== null && score < 50;
-                  return (
-                    <td key={subject.$id} style={{ ...tdStyle, color: subFail ? '#dc2626' : 'inherit', fontWeight: 'bold' }}>
-                      {score !== null ? score : '-'}
-                    </td>
-                  );
-                })}
-              </tr>
-            ))}
-            {/* Page 1 subject averages */}
-            <tr style={{ backgroundColor: '#f3f4f6', fontWeight: 'bold' }}>
-              <td style={tdStyle} colSpan="2">Class Average / معدل الصف</td>
-              {page1Subjects.map(subject => {
-                const scores = broadsheetData.map(s => s.subjectScores[subject.$id]).filter(s => s !== null);
-                const avg = scores.length > 0 ? (scores.reduce((a, b) => a + b, 0) / scores.length).toFixed(1) : '-';
-                return <td key={subject.$id} style={tdStyle}>{avg}</td>;
-              })}
-            </tr>
-          </tbody>
-        </table>
-      </div>
+            {/* ── PAGE 1 TABLE ── */}
+            <div className="page-1">
+              <p className="font-bold text-[10px] mb-1 text-gray-600">Page 1 of 2</p>
+              <table className="w-full border border-black" style={{ fontSize: '11px', borderCollapse: 'collapse' }}>
+                <thead>
+                  <tr>
+                    <th style={thStyle} className="w-5">S/N</th>
+                    <th style={{ ...thStyle, textAlign: 'left', minWidth: '70px', maxWidth: '80px' }}>Student Name / اسم الطالب</th>
 
-      {/* Page break between the two tables */}
-      <div className="page-break" style={{ pageBreakAfter: 'always', marginTop: '2rem' }} />
+                    {page1Subjects.map(subject => (
+                      <th key={subject.$id} style={thStyle}>
+                        <div style={{ fontSize: '8px' }}>{subject.arabicName}</div>
+                        <div style={{ fontSize: '7px', color: '#555' }}>{subject.englishName}</div>
+                        <div style={{ fontSize: '7px' }}>/100</div>
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {broadsheetData.map((student, index) => (
+                    <tr key={student.$id} style={{ backgroundColor: index % 2 === 0 ? '#f9fafb' : '#ffffff' }}>
+                      <td style={tdStyle}>{index + 1}</td>
 
-      {/* ── PAGE 2 TABLE ── */}
-      <div className="page-2" style={{ marginTop: '1rem' }}>
-        {/* Repeat header on page 2 */}
-        <div className="text-center mb-3">
-          <p className="text-[10px]">بسم الله الرحمن الرحيم</p>
-          <h1 className="font-bold text-sm">معهد دار المؤمن للدراسات العربية والإسلامية</h1>
-          <h2 className="font-bold text-xs">DAARUL MUHMIN INSTITUTE OF ARABIC AND ISLAMIC STUDIES</h2>
-          <p className="text-xs font-semibold mt-1">CLASS BROADSHEET (Cont'd) — كشف درجات الصف (تابع)</p>
-          <div className="flex justify-center gap-8 mt-1 text-[10px]">
-            <span>Session: <strong>{selectedSession?.sessionName}</strong></span>
-            <span>Class: <strong>{selectedClass?.className}</strong></span>
-            <span>Total Students: <strong>{broadsheetData.length}</strong></span>
-          </div>
-        </div>
-        <p className="font-bold text-[10px] mb-1 text-gray-600">Page 2 of 2</p>
-
-        <table className="w-full border border-black" style={{ fontSize: '11px', borderCollapse: 'collapse' }}>
-          <thead>
-            <tr>
-              <th style={thStyle} className="w-5">S/N</th>
-              <th style={{ ...thStyle, textAlign: 'left', minWidth: '70px', maxWidth: '80px' }}>Student Name / اسم الطالب</th>
-              {page2Subjects.map(subject => (
-                <th key={subject.$id} style={thStyle}>
-                  <div>{subject.arabicName}</div>
-                  <div style={{ fontSize: '9px', color: '#555' }}>{subject.englishName}</div>
-                  <div style={{ fontSize: '9px' }}>/100</div>
-                </th>
-              ))}
-            
-<th style={{ ...thStyle, minWidth: '30px' }}>Total<br />المجموع</th>
-<th style={{ ...thStyle, minWidth: '30px' }}>Max<br />الكلي</th>
-<th style={{ ...thStyle, minWidth: '28px' }}>%<br />النسبة</th>
-<th style={{ ...thStyle, minWidth: '45px', fontSize: '7px' }}>Grade<br />التقدير</th>
-<th style={{ ...thStyle, minWidth: '30px' }}>Pos<br />الترتيب</th>
-            </tr>
-          </thead>
-          <tbody>
-            {broadsheetData.map((student, index) => {
-              const grade = student.percentage >= 90 ? 'Excellent / ممتاز'
-                : student.percentage >= 80 ? 'Very Good / جيد جداً'
-                : student.percentage >= 60 ? 'Good / جيد'
-                : student.percentage >= 50 ? 'Pass / مقبول'
-                : 'Fail / راسب';
-              const isFail = student.percentage < 50;
-
-              return (
-                <tr key={student.$id} style={{ backgroundColor: index % 2 === 0 ? '#f9fafb' : '#ffffff' }}>
-                  <td style={tdStyle}>{index + 1}</td>
-                  <td style={{ ...tdStyle, textAlign: 'left', maxWidth: '90px', wordBreak: 'break-word' }}>
-                    <div style={{ fontWeight: 'bold' }}>{student.fullName}</div>
-                    {student.arabicName && (
-                      <div style={{ fontSize: '9px', color: '#555' }} dir="rtl">{student.arabicName}</div>
-                    )}
-                  </td>
-                  {page2Subjects.map(subject => {
-                    const score = student.subjectScores[subject.$id];
-                    const subFail = score !== null && score < 50;
-                    return (
-                      <td key={subject.$id} style={{ ...tdStyle, color: subFail ? '#dc2626' : 'inherit', fontWeight: 'bold' }}>
-                        {score !== null ? score : '-'}
+                      <td style={{ ...tdStyle, textAlign: 'left', maxWidth: '90px', wordBreak: 'break-word' }}>
+                        <div style={{ fontWeight: 'bold' }}>{student.fullName}</div>
+                        {student.arabicName && (
+                          <div style={{ fontSize: '9px', color: '#555' }} dir="rtl">{student.arabicName}</div>
+                        )}
                       </td>
+                      {page1Subjects.map(subject => {
+                        const score = student.subjectScores[subject.$id];
+                        const subFail = score !== null && score < 50;
+                        return (
+                          <td key={subject.$id} style={{ ...tdStyle, color: subFail ? '#dc2626' : 'inherit', fontWeight: 'bold' }}>
+                            {score !== null ? score : '-'}
+                          </td>
+                        );
+                      })}
+                    </tr>
+                  ))}
+                  {/* Page 1 subject averages */}
+                  <tr style={{ backgroundColor: '#f3f4f6', fontWeight: 'bold' }}>
+                    <td style={tdStyle} colSpan="2">Class Average / معدل الصف</td>
+                    {page1Subjects.map(subject => {
+                      const scores = broadsheetData.map(s => s.subjectScores[subject.$id]).filter(s => s !== null);
+                      const avg = scores.length > 0 ? (scores.reduce((a, b) => a + b, 0) / scores.length).toFixed(1) : '-';
+                      return <td key={subject.$id} style={tdStyle}>{avg}</td>;
+                    })}
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            {/* Page break between the two tables */}
+            <div className="page-break" style={{ pageBreakAfter: 'always', marginTop: '2rem' }} />
+
+            {/* ── PAGE 2 TABLE ── */}
+            <div className="page-2" style={{ marginTop: '1rem' }}>
+              {/* Repeat header on page 2 */}
+              <div className="text-center mb-3">
+                <p className="text-[10px]">بسم الله الرحمن الرحيم</p>
+                <h1 className="font-bold text-sm">معهد دار المؤمن للدراسات العربية والإسلامية</h1>
+                <h2 className="font-bold text-xs">DAARUL MUHMIN INSTITUTE OF ARABIC AND ISLAMIC STUDIES</h2>
+                <p className="text-xs font-semibold mt-1">CLASS BROADSHEET (Cont'd) — كشف درجات الصف (تابع)</p>
+                <div className="flex justify-center gap-8 mt-1 text-[10px]">
+                  <span>Session: <strong>{selectedSession?.sessionName}</strong></span>
+                  <span>Class: <strong>{selectedClass?.className}</strong></span>
+                  <span>Total Students: <strong>{broadsheetData.length}</strong></span>
+                </div>
+              </div>
+              <p className="font-bold text-[10px] mb-1 text-gray-600">Page 2 of 2</p>
+
+              <table className="w-full border border-black" style={{ fontSize: '11px', borderCollapse: 'collapse' }}>
+                <thead>
+                  <tr>
+                    <th style={thStyle} className="w-5">S/N</th>
+                    <th style={{ ...thStyle, textAlign: 'left', minWidth: '70px', maxWidth: '80px' }}>Student Name / اسم الطالب</th>
+                    {page2Subjects.map(subject => (
+                      <th key={subject.$id} style={thStyle}>
+                        <div>{subject.arabicName}</div>
+                        <div style={{ fontSize: '9px', color: '#555' }}>{subject.englishName}</div>
+                        <div style={{ fontSize: '9px' }}>/100</div>
+                      </th>
+                    ))}
+
+                    <th style={{ ...thStyle, minWidth: '30px' }}>Total<br />المجموع</th>
+                    <th style={{ ...thStyle, minWidth: '30px' }}>Max<br />الكلي</th>
+                    <th style={{ ...thStyle, minWidth: '28px' }}>%<br />النسبة</th>
+                    <th style={{ ...thStyle, minWidth: '45px', fontSize: '7px' }}>Grade<br />التقدير</th>
+                    <th style={{ ...thStyle, minWidth: '30px' }}>Pos<br />الترتيب</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {broadsheetData.map((student, index) => {
+                    const grade = student.percentage >= 90 ? 'Excellent / ممتاز'
+                      : student.percentage >= 80 ? 'Very Good / جيد جداً'
+                        : student.percentage >= 60 ? 'Good / جيد'
+                          : student.percentage >= 50 ? 'Pass / مقبول'
+                            : 'Fail / راسب';
+                    const isFail = student.percentage < 50;
+
+                    return (
+                      <tr key={student.$id} style={{ backgroundColor: index % 2 === 0 ? '#f9fafb' : '#ffffff' }}>
+                        <td style={tdStyle}>{index + 1}</td>
+                        <td style={{ ...tdStyle, textAlign: 'left', maxWidth: '90px', wordBreak: 'break-word' }}>
+                          <div style={{ fontWeight: 'bold' }}>{student.fullName}</div>
+                          {student.arabicName && (
+                            <div style={{ fontSize: '9px', color: '#555' }} dir="rtl">{student.arabicName}</div>
+                          )}
+                        </td>
+                        {page2Subjects.map(subject => {
+                          const score = student.subjectScores[subject.$id];
+                          const subFail = score !== null && score < 50;
+                          return (
+                            <td key={subject.$id} style={{ ...tdStyle, color: subFail ? '#dc2626' : 'inherit', fontWeight: 'bold' }}>
+                              {score !== null ? score : '-'}
+                            </td>
+                          );
+                        })}
+
+                        <td style={{ ...tdStyle, fontWeight: 'bold', minWidth: '30px' }}>{student.totalScore}</td>
+                        <td style={{ ...tdStyle, minWidth: '30px' }}>{student.totalMax}</td>
+                        <td style={{ ...tdStyle, fontWeight: 'bold', color: isFail ? '#dc2626' : '#15803d', minWidth: '28px' }}>
+                          {student.percentage}%
+                        </td>
+                        <td style={{ ...tdStyle, fontSize: '7px', color: isFail ? '#dc2626' : 'inherit', minWidth: '45px' }}>
+                          {grade}
+                        </td>
+                        <td style={{ ...tdStyle, fontWeight: 'bold', minWidth: '30px' }}>
+                          {student.position}{getPositionSuffix(student.position)}
+                          <div style={{ fontSize: '7px' }} dir="rtl">{toArabicNumerals(student.position)}</div>
+                        </td>
+                      </tr>
                     );
                   })}
-                 
-                      <td style={{ ...tdStyle, fontWeight: 'bold', minWidth: '30px' }}>{student.totalScore}</td>
-<td style={{ ...tdStyle, minWidth: '30px' }}>{student.totalMax}</td>
-<td style={{ ...tdStyle, fontWeight: 'bold', color: isFail ? '#dc2626' : '#15803d', minWidth: '28px' }}>
-  {student.percentage}%
-</td>
-<td style={{ ...tdStyle, fontSize: '7px', color: isFail ? '#dc2626' : 'inherit', minWidth: '45px' }}>
-  {grade}
-</td>
-<td style={{ ...tdStyle, fontWeight: 'bold', minWidth: '30px' }}>
-  {student.position}{getPositionSuffix(student.position)}
-  <div style={{ fontSize: '7px' }} dir="rtl">{toArabicNumerals(student.position)}</div>
-</td>
-                </tr>
-              );
-            })}
 
-            {/* Summary row */}
-            <tr style={{ backgroundColor: '#f3f4f6', fontWeight: 'bold' }}>
-              <td style={tdStyle} colSpan="2">Class Average / معدل الصف</td>
-              {page2Subjects.map(subject => {
-                const scores = broadsheetData.map(s => s.subjectScores[subject.$id]).filter(s => s !== null);
-                const avg = scores.length > 0 ? (scores.reduce((a, b) => a + b, 0) / scores.length).toFixed(1) : '-';
-                return <td key={subject.$id} style={tdStyle}>{avg}</td>;
-              })}
-              <td style={tdStyle} colSpan="5">
-                Class Avg %: {(broadsheetData.reduce((sum, s) => sum + s.percentage, 0) / broadsheetData.length).toFixed(1)}%
-              </td>
-            </tr>
-          </tbody>
-        </table>
+                  {/* Summary row */}
+                  <tr style={{ backgroundColor: '#f3f4f6', fontWeight: 'bold' }}>
+                    <td style={tdStyle} colSpan="2">Class Average / معدل الصف</td>
+                    {page2Subjects.map(subject => {
+                      const scores = broadsheetData.map(s => s.subjectScores[subject.$id]).filter(s => s !== null);
+                      const avg = scores.length > 0 ? (scores.reduce((a, b) => a + b, 0) / scores.length).toFixed(1) : '-';
+                      return <td key={subject.$id} style={tdStyle}>{avg}</td>;
+                    })}
+                    <td style={tdStyle} colSpan="5">
+                      Class Avg %: {(broadsheetData.reduce((sum, s) => sum + s.percentage, 0) / broadsheetData.length).toFixed(1)}%
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
 
-        {/* Footer */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '1rem', fontSize: '9px' }}>
-          <div>
-            <span style={{ fontWeight: 'bold' }}>Prepared by:</span>
-            <span style={{ borderBottom: '1px dotted #888', display: 'inline-block', width: '8rem', marginLeft: '0.5rem' }}></span>
-          </div>
-          <div>
-            <span style={{ fontWeight: 'bold' }}>Date:</span>
-            <span style={{ marginLeft: '0.5rem' }}>{new Date().toLocaleDateString()}</span>
-          </div>
-          <div>
-            <span style={{ fontWeight: 'bold' }}>Principal's Sign:</span>
-            <span style={{ borderBottom: '1px dotted #888', display: 'inline-block', width: '8rem', marginLeft: '0.5rem' }}></span>
+              {/* Footer */}
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '1rem', fontSize: '9px' }}>
+                <div>
+                  <span style={{ fontWeight: 'bold' }}>Prepared by:</span>
+                  <span style={{ borderBottom: '1px dotted #888', display: 'inline-block', width: '8rem', marginLeft: '0.5rem' }}></span>
+                </div>
+                <div>
+                  <span style={{ fontWeight: 'bold' }}>Date:</span>
+                  <span style={{ marginLeft: '0.5rem' }}>{new Date().toLocaleDateString()}</span>
+                </div>
+                <div>
+                  <span style={{ fontWeight: 'bold' }}>Principal's Sign:</span>
+                  <span style={{ borderBottom: '1px dotted #888', display: 'inline-block', width: '8rem', marginLeft: '0.5rem' }}></span>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
-      </div>
-
+      )
+      }
     </div>
-  </div>
-)
-}
-</div> 
 
-);
+  );
 };
 
 
@@ -2297,19 +2335,19 @@ const AdminDashboard = ({ user, onLogout, isDark, setIsDark }) => {
   const [selectedSession, setSelectedSession] = useState(null);
   const [selectedClass, setSelectedClass] = useState(null);
   const [loading, setLoading] = useState(true);
-  
+
   // Data State
   const [sessions, setSessions] = useState([]);
   const [classes, setClasses] = useState([]);
   const [students, setStudents] = useState([]);
   const [subjects, setSubjects] = useState([]);
-  
+
   // Modal State
   const [isSessionModalOpen, setIsSessionModalOpen] = useState(false);
   const [isClassModalOpen, setIsClassModalOpen] = useState(false);
   const [isStudentModalOpen, setIsStudentModalOpen] = useState(false);
   const [isSubjectModalOpen, setIsSubjectModalOpen] = useState(false);
-  
+
   // Editing State
   const [editingSession, setEditingSession] = useState(null);
   const [editingClass, setEditingClass] = useState(null);
@@ -2323,10 +2361,10 @@ const AdminDashboard = ({ user, onLogout, isDark, setIsDark }) => {
     { id: 'settings', label: 'Settings', icon: Settings }
   ];
 
-    const [isGradesModalOpen, setIsGradesModalOpen] = useState(false);
-    const [selectedStudentForGrades, setSelectedStudentForGrades] = useState(null);
-    const [isReportCardOpen, setIsReportCardOpen] = useState(false);
-    const [selectedStudentForReport, setSelectedStudentForReport] = useState(null);
+  const [isGradesModalOpen, setIsGradesModalOpen] = useState(false);
+  const [selectedStudentForGrades, setSelectedStudentForGrades] = useState(null);
+  const [isReportCardOpen, setIsReportCardOpen] = useState(false);
+  const [selectedStudentForReport, setSelectedStudentForReport] = useState(null);
 
 
   // ============================================
@@ -2338,13 +2376,13 @@ const AdminDashboard = ({ user, onLogout, isDark, setIsDark }) => {
 
   const loadInitialData = async () => {
     setLoading(true);
-    
+
     try {
       const [sessionsResult, subjectsResult] = await Promise.all([
         academicSessionsManager.getAll(),
         subjectsManager.getAll()
       ]);
-      
+
       if (sessionsResult.success) setSessions(sessionsResult.sessions);
       if (subjectsResult.success) setSubjects(subjectsResult.subjects);
     } catch (error) {
@@ -2361,19 +2399,19 @@ const AdminDashboard = ({ user, onLogout, isDark, setIsDark }) => {
   const handleViewSession = async (session) => {
     setSelectedSession(session);
     setLoading(true);
-    
+
     const classesResult = await classesManager.getBySession(session.$id);
     if (classesResult.success) {
       setClasses(classesResult.classes);
     }
-    
+
     setLoading(false);
     setCurrentView('classes');
   };
 
   const handleSaveSession = async (sessionData, editingId) => {
     setLoading(true);
-    
+
     let result;
     if (editingId) {
       result = await academicSessionsManager.update(editingId, sessionData);
@@ -2388,11 +2426,11 @@ const AdminDashboard = ({ user, onLogout, isDark, setIsDark }) => {
         alert('Session created successfully!');
       }
     }
-    
+
     if (!result.success) {
       alert(result.message);
     }
-    
+
     setIsSessionModalOpen(false);
     setEditingSession(null);
     setLoading(false);
@@ -2407,50 +2445,50 @@ const AdminDashboard = ({ user, onLogout, isDark, setIsDark }) => {
     if (!window.confirm('Are you sure you want to delete this session?')) {
       return;
     }
-    
+
     setLoading(true);
     const result = await academicSessionsManager.delete(sessionId);
-    
+
     if (result.success) {
       setSessions(sessions.filter(s => s.$id !== sessionId));
       alert('Session deleted successfully!');
     } else {
       alert(result.message);
     }
-    
+
     setLoading(false);
   };
   // Add this handler:
-const handleViewGrades = (student) => {
-  setSelectedStudentForGrades(student);
-  setIsGradesModalOpen(true);
-};
+  const handleViewGrades = (student) => {
+    setSelectedStudentForGrades(student);
+    setIsGradesModalOpen(true);
+  };
 
-const handleSaveGrades = () => {
-  // Refresh student list if needed
-  setIsGradesModalOpen(false);
-  setSelectedStudentForGrades(null);
-};
-  
+  const handleSaveGrades = () => {
+    // Refresh student list if needed
+    setIsGradesModalOpen(false);
+    setSelectedStudentForGrades(null);
+  };
+
   // ============================================
   // CLASS HANDLERS
   // ============================================
   const handleViewClass = async (classItem) => {
     setSelectedClass(classItem);
     setLoading(true);
-    
+
     const studentsResult = await studentsManager.getByClass(classItem.$id);
     if (studentsResult.success) {
       setStudents(studentsResult.students);
     }
-    
+
     setLoading(false);
     setCurrentView('students');
   };
 
   const handleSaveClass = async (classData, editingId) => {
     setLoading(true);
-    
+
     let result;
     if (editingId) {
       result = await classesManager.update(editingId, classData);
@@ -2465,11 +2503,11 @@ const handleSaveGrades = () => {
         alert('Class created successfully!');
       }
     }
-    
+
     if (!result.success) {
       alert(result.message);
     }
-    
+
     setIsClassModalOpen(false);
     setEditingClass(null);
     setLoading(false);
@@ -2484,17 +2522,17 @@ const handleSaveGrades = () => {
     if (!window.confirm('Are you sure you want to delete this class?')) {
       return;
     }
-    
+
     setLoading(true);
     const result = await classesManager.delete(classId);
-    
+
     if (result.success) {
       setClasses(classes.filter(c => c.$id !== classId));
       alert('Class deleted successfully!');
     } else {
       alert(result.message);
     }
-    
+
     setLoading(false);
   };
 
@@ -2503,7 +2541,7 @@ const handleSaveGrades = () => {
   // ============================================
   const handleSaveStudent = async (studentData, editingId) => {
     setLoading(true);
-    
+
     let result;
     if (editingId) {
       result = await studentsManager.update(editingId, studentData);
@@ -2521,11 +2559,11 @@ const handleSaveGrades = () => {
         alert('Student added successfully!');
       }
     }
-    
+
     if (!result.success) {
       alert(result.message);
     }
-    
+
     setIsStudentModalOpen(false);
     setEditingStudent(null);
     setLoading(false);
@@ -2540,10 +2578,10 @@ const handleSaveGrades = () => {
     if (!window.confirm('Are you sure you want to delete this student?')) {
       return;
     }
-    
+
     setLoading(true);
     const result = await studentsManager.delete(studentId);
-    
+
     if (result.success) {
       setStudents(students.filter(s => s.$id !== studentId));
       if (selectedClass) {
@@ -2553,7 +2591,7 @@ const handleSaveGrades = () => {
     } else {
       alert(result.message);
     }
-    
+
     setLoading(false);
   };
 
@@ -2562,7 +2600,7 @@ const handleSaveGrades = () => {
   // ============================================
   const handleSaveSubject = async (subjectData, editingId) => {
     setLoading(true);
-    
+
     let result;
     if (editingId) {
       result = await subjectsManager.update(editingId, subjectData);
@@ -2577,11 +2615,11 @@ const handleSaveGrades = () => {
         alert('Subject created successfully!');
       }
     }
-    
+
     if (!result.success) {
       alert(result.message);
     }
-    
+
     setIsSubjectModalOpen(false);
     setEditingSubject(null);
     setLoading(false);
@@ -2596,17 +2634,17 @@ const handleSaveGrades = () => {
     if (!window.confirm('Are you sure you want to delete this subject?')) {
       return;
     }
-    
+
     setLoading(true);
     const result = await subjectsManager.delete(subjectId);
-    
+
     if (result.success) {
       setSubjects(subjects.filter(s => s.$id !== subjectId));
       alert('Subject deactivated successfully!');
     } else {
       alert(result.message);
     }
-    
+
     setLoading(false);
   };
 
@@ -2619,25 +2657,25 @@ const handleSaveGrades = () => {
     setCurrentView('sessions');
   };
 
- const handleBackToClasses = () => {
+  const handleBackToClasses = () => {
     setSelectedClass(null);
     setCurrentView('classes'); // ✅
-};
+  };
 
-const handleViewReportCard = (student) => {
-  setSelectedStudentForReport(student);
-  setIsReportCardOpen(true);
-};
+  const handleViewReportCard = (student) => {
+    setSelectedStudentForReport(student);
+    setIsReportCardOpen(true);
+  };
   // Filter Data
-  const filteredClasses = selectedSession 
+  const filteredClasses = selectedSession
     ? classes.filter(c => c.academicSessionId === selectedSession.$id)
     : [];
-  
+
   const filteredStudents = selectedClass
     ? students.filter(s => s.classId === selectedClass.$id)
     : [];
 
-    // ============================================
+  // ============================================
   // RENDER (JSX)
   // ============================================
   return (
@@ -2655,7 +2693,7 @@ const handleViewReportCard = (student) => {
                 <p className="text-xs sm:text-sm text-gray-300">Daarul Muhmin Institute</p>
               </div>
             </div>
-            
+
             <div className="flex items-center gap-2 sm:gap-3">
               <button
                 onClick={() => setIsDark(!isDark)}
@@ -2663,7 +2701,7 @@ const handleViewReportCard = (student) => {
               >
                 {isDark ? <Sun size={18} /> : <Moon size={18} />}
               </button>
-              
+
               <Button onClick={onLogout} variant="danger" icon={LogOut}>
                 <span className="hidden sm:inline">Logout</span>
               </Button>
@@ -2683,11 +2721,10 @@ const handleViewReportCard = (student) => {
                 setSelectedSession(null);
                 setSelectedClass(null);
               }}
-              className={`flex-1 py-3 flex flex-col items-center gap-1 transition-colors ${
-                currentView === item.id && !selectedSession && !selectedClass
+              className={`flex-1 py-3 flex flex-col items-center gap-1 transition-colors ${currentView === item.id && !selectedSession && !selectedClass
                   ? 'text-green-400 border-b-2 border-green-400'
                   : 'text-gray-400 hover:text-white'
-              }`}
+                }`}
             >
               <item.icon size={20} />
               <span className="text-xs">{item.label}</span>
@@ -2708,11 +2745,10 @@ const handleViewReportCard = (student) => {
                   setSelectedSession(null);
                   setSelectedClass(null);
                 }}
-                className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg mb-2 transition-all ${
-                  currentView === item.id && !selectedSession && !selectedClass
+                className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg mb-2 transition-all ${currentView === item.id && !selectedSession && !selectedClass
                     ? 'bg-green-600 text-white'
                     : 'text-gray-300 hover:bg-gray-700'
-                }`}
+                  }`}
               >
                 <item.icon size={20} />
                 {item.label}
@@ -2908,43 +2944,43 @@ const handleViewReportCard = (student) => {
                 )}
 
                 {/* Settings View */}
-                
-                  
-{currentView === 'settings' && (
-  <div>
-    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-6">
-      <h2 className="text-2xl sm:text-3xl font-bold text-white">Settings</h2>
-    </div>
 
-    <div className="space-y-6">
-      {/* ✅ NEW - Broadsheet Section */}
-      <Card>
-        <h3 className="text-xl font-bold text-white mb-2">Class Broadsheet</h3>
-        <p className="text-gray-300 mb-4 text-sm">
-          Generate and print the full result broadsheet for any class.
-          كشف درجات كامل للصف
-        </p>
-        <BroadsheetView sessions={sessions} subjects={subjects} />
-      </Card>
 
-      {/* Report Card Template */}
-      <Card>
-        <h3 className="text-xl font-bold text-white mb-4">Report Card Template</h3>
-        <p className="text-gray-300 mb-4">Download the blank report card template for printing or reference.</p>
-        <ReportCardTemplate subjects={subjects} />
-      </Card>
+                {currentView === 'settings' && (
+                  <div>
+                    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-6">
+                      <h2 className="text-2xl sm:text-3xl font-bold text-white">Settings</h2>
+                    </div>
 
-      <Card>
-        <h3 className="text-xl font-bold text-white mb-4">System Settings</h3>
-        <EmptyState
-          icon={Settings}
-          title="Additional Settings"
-          description="More system settings coming soon..."
-        />
-      </Card>
-    </div>
-  </div>
-)}
+                    <div className="space-y-6">
+                      {/* ✅ NEW - Broadsheet Section */}
+                      <Card>
+                        <h3 className="text-xl font-bold text-white mb-2">Class Broadsheet</h3>
+                        <p className="text-gray-300 mb-4 text-sm">
+                          Generate and print the full result broadsheet for any class.
+                          كشف درجات كامل للصف
+                        </p>
+                        <BroadsheetView sessions={sessions} subjects={subjects} />
+                      </Card>
+
+                      {/* Report Card Template */}
+                      <Card>
+                        <h3 className="text-xl font-bold text-white mb-4">Report Card Template</h3>
+                        <p className="text-gray-300 mb-4">Download the blank report card template for printing or reference.</p>
+                        <ReportCardTemplate subjects={subjects} />
+                      </Card>
+
+                      <Card>
+                        <h3 className="text-xl font-bold text-white mb-4">System Settings</h3>
+                        <EmptyState
+                          icon={Settings}
+                          title="Additional Settings"
+                          description="More system settings coming soon..."
+                        />
+                      </Card>
+                    </div>
+                  </div>
+                )}
               </>
             )}
           </main>
@@ -2961,7 +2997,7 @@ const handleViewReportCard = (student) => {
         onSave={handleSaveSession}
         editingSession={editingSession}
       />
-      
+
       <ClassModal
         isOpen={isClassModalOpen}
         onClose={() => {
@@ -2972,7 +3008,7 @@ const handleViewReportCard = (student) => {
         sessionId={selectedSession?.$id}
         editingClass={editingClass}
       />
-      
+
       <StudentModal
         isOpen={isStudentModalOpen}
         onClose={() => {
@@ -2984,7 +3020,7 @@ const handleViewReportCard = (student) => {
         sessionId={selectedSession?.$id}
         editingStudent={editingStudent}
       />
-      
+
       <SubjectModal
         isOpen={isSubjectModalOpen}
         onClose={() => {
