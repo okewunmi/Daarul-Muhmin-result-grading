@@ -1,0 +1,19 @@
+name: Keepalive Ping
+
+on:
+  schedule:
+    - cron: "0 8 */3 * *"  # Every 3 days at 8am UTC
+  workflow_dispatch:        # Allows manual trigger
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping keepalive endpoint
+        run: |
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" https://daarul-muhmin.netlify.app/api/keepalive)
+          echo "Response: $STATUS"
+          if [ "$STATUS" != "200" ]; then
+            echo "Ping failed with status $STATUS"
+            exit 1
+          fi
