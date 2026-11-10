@@ -11,7 +11,7 @@ import {
   subjectsManager,
   resultsManager,
   gradingSystem
-} from '../../lib/appwrite';
+} from '../../lib/api';
 
 // ============================================
 // REUSABLE COMPONENTS

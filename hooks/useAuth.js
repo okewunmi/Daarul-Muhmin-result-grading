@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { appwriteAuth } from '../lib/appwrite';
+import { appwriteAuth } from '../lib/api';
 
 export const useAuth = () => {
   const [user, setUser] = useState(null);

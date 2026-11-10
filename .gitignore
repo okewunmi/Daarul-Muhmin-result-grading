@@ -39,3 +39,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# secrets and private data: never commit these
+.env
+.env.*
+!.env.example
+/backups

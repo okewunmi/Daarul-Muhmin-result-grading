@@ -5,7 +5,7 @@
 // import { LoginForm, RegisterForm } from '../../components/auth/AuthForm';
 // import { AuthForm } from '../../components/auth/AuthForm';
 // import { MessageAlert } from '../../components/common/MessageAlert';
-// import { adminUserManagement } from '../../lib/appwrite';
+// import { adminUserManagement } from '../../lib/api';
 
 // const AuthPage = ({ onNavigate, onLogin, isDark, setIsDark }) => {
 //   const [isLogin, setIsLogin] = useState(true);
@@ -177,7 +177,7 @@ import { BookOpen, Sun, Moon } from 'lucide-react';
 import { AuthToggle } from '../../components/auth/AuthToggle';
 import { LoginForm, RegisterForm, ForgotPasswordForm } from '../../components/auth/AuthForm';
 import { MessageAlert } from '../../components/common/MessageAlert';
-import { adminUserManagement } from '../../lib/appwrite';
+import { adminUserManagement } from '../../lib/api';
 
 const AuthPage = ({ onNavigate, onLogin, isDark, setIsDark }) => {
   const [isLogin, setIsLogin] = useState(true);

@@ -1,15 +1,27 @@
 'use client'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import AuthPage from './AuthPage/Page';
 import DashboardPage from './Dashboard/Page';
 import HomePage from './HomePage/Page';
-import { appwriteAuth } from '../lib/appwrite';
+import { appwriteAuth } from '../lib/api';
 import { Toaster } from 'react-hot-toast';
 
 const App = () => {
   const [currentPage, setCurrentPage] = useState('home'); // Start with 'home'
   const [user, setUser] = useState(null);
   const [isDark, setIsDark] = useState(true);
+
+  // If the login cookie is still valid (e.g. after a page refresh), go straight to the dashboard.
+  useEffect(() => {
+    let cancelled = false;
+    appwriteAuth.getCurrentUser().then((currentUser) => {
+      if (!cancelled && currentUser) {
+        setUser(currentUser);
+        setCurrentPage('dashboard');
+      }
+    });
+    return () => { cancelled = true; };
+  }, []);
 
   const handleLogin = (userData) => {
     setUser(userData);
